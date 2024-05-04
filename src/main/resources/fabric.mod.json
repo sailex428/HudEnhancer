@@ -3,9 +3,9 @@
 	"id": "position-display",
 	"version": "${version}",
 	"name": "position-display",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "Shows a HUD with the current coords, biome and direction of the crosshair",
 	"authors": [
-		"Me!"
+		"sailex428"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
@@ -16,7 +16,7 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"io.sailex.Positiondisplay"
+			"io.sailex.PositionDisplay"
 		],
 		"client": [
           "io.sailex.PositionDisplayClient"
