@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.world.biome.Biome;
 
@@ -23,6 +24,10 @@ public class PositionDisplay implements HudRenderCallback {
         int textBegin = hudBegin + 5;
         int textColor = 0xFFFFFF;
 
+        MatrixStack matrices = drawContext.getMatrices();
+        matrices.push();
+        matrices.scale(0.8F, 0.8F, 0.8F);
+
         drawContext.fill(hudBegin, hudBegin, 130, 55, 0x80000000);
         String[] texts = {
                 "X " + Math.round(player.getX() * 10.0) / 10.0,
@@ -34,6 +39,7 @@ public class PositionDisplay implements HudRenderCallback {
             drawContext.drawText(client.textRenderer, texts[i], textBegin, textBegin + (i * 10), textColor, true);
         }
         drawContext.drawText(client.textRenderer, getDirection(player), textBegin + 100, textBegin, textColor, true);
+        matrices.pop();
     }
 
     private String getBiome(ClientPlayerEntity player) {
