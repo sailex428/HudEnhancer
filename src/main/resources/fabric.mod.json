@@ -2,21 +2,21 @@
 	"schemaVersion": 1,
 	"id": "position-display",
 	"version": "${version}",
-	"name": "position-display",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"name": "Position Display",
+	"description": "Shows a HUD with the current coords, biome and direction of the crosshair",
 	"authors": [
-		"Me!"
+		"sailex428"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://github.com/sailex428",
+		"sources": "https://github.com/sailex428/position-display"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/position-display/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"io.sailex.Positiondisplay"
+			"io.sailex.PositionDisplay"
 		],
 		"client": [
           "io.sailex.PositionDisplayClient"
