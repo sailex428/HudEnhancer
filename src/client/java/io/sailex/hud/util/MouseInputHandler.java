@@ -3,6 +3,7 @@ package io.sailex.hud.util;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenMouseEvents;
 
+import net.minecraft.client.gui.screen.ChatScreen;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
@@ -17,6 +18,9 @@ public class MouseInputHandler{
 
     public void register() {
         ScreenEvents.AFTER_INIT.register((client, currentScreen, scaledWidth, scaledHeight) -> {
+            if (!(currentScreen instanceof ChatScreen)) {
+                return;
+            }
             ScreenMouseEvents.afterMouseClick(currentScreen).register((screen, mouseX, mouseY, button) -> {
                 if (button != GLFW.GLFW_MOUSE_BUTTON_LEFT) {
                     return;
