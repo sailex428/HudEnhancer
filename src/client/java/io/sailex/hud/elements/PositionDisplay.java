@@ -1,7 +1,7 @@
-package io.sailex.hud;
+package io.sailex.hud.elements;
 
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
-import net.minecraft.client.MinecraftClient;
+import io.sailex.hud.util.AHudElement;
+import io.sailex.hud.util.Direction;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.math.MatrixStack;
@@ -10,36 +10,30 @@ import net.minecraft.world.biome.Biome;
 
 import java.util.Optional;
 
-public class PositionDisplay implements HudRenderCallback {
+public class PositionDisplay extends AHudElement {
 
-    private final MinecraftClient client = MinecraftClient.getInstance();
+    public PositionDisplay(int elementX, int elementY, int elementWidth, int elementHeight) {
+        this.elementX = elementX;
+        this.elementY = elementY;
+        this.elementWidth = elementWidth;
+        this.elementHeight = elementHeight;
+    }
 
     @Override
-    public void onHudRender(DrawContext drawContext, float tickDelta) {
-        ClientPlayerEntity player = client.player;
-        if (player == null || client.getDebugHud().shouldShowDebugHud()) {
-            return;
-        }
-        int hudBegin = 7;
-        int textBegin = hudBegin + 5;
+    public void drawElement(DrawContext drawContext, ClientPlayerEntity player) {
         int textColor = 0xFFFFFF;
 
-        MatrixStack matrices = drawContext.getMatrices();
-        matrices.push();
-        matrices.scale(0.8F, 0.8F, 0.8F);
-
-        drawContext.fill(hudBegin, hudBegin, 130, 55, 0x80000000);
+        drawContext.fill(elementX, elementY, elementX + elementWidth, elementY + elementHeight, 0x80000000);
         String[] texts = {
                 "X " + Math.round(player.getX() * 10.0) / 10.0,
-                "Z " + Math.round(player.getZ() * 10.0) / 10.0,
                 "Y " + Math.round(player.getY() * 10.0) / 10.0,
+                "Z " + Math.round(player.getZ() * 10.0) / 10.0,
                 "Biome: " + getBiome(player)
         };
         for (int i = 0; i < texts.length; i++) {
-            drawContext.drawText(client.textRenderer, texts[i], textBegin, textBegin + (i * 10), textColor, true);
+            drawContext.drawText(client.textRenderer, texts[i], elementX + 5, elementY + 5 + (i * 10), textColor, true);
         }
-        drawContext.drawText(client.textRenderer, getDirection(player), textBegin + 100, textBegin, textColor, true);
-        matrices.pop();
+        drawContext.drawText(client.textRenderer, getDirection(player), elementX + 5 + 100, elementY + 5, textColor, true);
     }
 
     private String getBiome(ClientPlayerEntity player) {
@@ -63,4 +57,5 @@ public class PositionDisplay implements HudRenderCallback {
 
         return Direction.values()[index].getAbbreviation();
     }
+
 }
