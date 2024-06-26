@@ -3,7 +3,6 @@ package io.sailex.screens;
 import io.sailex.config.Position;
 
 import io.sailex.config.PositionDisplayConfig;
-import io.sailex.screens.widgets.CPSWidget;
 import io.sailex.screens.widgets.FPSWidget;
 import io.sailex.screens.widgets.PositionWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;

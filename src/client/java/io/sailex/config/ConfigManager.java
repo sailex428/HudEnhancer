@@ -25,9 +25,7 @@ public class ConfigManager {
         configFile = new File(FabricLoader.getInstance().getConfigDir().toString(), "position_display.json");
         this.config = config;
 
-        ClientLifecycleEvents.CLIENT_STOPPING.register(client -> {
-            saveConfig();
-        });
+        ClientLifecycleEvents.CLIENT_STOPPING.register(client -> saveConfig());
     }
 
     public void initialize() {

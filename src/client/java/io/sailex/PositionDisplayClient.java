@@ -6,13 +6,8 @@ import io.sailex.hud.HudElementsManager;
 import io.sailex.keybinds.EditHudElementsKeybind;
 import io.sailex.screens.HudElementScreen;
 import io.sailex.screens.WidgetManager;
-import io.sailex.screens.widgets.FPSWidget;
 import net.fabricmc.api.ClientModInitializer;
-import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.text.Text;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class PositionDisplayClient implements ClientModInitializer {
 

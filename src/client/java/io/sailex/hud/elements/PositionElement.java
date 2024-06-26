@@ -1,14 +1,9 @@
 package io.sailex.hud.elements;
 
 import io.sailex.util.AHudElement;
-import io.sailex.util.Direction;
 import io.sailex.util.PositionElementRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.world.biome.Biome;
-
-import java.util.Optional;
 
 public class PositionElement extends AHudElement {
 
