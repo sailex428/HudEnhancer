@@ -1,4 +1,4 @@
-package io.sailex.hud.util;
+package io.sailex.util;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 

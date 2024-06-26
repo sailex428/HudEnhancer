@@ -1,16 +1,19 @@
 package io.sailex.hud.elements;
 
-import io.sailex.hud.util.AHudElement;
+import io.sailex.util.AHudElement;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
 
-public class FPSDisplay extends AHudElement {
+public class StaticElement extends AHudElement {
 
-    public FPSDisplay(int elementX, int elementY, int elementWidth, int elementHeight) {
+    private final String content;
+
+    public StaticElement(int elementX, int elementY, int elementWidth, int elementHeight, String content) {
         this.elementX = elementX;
         this.elementY = elementY;
         this.elementWidth = elementWidth;
         this.elementHeight = elementHeight;
+        this.content = content;
     }
 
     @Override
@@ -18,6 +21,7 @@ public class FPSDisplay extends AHudElement {
         int textColor = 0xFFFFFF;
 
         drawContext.fill(elementX, elementY, elementX + elementWidth, elementY + elementHeight, 0x80000000);
-        drawContext.drawText(client.textRenderer, client.getCurrentFps() + " FPS", elementX + 5, elementY + 5, textColor, true);
+        drawContext.drawText(client.textRenderer, content, elementX + 5, elementY + 5, textColor, true);
     }
+
 }

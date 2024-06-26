@@ -1,26 +1,18 @@
-package io.sailex.hud.elements;
+package io.sailex.util;
 
-import io.sailex.hud.util.AHudElement;
-import io.sailex.hud.util.Direction;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.world.biome.Biome;
 
 import java.util.Optional;
 
-public class PositionDisplay extends AHudElement {
+public class PositionElementRenderer {
 
-    public PositionDisplay(int elementX, int elementY, int elementWidth, int elementHeight) {
-        this.elementX = elementX;
-        this.elementY = elementY;
-        this.elementWidth = elementWidth;
-        this.elementHeight = elementHeight;
-    }
+    private final MinecraftClient client = MinecraftClient.getInstance();
 
-    @Override
-    public void drawElement(DrawContext drawContext, ClientPlayerEntity player) {
+    public void render(DrawContext drawContext, ClientPlayerEntity player, int elementX, int elementY, int elementWidth, int elementHeight) {
         int textColor = 0xFFFFFF;
 
         drawContext.fill(elementX, elementY, elementX + elementWidth, elementY + elementHeight, 0x80000000);
