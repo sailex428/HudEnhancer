@@ -10,34 +10,42 @@ import java.util.Optional;
 
 public class PositionElementRenderer {
 
-    private final MinecraftClient client = MinecraftClient.getInstance();
+    private static final MinecraftClient client = MinecraftClient.getInstance();
 
-    public void render(DrawContext drawContext, ClientPlayerEntity player, int elementX, int elementY, int elementWidth, int elementHeight) {
-        int textColor = 0xFFFFFF;
+    public static void render(DrawContext drawContext, ClientPlayerEntity player,
+                       int elementX, int elementY, int elementWidth, int elementHeight,
+                       int color, int backgroundColor, boolean shadow) {
+        drawContext.fill(elementX, elementY, elementX + elementWidth, elementY + elementHeight, backgroundColor);
+        String[] textContent = createTextContent(player);
 
-        drawContext.fill(elementX, elementY, elementX + elementWidth, elementY + elementHeight, 0x80000000);
-        String[] texts = {
+        for (int i = 0; i < textContent.length; i++) {
+            drawContext.drawText(client.textRenderer, textContent[i], elementX + 5, elementY + 5 + (i * 10), color, shadow);
+        }
+        drawContext.drawText(client.textRenderer, getDirection(player), elementX + 105, elementY + 5, color, shadow);
+    }
+
+    private static String[] createTextContent(ClientPlayerEntity player) {
+        return new String[] {
                 "X " + Math.round(player.getX() * 10.0) / 10.0,
                 "Y " + Math.round(player.getY() * 10.0) / 10.0,
                 "Z " + Math.round(player.getZ() * 10.0) / 10.0,
                 "Biome: " + getBiome(player)
         };
-        for (int i = 0; i < texts.length; i++) {
-            drawContext.drawText(client.textRenderer, texts[i], elementX + 5, elementY + 5 + (i * 10), textColor, true);
-        }
-        drawContext.drawText(client.textRenderer, getDirection(player), elementX + 5 + 100, elementY + 5, textColor, true);
     }
 
-    private String getBiome(ClientPlayerEntity player) {
+    private static String getBiome(ClientPlayerEntity player) {
         Optional<RegistryKey<Biome>> biomeRegistry = player.getWorld().getBiome(player.getBlockPos()).getKey();
         if (biomeRegistry.isPresent()) {
             String biome = biomeRegistry.get().getValue().getPath();
+            if (biome.length() > 16) {
+                biome = biome.substring(0, 16);
+            }
             return biome.replaceAll("_", " ");
         }
         return "";
     }
 
-    private String getDirection(ClientPlayerEntity player) {
+    private static String getDirection(ClientPlayerEntity player) {
         int yaw = Math.round(player.getYaw());
         int directionLength = Direction.values().length;
         int part = 360 / directionLength;

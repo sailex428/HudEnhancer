@@ -24,8 +24,6 @@ public class ConfigManager {
     public ConfigManager(PositionDisplayConfig config) {
         configFile = new File(FabricLoader.getInstance().getConfigDir().toString(), "position_display.json");
         this.config = config;
-
-        ClientLifecycleEvents.CLIENT_STOPPING.register(client -> saveConfig());
     }
 
     public void initialize() {
@@ -34,64 +32,105 @@ public class ConfigManager {
         } else {
             saveConfig();
         }
+        saveConfigOnClientStop();
     }
 
     public void loadConfig() {
         if (!configFile.exists()) {
             return;
         }
-        ObjectNode json;
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            json = mapper.readValue(configFile, ObjectNode.class);
-        } catch (IOException e) {
-            LOGGER.error("Error loading configs from position_display.json : ", e);
-            return;
-        }
+        ObjectNode json = readConfigFile();
         processPositionData(json);
     }
 
+    private ObjectNode readConfigFile() {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.readValue(configFile, ObjectNode.class);
+        } catch (IOException e) {
+            LOGGER.error("Error loading configs from position_display.json : ", e);
+            return mapper.createObjectNode();
+        }
+    }
+
     private void processPositionData(ObjectNode json) {
-        Map<String, Position> positionMap = new HashMap<>();
+        if (!json.has("data") && !(json.get("data") instanceof ArrayNode)) {
+            return;
+        }
+        Map<String, HudElement> positionMap = new HashMap<>();
         for (JsonNode elementData : json.get("data")) {
 
-            if (!elementData.has("x") || !elementData.has("y")) {
+            if (!isJsonValid(elementData)) {
                 continue;
             }
-            if (!elementData.has("width") || !elementData.has("height")) {
-                continue;
-            }
-            positionMap.put(elementData.get("name").asText(), new Position(elementData.get("x").asInt(), elementData.get("y").asInt(), elementData.get("width").asInt(), elementData.get("height").asInt()));
+
+            positionMap.put(elementData.get("name").asText(),
+                    new HudElement(
+                        elementData.get("x").asInt(),
+                        elementData.get("y").asInt(),
+                        elementData.get("width").asInt(),
+                        elementData.get("height").asInt(),
+                        elementData.get("color").asInt(),
+                        elementData.get("backgroundColor").asInt(),
+                        elementData.get("shadow").asBoolean()
+                    )
+            );
         }
         config.setPositionMap(positionMap);
     }
 
     public void saveConfig() {
-        Map<String, Position> positions = config.getPositionMap();
+        Map<String, HudElement> positions = config.getPositionMap();
 
         ObjectMapper mapper = new ObjectMapper();
-        ArrayNode positionsArrNode = mapper.createArrayNode();
-
-        for (Map.Entry<String, Position> entry : positions.entrySet()) {
-            ObjectNode valueNode = mapper.createObjectNode();
-            valueNode.put("x", entry.getValue().x());
-            valueNode.put("y", entry.getValue().y());
-            valueNode.put("width", entry.getValue().width());
-            valueNode.put("height", entry.getValue().height());
-
-            ObjectNode positionNode = mapper.createObjectNode();
-            positionNode.set(entry.getKey(), valueNode);
-            positionsArrNode.add(positionNode);
-        }
-
         try {
             PrintWriter writer = new PrintWriter(configFile, StandardCharsets.UTF_8);
-            writer.write(mapper.writeValueAsString(mapper.createObjectNode().set("data", positionsArrNode)));
+            writer.write(mapper.writeValueAsString(createJson(positions, mapper)));
             writer.close();
             LOGGER.info("Saved position_display.json successfully!");
         } catch (IOException e) {
             LOGGER.error("Error writing Position-Display configs to position_display.json : ", e);
         }
+    }
+
+    private JsonNode createJson(Map<String, HudElement> positions, ObjectMapper mapper) {
+        ArrayNode positionsArrNode = mapper.createArrayNode();
+
+        for (Map.Entry<String, HudElement> entry : positions.entrySet()) {
+            ObjectNode elementNode = mapper.createObjectNode();
+            elementNode.put("name", entry.getKey());
+            elementNode.put("x", entry.getValue().x());
+            elementNode.put("y", entry.getValue().y());
+            elementNode.put("width", entry.getValue().width());
+            elementNode.put("height", entry.getValue().height());
+            elementNode.put("color", entry.getValue().color());
+            elementNode.put("backgroundColor", entry.getValue().backgroundColor());
+            elementNode.put("shadow", entry.getValue().shadow());
+
+            positionsArrNode.add(elementNode);
+        }
+        return mapper.createObjectNode().set("data", positionsArrNode);
+    }
+
+    private boolean isJsonValid(JsonNode elementData) {
+        return hasDimensions(elementData) || hasStyle(elementData);
+    }
+
+    private boolean hasDimensions(JsonNode elementData) {
+        return elementData.has("x") &&
+                elementData.has("y") &&
+                elementData.has("width") &&
+                elementData.has("height");
+    }
+
+    private boolean hasStyle(JsonNode elementData) {
+        return elementData.has("color") &&
+                elementData.has("backgroundColor") &&
+                elementData.has("shadow");
+    }
+
+    private void saveConfigOnClientStop() {
+        ClientLifecycleEvents.CLIENT_STOPPING.register(client -> saveConfig());
     }
 
 }

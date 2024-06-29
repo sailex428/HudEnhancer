@@ -1,6 +1,6 @@
 package io.sailex.util;
 
-import io.sailex.screens.HudElementScreen;
+import io.sailex.gui.screens.MoveHudElementsScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -12,6 +12,9 @@ public abstract class AHudElement implements IHudElement {
     protected int elementWidth;
     protected int elementX;
     protected int elementY;
+    protected int color;
+    protected int backgroundColor;
+    protected boolean shadow;
 
     @Override
     public abstract void drawElement(DrawContext drawContext, ClientPlayerEntity player);
@@ -22,18 +25,15 @@ public abstract class AHudElement implements IHudElement {
         if (player == null || client.getDebugHud().shouldShowDebugHud()) {
             return;
         }
-        if (client.currentScreen instanceof HudElementScreen) {
+        if (client.currentScreen instanceof MoveHudElementsScreen) {
             return;
         }
         drawElement(drawContext, player);
     }
 
-    public void setElementY(int elementY) {
-        this.elementY = elementY;
-    }
-
-    public void setElementX(int elementX) {
+    public void setPosition(int elementX, int elementY) {
         this.elementX = elementX;
+        this.elementY = elementY;
     }
 
 }

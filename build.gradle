@@ -36,8 +36,8 @@ dependencies {
 	mappings "net.fabricmc:yarn:${property('deps.yarn_mappings')}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${property('deps.fabric_loader')}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${property('deps.fabric_api')}"
-	implementation 'com.fasterxml.jackson.core:jackson-core:2.13.1'
-	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.1'
+	implementation 'com.fasterxml.jackson.core:jackson-core:2.17.1'
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.1'
 }
 
 processResources {

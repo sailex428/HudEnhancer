@@ -2,14 +2,15 @@ package io.sailex;
 
 import io.sailex.config.ConfigManager;
 import io.sailex.config.PositionDisplayConfig;
-import io.sailex.hud.HudElementsManager;
-import io.sailex.keybinds.EditHudElementsKeybind;
-import io.sailex.screens.HudElementScreen;
-import io.sailex.screens.WidgetManager;
+import io.sailex.gui.hud.HudElementsManager;
+import io.sailex.gui.screens.ScreenManager;
+import io.sailex.keybinds.MoveHudElementsKeybind;
 import net.fabricmc.api.ClientModInitializer;
-import net.minecraft.text.Text;
+
 
 public class PositionDisplayClient implements ClientModInitializer {
+
+	private static ScreenManager screenManager;
 
 	@Override
 	public void onInitializeClient() {
@@ -23,13 +24,16 @@ public class PositionDisplayClient implements ClientModInitializer {
 		HudElementsManager hudManager = new HudElementsManager(positionDisplayConfig.getPositionMap());
 		hudManager.register();
 
-		WidgetManager widgetManager = new WidgetManager(positionDisplayConfig.getPositionMap());
-		widgetManager.registerWidgets();
+		screenManager = new ScreenManager(hudManager.getHudWidgets());
+		screenManager.registerScreens();
 
-		HudElementScreen screen = new HudElementScreen(Text.empty(), widgetManager.getWidgets());
-
-		EditHudElementsKeybind keybind = new EditHudElementsKeybind(screen);
+		MoveHudElementsKeybind keybind = new MoveHudElementsKeybind(screenManager.getMoveHudElementsScreen());
 		keybind.register();
 
 	}
+
+	public static ScreenManager getScreenManager() {
+		return screenManager;
+	}
+
 }

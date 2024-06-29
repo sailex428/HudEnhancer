@@ -1,18 +1,18 @@
 package io.sailex.keybinds;
 
-import io.sailex.screens.HudElementScreen;
+import io.sailex.gui.screens.MoveHudElementsScreen;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.option.KeyBinding;
 import org.lwjgl.glfw.GLFW;
 
-public class EditHudElementsKeybind {
+public class MoveHudElementsKeybind {
 
-    public EditHudElementsKeybind(HudElementScreen screen) {
+    public MoveHudElementsKeybind(MoveHudElementsScreen screen) {
         this.screen = screen;
     }
 
-    private final HudElementScreen screen;
+    private final MoveHudElementsScreen screen;
     private KeyBinding keyBinding;
 
     public void register() {
@@ -30,7 +30,7 @@ public class EditHudElementsKeybind {
                     client.setScreen(screen);
                     return;
                 }
-                if (client.currentScreen instanceof HudElementScreen) {
+                if (client.currentScreen instanceof MoveHudElementsScreen) {
                     client.setScreen(null);
                 }
             }
