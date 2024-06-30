@@ -9,13 +9,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
 public class PositionElement extends AHudElement {
 
     public PositionElement(HudElement posDisplay) {
-        this.elementX = posDisplay.x();
-        this.elementY = posDisplay.y();
-        this.elementWidth = posDisplay.width();
-        this.elementHeight = posDisplay.height();
-        this.color = posDisplay.color();
-        this.backgroundColor = posDisplay.backgroundColor();
-        this.shadow = posDisplay.shadow();
+        super(posDisplay);
     }
 
     @Override
@@ -23,7 +17,7 @@ public class PositionElement extends AHudElement {
         PositionElementRenderer.render(
                 drawContext, player,
                 elementX, elementY, elementWidth, elementHeight,
-                color, backgroundColor, shadow
+                color, background, shadow
         );
     }
 

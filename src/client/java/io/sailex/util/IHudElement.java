@@ -9,5 +9,6 @@ public interface IHudElement extends HudRenderCallback {
     void onHudRender(DrawContext drawContext, float tickDelta);
     void drawElement(DrawContext drawContext, ClientPlayerEntity player);
     void setPosition(int elementX, int elementY);
+    void setStyling(int color, boolean shadow, boolean background);
 
 }

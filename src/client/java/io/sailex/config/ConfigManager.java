@@ -71,7 +71,7 @@ public class ConfigManager {
                         elementData.get("width").asInt(),
                         elementData.get("height").asInt(),
                         elementData.get("color").asInt(),
-                        elementData.get("backgroundColor").asInt(),
+                        elementData.get("background").asBoolean(),
                         elementData.get("shadow").asBoolean()
                     )
             );
@@ -104,7 +104,7 @@ public class ConfigManager {
             elementNode.put("width", entry.getValue().width());
             elementNode.put("height", entry.getValue().height());
             elementNode.put("color", entry.getValue().color());
-            elementNode.put("backgroundColor", entry.getValue().backgroundColor());
+            elementNode.put("background", entry.getValue().background());
             elementNode.put("shadow", entry.getValue().shadow());
 
             positionsArrNode.add(elementNode);
@@ -125,7 +125,7 @@ public class ConfigManager {
 
     private boolean hasStyle(JsonNode elementData) {
         return elementData.has("color") &&
-                elementData.has("backgroundColor") &&
+                elementData.has("background") &&
                 elementData.has("shadow");
     }
 

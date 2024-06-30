@@ -9,13 +9,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
 public class FPSElement extends AHudElement {
 
     public FPSElement(HudElement fps) {
-        this.elementX = fps.x();
-        this.elementY = fps.y();
-        this.elementWidth = fps.width();
-        this.elementHeight = fps.height();
-        this.color = fps.color();
-        this.backgroundColor = fps.backgroundColor();
-        this.shadow = fps.shadow();
+        super(fps);
     }
 
     @Override
@@ -23,7 +17,7 @@ public class FPSElement extends AHudElement {
         FPSElementRenderer.render(
                 drawContext,
                 elementX, elementY, elementWidth, elementHeight,
-                color, backgroundColor, shadow
+                color, background, shadow
         );
     }
 }

@@ -32,7 +32,7 @@ public class PositionWidget extends AWidget {
                 context,
                 this.client.player,
                 this.getX(), this.getY(), this.getWidth(), this.getHeight(),
-                color, backgroundColor, shadow
+                color, background, shadow
         );
     }
 

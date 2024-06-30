@@ -1,7 +1,7 @@
 package io.sailex.util;
 
-import io.sailex.PositionDisplayClient;
 import io.sailex.config.HudElement;
+import io.sailex.gui.screens.EditHudElementsScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.ClickableWidget;
@@ -16,7 +16,7 @@ public abstract class AWidget extends ClickableWidget {
     protected Map<ClickableWidget, IHudElement> widgetToHudElement;
     protected Map<String, HudElement> positionMap;
     protected int color;
-    protected int backgroundColor;
+    protected boolean background;
     protected boolean shadow;
     private int initMouseX;
     private int initMouseY;
@@ -24,7 +24,7 @@ public abstract class AWidget extends ClickableWidget {
     public AWidget(HudElement hudElement, Text message) {
         super(hudElement.x(), hudElement.y(), hudElement.width(), hudElement.height(), message);
         this.color = hudElement.color();
-        this.backgroundColor = hudElement.backgroundColor();
+        this.background = hudElement.background();
         this.shadow = hudElement.shadow();
     }
 
@@ -64,31 +64,66 @@ public abstract class AWidget extends ClickableWidget {
 
     private void handleRightClick() {
         this.playDownSound(MinecraftClient.getInstance().getSoundManager());
-        client.setScreen(PositionDisplayClient.getScreenManager().getEditHudElementsScreen());
+        client.setScreen(new EditHudElementsScreen(this));
     }
 
     @Override
     public void onDrag(double mouseX, double mouseY, double deltaX, double deltaY) {
-        updateElementPosition((int) mouseX, (int) mouseY);
+        updateWidgetPosition((int) mouseX, (int) mouseY);
 
         widgetToHudElement.get(this).setPosition(getX(), getY());
-        positionMap.put(this.getMessage().getString(), createUpdatedElement());
     }
 
-    private void updateElementPosition(int mouseX, int mouseY) {
+    private void updateWidgetPosition(int mouseX, int mouseY) {
         int offsetX = mouseX - initMouseX;
         int offsetY = mouseY - initMouseY;
         initMouseX += offsetX;
         initMouseY += offsetY;
 
         this.setPosition(getX() + offsetX, getY() + offsetY);
+        updateElementConfig();
     }
 
-    private HudElement createUpdatedElement() {
-        return new HudElement(getX(), getY(), getWidth(), getHeight(), color, backgroundColor, shadow);
+    private void updateElementConfig() {
+        HudElement updatedElement = new HudElement(
+                getX(), getY(),
+                getWidth(), getHeight(),
+                color, background, shadow
+        );
+        positionMap.put(this.getMessage().getString(), updatedElement);
     }
 
     @Override
     protected void appendClickableNarrations(NarrationMessageBuilder builder) {}
+
+    public boolean isShadow() {
+        return shadow;
+    }
+
+    public void setShadow(boolean shadow) {
+        this.shadow = shadow;
+        widgetToHudElement.get(this).setStyling(color, shadow, background);
+        updateElementConfig();
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
+        widgetToHudElement.get(this).setStyling(color, shadow, background);
+        updateElementConfig();
+    }
+
+    public boolean isBackground() {
+        return background;
+    }
+
+    public void setBackground(boolean background) {
+        this.background = background;
+        widgetToHudElement.get(this).setStyling(color, shadow, background);
+        updateElementConfig();
+    }
 
 }

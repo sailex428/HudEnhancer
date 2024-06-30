@@ -27,7 +27,7 @@ public class FPSWidget extends AWidget {
         FPSElementRenderer.render(
                 context,
                 this.getX(), this.getY(), this.getWidth(), this.getHeight(),
-                color, backgroundColor, shadow
+                color, background, shadow
         );
     }
 

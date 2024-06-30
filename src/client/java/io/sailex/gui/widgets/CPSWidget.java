@@ -28,7 +28,7 @@ public class CPSWidget extends AWidget {
 
     @Override
     protected void renderWidget(DrawContext drawContext, int mouseX, int mouseY, float delta) {
-        drawContext.fill(getX(), getY(), getX() + getWidth(), getY() + getHeight(), backgroundColor);
+        drawContext.fill(getX(), getY(), getX() + getWidth(), getY() + getHeight(), background ? 0x80000000 : 0x00FFFFFF);
         drawContext.drawText(client.textRenderer,  cpsCalculator.getCPS() + " CPS", getX() + 5, getY() + 5, color, shadow);
     }
 }

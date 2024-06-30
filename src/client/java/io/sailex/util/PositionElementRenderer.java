@@ -14,8 +14,8 @@ public class PositionElementRenderer {
 
     public static void render(DrawContext drawContext, ClientPlayerEntity player,
                        int elementX, int elementY, int elementWidth, int elementHeight,
-                       int color, int backgroundColor, boolean shadow) {
-        drawContext.fill(elementX, elementY, elementX + elementWidth, elementY + elementHeight, backgroundColor);
+                       int color, boolean background, boolean shadow) {
+        drawContext.fill(elementX, elementY, elementX + elementWidth, elementY + elementHeight, background ? 0x80000000 : 0x00FFFFFF);
         String[] textContent = createTextContent(player);
 
         for (int i = 0; i < textContent.length; i++) {

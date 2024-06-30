@@ -11,20 +11,19 @@ public class ColorGradientWidget extends ClickableWidget {
     private int selectedHue;
     private int selectedColor;
     private final OnColorChanged onColorChanged;
-    private final int widgetX;
-    private final int widgetY;
 
     public interface OnColorChanged {
         void onColorChanged(int newColor);
     }
 
-    public ColorGradientWidget(int x, int y, int width, int height, OnColorChanged onColorChanged) {
+    public ColorGradientWidget(
+            int x, int y, int width, int height,
+            OnColorChanged onColorChanged,
+            int selectedHue, int selectedColor) {
         super(x, y, width, height, Text.literal(""));
-        this.widgetX = x;
-        this.widgetY = y;
         this.onColorChanged = onColorChanged;
-        this.selectedHue = 0;
-        this.selectedColor = 0xFFFFFF;
+        this.selectedHue = selectedHue;
+        this.selectedColor = selectedColor;
     }
 
     @Override
@@ -34,16 +33,16 @@ public class ColorGradientWidget extends ClickableWidget {
                 float saturation = i / (float) this.width;
                 float brightness = 1.0f - j / (float) this.height;
                 int color = Color.HSBtoRGB(selectedHue / 360.0f, saturation, brightness);
-                context.fill(widgetX + i, widgetY + j, widgetX + i + 1, widgetY + j + 1, color);
+                context.fill(getX() + i, getY() + j, getX() + i + 1, getY() + j + 1, color);
             }
         }
     }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (clicked(mouseX, mouseY)) {
-            float saturation = (float) (mouseX - widgetX) / this.width;
-            float brightness = 1.0f - (float) (mouseY - widgetY) / this.height;
+        if (this.clicked(mouseX, mouseY)) {
+            float saturation = (float) (mouseX - getX()) / this.width;
+            float brightness = 1.0f - (float) (mouseY - getY()) / this.height;
             this.selectedColor = Color.HSBtoRGB(this.selectedHue / 360.0f, saturation, brightness);
             this.onColorChanged.onColorChanged(this.selectedColor);
             return true;

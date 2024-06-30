@@ -7,9 +7,8 @@ import java.util.List;
 public class ScreenManager {
 
     private final List<ClickableWidget> widgetList;
-    private EditHudElementsScreen editHudElementsScreen;
     private AddHudElementsScreen addHudElementsScreen;
-    private MoveHudElementsScreen moveHudElementsScreen;
+    private static MoveHudElementsScreen moveHudElementsScreen;
 
     public ScreenManager(List<ClickableWidget> widgetList) {
         this.widgetList = widgetList;
@@ -17,18 +16,11 @@ public class ScreenManager {
 
     public void registerScreens() {
         moveHudElementsScreen = new MoveHudElementsScreen(widgetList);
-        editHudElementsScreen = new EditHudElementsScreen();
         addHudElementsScreen = new AddHudElementsScreen();
-
-        editHudElementsScreen.setPreviousScreen(moveHudElementsScreen);
     }
 
     public AddHudElementsScreen getAddHudElementsScreen() {
         return addHudElementsScreen;
-    }
-
-    public EditHudElementsScreen getEditHudElementsScreen() {
-        return editHudElementsScreen;
     }
 
     public MoveHudElementsScreen getMoveHudElementsScreen() {
