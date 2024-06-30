@@ -19,7 +19,7 @@ public class PositionDisplayConfig {
         boolean shadow = true;
         boolean background = true;
         positionMap.put(POSITION_DISPLAY, new HudElement(7, 7, 123, 48, color, background, shadow));
-        positionMap.put(FPS, new HudElement(250, 7, 50, 17, color, background, shadow));
+        positionMap.put(FPS, new HudElement(150, 38, 50, 17, color, background, shadow));
         positionMap.put(CPS, new HudElement(150 , 7, 50, 17, color, background, shadow));
     }
 
