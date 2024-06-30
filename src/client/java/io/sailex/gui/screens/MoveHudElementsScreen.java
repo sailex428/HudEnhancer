@@ -25,7 +25,7 @@ public class MoveHudElementsScreen extends Screen {
         super.init();
 
         this.clearChildren();
-        this.addDrawableChild(createAddButton());
+        //this.addDrawableChild(createAddButton());
 
         for (ClickableWidget widget : widgetList) {
             this.addDrawableChild(widget);
