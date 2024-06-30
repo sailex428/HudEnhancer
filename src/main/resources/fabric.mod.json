@@ -3,7 +3,7 @@
 	"id": "position-display",
 	"version": "${version}",
 	"name": "Position Display",
-	"description": "Shows a HUD with the current coords, biome and direction of the crosshair",
+	"description": "Shows a HUD with the current coords, biome, direction, fps and cps of the client/player.",
 	"authors": [
 		"sailex428"
 	],
