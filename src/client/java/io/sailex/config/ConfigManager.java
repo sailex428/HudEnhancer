@@ -1,9 +1,6 @@
 package io.sailex.config;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.gson.*;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.loader.api.FabricLoader;
 
@@ -20,10 +17,12 @@ public class ConfigManager {
     private final Logger LOGGER = LogManager.getLogger("ConfigManager");
     private final File configFile;
     private final PositionDisplayConfig config;
+    private final Gson gson;
 
     public ConfigManager(PositionDisplayConfig config) {
         configFile = new File(FabricLoader.getInstance().getConfigDir().toString(), "position_display.json");
         this.config = config;
+        this.gson = new GsonBuilder().setPrettyPrinting().create();
     }
 
     public void initialize() {
@@ -39,40 +38,41 @@ public class ConfigManager {
         if (!configFile.exists()) {
             return;
         }
-        ObjectNode json = readConfigFile();
+        JsonObject json = readConfigFile();
         processPositionData(json);
     }
 
-    private ObjectNode readConfigFile() {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            return mapper.readValue(configFile, ObjectNode.class);
+    private JsonObject readConfigFile() {
+        try (Reader reader = new InputStreamReader(new FileInputStream(configFile), StandardCharsets.UTF_8)) {
+            return gson.fromJson(reader, JsonObject.class);
         } catch (IOException e) {
             LOGGER.error("Error loading configs from position_display.json : ", e);
-            return mapper.createObjectNode();
+            return new JsonObject();
         }
     }
 
-    private void processPositionData(ObjectNode json) {
-        if (!json.has("data") && !(json.get("data") instanceof ArrayNode)) {
+    private void processPositionData(JsonObject json) {
+        if (!json.has("data") || !json.get("data").isJsonArray()) {
             return;
         }
         Map<String, HudElement> positionMap = new HashMap<>();
-        for (JsonNode elementData : json.get("data")) {
+        JsonArray dataArray = json.getAsJsonArray("data");
+        for (JsonElement element : dataArray) {
+            JsonObject elementData = element.getAsJsonObject();
 
             if (!isJsonValid(elementData)) {
                 continue;
             }
 
-            positionMap.put(elementData.get("name").asText(),
+            positionMap.put(elementData.get("name").getAsString(),
                     new HudElement(
-                        elementData.get("x").asInt(),
-                        elementData.get("y").asInt(),
-                        elementData.get("width").asInt(),
-                        elementData.get("height").asInt(),
-                        elementData.get("color").asInt(),
-                        elementData.get("background").asBoolean(),
-                        elementData.get("shadow").asBoolean()
+                            elementData.get("x").getAsInt(),
+                            elementData.get("y").getAsInt(),
+                            elementData.get("width").getAsInt(),
+                            elementData.get("height").getAsInt(),
+                            elementData.get("color").getAsInt(),
+                            elementData.get("background").getAsBoolean(),
+                            elementData.get("shadow").getAsBoolean()
                     )
             );
         }
@@ -82,48 +82,47 @@ public class ConfigManager {
     public void saveConfig() {
         Map<String, HudElement> positions = config.getPositionMap();
 
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            PrintWriter writer = new PrintWriter(configFile, StandardCharsets.UTF_8);
-            writer.write(mapper.writeValueAsString(createJson(positions, mapper)));
-            writer.close();
+        try (Writer writer = new OutputStreamWriter(new FileOutputStream(configFile), StandardCharsets.UTF_8)) {
+            gson.toJson(createJson(positions), writer);
             LOGGER.info("Saved position_display.json successfully!");
         } catch (IOException e) {
             LOGGER.error("Error writing Position-Display configs to position_display.json : ", e);
         }
     }
 
-    private JsonNode createJson(Map<String, HudElement> positions, ObjectMapper mapper) {
-        ArrayNode positionsArrNode = mapper.createArrayNode();
+    private JsonObject createJson(Map<String, HudElement> positions) {
+        JsonArray positionsArrNode = new JsonArray();
 
         for (Map.Entry<String, HudElement> entry : positions.entrySet()) {
-            ObjectNode elementNode = mapper.createObjectNode();
-            elementNode.put("name", entry.getKey());
-            elementNode.put("x", entry.getValue().x());
-            elementNode.put("y", entry.getValue().y());
-            elementNode.put("width", entry.getValue().width());
-            elementNode.put("height", entry.getValue().height());
-            elementNode.put("color", entry.getValue().color());
-            elementNode.put("background", entry.getValue().background());
-            elementNode.put("shadow", entry.getValue().shadow());
+            JsonObject elementNode = new JsonObject();
+            elementNode.addProperty("name", entry.getKey());
+            elementNode.addProperty("x", entry.getValue().x());
+            elementNode.addProperty("y", entry.getValue().y());
+            elementNode.addProperty("width", entry.getValue().width());
+            elementNode.addProperty("height", entry.getValue().height());
+            elementNode.addProperty("color", entry.getValue().color());
+            elementNode.addProperty("background", entry.getValue().background());
+            elementNode.addProperty("shadow", entry.getValue().shadow());
 
             positionsArrNode.add(elementNode);
         }
-        return mapper.createObjectNode().set("data", positionsArrNode);
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.add("data", positionsArrNode);
+        return jsonObject;
     }
 
-    private boolean isJsonValid(JsonNode elementData) {
+    private boolean isJsonValid(JsonObject elementData) {
         return hasDimensions(elementData) || hasStyle(elementData);
     }
 
-    private boolean hasDimensions(JsonNode elementData) {
+    private boolean hasDimensions(JsonObject elementData) {
         return elementData.has("x") &&
                 elementData.has("y") &&
                 elementData.has("width") &&
                 elementData.has("height");
     }
 
-    private boolean hasStyle(JsonNode elementData) {
+    private boolean hasStyle(JsonObject elementData) {
         return elementData.has("color") &&
                 elementData.has("background") &&
                 elementData.has("shadow");
