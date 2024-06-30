@@ -9,13 +9,12 @@ public class CPSCalculator {
     private int cps = 0;
     private int clickCount = 0;
 
-    public void register() {
+    public CPSCalculator() {
         ClientTickEvents.END_CLIENT_TICK.register((client -> {
             if (client.mouse.wasLeftButtonClicked()) {
                 clickCount++;
             }
             updateClicks();
-            cps = calculateCPS();
         }));
     }
 
@@ -24,6 +23,7 @@ public class CPSCalculator {
         long timeElapsed = currentTime - lastUpdateTime;
 
         if (timeElapsed >= CPS_UPDATE_INTERVAL) {
+            cps = calculateCPS();
             lastUpdateTime = currentTime;
             clickCount = 0;
         }

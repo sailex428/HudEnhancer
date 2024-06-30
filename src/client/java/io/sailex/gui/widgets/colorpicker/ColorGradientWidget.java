@@ -20,7 +20,7 @@ public class ColorGradientWidget extends ClickableWidget {
             int x, int y, int width, int height,
             OnColorChanged onColorChanged,
             int selectedHue, int selectedColor) {
-        super(x, y, width, height, Text.literal(""));
+        super(x, y, width, height, Text.literal("ColorGradient"));
         this.onColorChanged = onColorChanged;
         this.selectedHue = selectedHue;
         this.selectedColor = selectedColor;

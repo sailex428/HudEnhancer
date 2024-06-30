@@ -40,20 +40,20 @@ public class EditHudElementsScreen extends Screen {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        int screenWidth = client.getWindow().getScaledWidth();
-        int screenHeight = client.getWindow().getScaledHeight();
+        int windowX = this.width / 3;
+        int windowY = this.height / 5;
 
-        context.fill(screenWidth / 3, screenHeight / 5, screenWidth - screenWidth / 3, screenHeight - screenHeight / 5, 0xFF232323);
-        context.drawText(client.textRenderer, "Settings", screenWidth / 3 + 5, screenHeight / 5 + 7, 0xFFFFFFFF, true);
+        context.fill(windowX, windowY, width - windowX, height - windowY, 0xFF232323);
+        context.drawText(client.textRenderer, "Settings", width / 3 + 5, windowY + 7, 0xFFFFFFFF, true);
 
-        context.drawHorizontalLine(screenWidth / 3 + 5, screenWidth - screenWidth / 3 - 5, screenHeight / 5 + 20, 0xFF565656);
-        context.drawText(client.textRenderer, "Textcolor", screenWidth / 3 + 5, screenHeight / 5 + 27, 0xFFFFFFFF, true);
+        context.drawHorizontalLine(windowX + 5, width - windowX - 5, windowY + 20, 0xFF565656);
+        context.drawText(client.textRenderer, "Textcolor", windowX + 5, windowY + 27, 0xFFFFFFFF, true);
 
-        context.drawHorizontalLine(screenWidth / 3 + 5 , screenWidth - screenWidth / 3 - 5, screenHeight / 5 + 92, 0xFF565656);
-        context.drawText(client.textRenderer, "Shadow", screenWidth / 3 + 5, screenHeight / 5 + 99,0xFFFFFFFF, true);
+        context.drawHorizontalLine(windowX + 5 , width - windowX - 5, windowY + 92, 0xFF565656);
+        context.drawText(client.textRenderer, "Shadow", windowX + 5, windowY + 99,0xFFFFFFFF, true);
 
-        context.drawHorizontalLine(screenWidth / 3 + 5 , screenWidth - screenWidth / 3 - 5, screenHeight / 5 + 114, 0xFF565656);
-        context.drawText(client.textRenderer, "Background", screenWidth / 3 + 5, screenHeight / 5 + 121,0xFFFFFFFF, true);
+        context.drawHorizontalLine(windowX + 5 , width - windowX - 5, windowY + 114, 0xFF565656);
+        context.drawText(client.textRenderer, "Background", windowX + 5, windowY + 121,0xFFFFFFFF, true);
 
         super.render(context, mouseX, mouseY, delta);
     }

@@ -21,7 +21,7 @@ public class ColorHueBarWidget extends ClickableWidget {
             int width, int height,
             OnHueChanged onHueChanged,
             int selectedHue) {
-        super(x, y, width, height, Text.literal(""));
+        super(x, y, width, height, Text.literal("ColorHueBar"));
         this.onHueChanged = onHueChanged;
         this.selectedHue = selectedHue;
     }
