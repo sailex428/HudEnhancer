@@ -8,7 +8,7 @@ import net.minecraft.text.Text;
 import java.awt.Color;
 
 
-public class ColorHueBarWidget extends ClickableWidget {
+public class HueBarWidget extends ClickableWidget {
     private int selectedHue;
     private final OnHueChanged onHueChanged;
 
@@ -16,7 +16,7 @@ public class ColorHueBarWidget extends ClickableWidget {
         void onHueChanged(int newHue);
     }
 
-    public ColorHueBarWidget(
+    public HueBarWidget(
             int x, int y,
             int width, int height,
             OnHueChanged onHueChanged,

@@ -1,7 +1,8 @@
-package io.sailex.util;
+package io.sailex.gui.widgets;
 
 import io.sailex.config.HudElement;
 import io.sailex.gui.screens.EditHudElementsScreen;
+import io.sailex.gui.hud.IHudElement;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.ClickableWidget;
@@ -43,6 +44,9 @@ public abstract class AWidget extends ClickableWidget {
         }
         return false;
     }
+
+    @Override
+    protected void appendClickableNarrations(NarrationMessageBuilder builder) {}
 
     private boolean isWidgetActiveAndVisible() {
         return this.active && this.visible;
@@ -91,10 +95,15 @@ public abstract class AWidget extends ClickableWidget {
                 color, background, shadow
         );
         positionMap.put(this.getMessage().getString(), updatedElement);
+        setStylingToHudElement();
     }
 
-    @Override
-    protected void appendClickableNarrations(NarrationMessageBuilder builder) {}
+    private void setStylingToHudElement() {
+        IHudElement hudElement = widgetToHudElement.get(this);
+        if (hudElement != null) {
+            hudElement.setStyling(color, shadow, background);
+        }
+    }
 
     public boolean isShadow() {
         return shadow;
@@ -102,7 +111,6 @@ public abstract class AWidget extends ClickableWidget {
 
     public void setShadow(boolean shadow) {
         this.shadow = shadow;
-        widgetToHudElement.get(this).setStyling(color, shadow, background);
         updateElementConfig();
     }
 
@@ -112,7 +120,6 @@ public abstract class AWidget extends ClickableWidget {
 
     public void setColor(int color) {
         this.color = color;
-        widgetToHudElement.get(this).setStyling(color, shadow, background);
         updateElementConfig();
     }
 
@@ -122,7 +129,6 @@ public abstract class AWidget extends ClickableWidget {
 
     public void setBackground(boolean background) {
         this.background = background;
-        widgetToHudElement.get(this).setStyling(color, shadow, background);
         updateElementConfig();
     }
 

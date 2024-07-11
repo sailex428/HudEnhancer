@@ -2,8 +2,7 @@ package io.sailex.gui.widgets;
 
 import io.sailex.config.HudElement;
 import io.sailex.config.PositionDisplayConfig;
-import io.sailex.util.AWidget;
-import io.sailex.util.IHudElement;
+import io.sailex.gui.hud.IHudElement;
 import io.sailex.util.PositionElementRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.ClickableWidget;

@@ -1,4 +1,4 @@
-package io.sailex.util;
+package io.sailex.gui.hud;
 
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.gui.DrawContext;

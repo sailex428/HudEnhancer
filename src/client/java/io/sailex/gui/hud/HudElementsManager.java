@@ -8,7 +8,6 @@ import io.sailex.gui.hud.elements.CPSElement;
 import io.sailex.gui.hud.elements.FPSElement;
 import io.sailex.gui.widgets.CPSWidget;
 import io.sailex.gui.widgets.FPSWidget;
-import io.sailex.util.IHudElement;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.gui.widget.ClickableWidget;
 
@@ -28,6 +27,7 @@ public class HudElementsManager {
     }
 
     public void register() {
+
         HudElement fps = positionMap.get(PositionDisplayConfig.FPS);
         widgetToHudElement.put(new FPSWidget(fps, widgetToHudElement, positionMap), new FPSElement(fps));
 
@@ -38,6 +38,7 @@ public class HudElementsManager {
         widgetToHudElement.put(new CPSWidget(cps, widgetToHudElement, positionMap), new CPSElement(cps));
 
         getHudElements().forEach(HudRenderCallback.EVENT::register);
+
     }
 
     public List<IHudElement> getHudElements() {

@@ -1,4 +1,4 @@
-package io.sailex.util;
+package io.sailex.gui.hud;
 
 import io.sailex.config.HudElement;
 import io.sailex.gui.screens.MoveHudElementsScreen;
