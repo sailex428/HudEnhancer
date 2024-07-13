@@ -46,8 +46,8 @@ public class MoveHudElementsScreen extends Screen {
 
     private void drawScreenTitle(DrawContext context) {
         int screenHeight = client.getWindow().getScaledHeight();
-        context.fill(width / 2 - 40, screenHeight - 50, width / 2 + 40, screenHeight - 33, 0x80000000);
-        context.drawCenteredTextWithShadow(textRenderer, Text.literal("Move Elements"), width / 2, screenHeight - 45, 0xFFFFFFFF);
+        context.fill(width / 2 - 40, screenHeight - 65, width / 2 + 40, screenHeight - 48, 0x80000000);
+        context.drawCenteredTextWithShadow(textRenderer, Text.literal("Move Elements"), width / 2, screenHeight - 60, 0xFFFFFFFF);
     }
 
     private ClickableWidget createAddButton() {

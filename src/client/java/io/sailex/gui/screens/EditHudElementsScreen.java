@@ -1,8 +1,7 @@
 package io.sailex.gui.screens;
 
 import io.sailex.PositionDisplayClient;
-import io.sailex.gui.widgets.colorpicker.ColorGradientWidget;
-import io.sailex.gui.widgets.colorpicker.HueBarControl;
+import io.sailex.gui.widgets.colorpicker.GradientWidget;
 import io.sailex.gui.widgets.colorpicker.HueBarWidget;
 import io.sailex.gui.widgets.AWidget;
 import io.sailex.util.TranslationKeys;
@@ -24,9 +23,8 @@ public class EditHudElementsScreen extends Screen {
 
     private final AWidget currentWidget;
     private final MinecraftClient client;
-    private ColorGradientWidget gradientWidget;
+    private GradientWidget gradientWidget;
     private HueBarWidget hueBarWidget;
-    private HueBarControl hueBarControl;
 
     private int hue;
 
@@ -44,11 +42,9 @@ public class EditHudElementsScreen extends Screen {
 
         createGradientWidget();
         createHueBarWidget();
-        createHueBarControl();
 
         this.addDrawableChild(gradientWidget);
         this.addDrawableChild(hueBarWidget);
-        this.addDrawableChild(hueBarControl);
         this.addDrawableChild(buildBackgroundButton());
         this.addDrawableChild(buildShadowButton());
     }
@@ -102,7 +98,7 @@ public class EditHudElementsScreen extends Screen {
     }
 
     private void createGradientWidget() {
-        gradientWidget = new ColorGradientWidget(
+        gradientWidget = new GradientWidget(
                 this.width - this.width / 3 - 80, this.height / 5 + 27,
                 60, 60,
                 currentWidget::setColor,
@@ -119,14 +115,6 @@ public class EditHudElementsScreen extends Screen {
                     hue = newHue;
                     gradientWidget.setSelectedHue(newHue);
                 }, hue);
-    }
-
-    private void createHueBarControl() {
-        hueBarControl = new HueBarControl(
-                this.width - this.width / 3 - 15, this.height / 5 + 27,
-                10, 3,
-                Text.literal("")
-        );
     }
 
     private ButtonWidget buildShadowButton() {

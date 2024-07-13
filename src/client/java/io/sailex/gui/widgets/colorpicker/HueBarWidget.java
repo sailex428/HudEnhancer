@@ -1,5 +1,7 @@
 package io.sailex.gui.widgets.colorpicker;
 
+import io.sailex.gui.widgets.Textures;
+
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.ClickableWidget;
@@ -9,44 +11,61 @@ import java.awt.Color;
 
 
 public class HueBarWidget extends ClickableWidget {
-    private int selectedHue;
+
     private final OnHueChanged onHueChanged;
+
+    private int selectedHue;
+    private int draggedMousePosY;
+
+    public HueBarWidget(int x, int y, int width, int height, OnHueChanged onHueChanged, int selectedHue) {
+        super(x, y, width, height, Text.literal("ColorHueBar"));
+        this.onHueChanged = onHueChanged;
+        this.selectedHue = selectedHue;
+        this.draggedMousePosY = (int) (y + (selectedHue / 360.0) * height);
+    }
 
     public interface OnHueChanged {
         void onHueChanged(int newHue);
     }
 
-    public HueBarWidget(
-            int x, int y,
-            int width, int height,
-            OnHueChanged onHueChanged,
-            int selectedHue) {
-        super(x, y, width, height, Text.literal("ColorHueBar"));
-        this.onHueChanged = onHueChanged;
-        this.selectedHue = selectedHue;
-    }
-
     @Override
     protected void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
-        for (int i = 0; i < this.height; i++) {
-            int color = Color.HSBtoRGB(i / (float) this.height, 1.0f, 1.0f);
-            context.fill(getX(), getY() + i, getX() + this.width, getY() + i + 1, color);
+        drawHueBar(context);
+        drawControlButton(context);
+    }
+
+    private void drawHueBar(DrawContext context) {
+        for (int i = 0; i < getHeight(); i++) {
+            int color = Color.HSBtoRGB(i / (float) getHeight(), 1.0f, 1.0f);
+            context.fill(getX(), getY() + i, getX() + getWidth(), getY() + i + 1, color);
         }
     }
 
+    private void drawControlButton(DrawContext context) {
+        context.drawTexture(Textures.BUTTON_IDENTIFIER, getX() - 3, draggedMousePosY - 2, 0, 0,
+                getWidth() + 6, 10, getWidth() + 6, 10);
+    }
+
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (clicked(mouseX, mouseY)) {
-            this.selectedHue = (int) ((mouseY - getY()) * 360.0f / this.height);
-            this.onHueChanged.onHueChanged(this.selectedHue);
-            return true;
+    protected void onDrag(double mouseX, double mouseY, double deltaX, double deltaY) {
+        if (!isMouseYOver((int) mouseY)) {
+            return;
         }
-        return false;
+        updateHue((int) mouseY);
+        this.draggedMousePosY = (int) mouseY;
+    }
+
+    private boolean isMouseYOver(int mouseY) {
+        return mouseY >= getY() && mouseY <= getY() + getHeight() - getHeight() / 10;
+    }
+
+    private void updateHue(int mouseY) {
+        this.selectedHue = (int) ((mouseY - getY()) * 360.0f / getHeight());
+        this.onHueChanged.onHueChanged(this.selectedHue);
     }
 
     @Override
-    protected void appendClickableNarrations(NarrationMessageBuilder builder) {
+    protected void appendClickableNarrations(NarrationMessageBuilder builder) {}
 
-    }
 }
 
