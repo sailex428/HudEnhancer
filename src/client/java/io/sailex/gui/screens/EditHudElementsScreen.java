@@ -1,6 +1,7 @@
 package io.sailex.gui.screens;
 
 import io.sailex.PositionDisplayClient;
+import io.sailex.gui.widgets.CheckBoxWidget;
 import io.sailex.gui.widgets.colorpicker.GradientWidget;
 import io.sailex.gui.widgets.colorpicker.HueBarWidget;
 import io.sailex.gui.widgets.AWidget;
@@ -8,7 +9,6 @@ import io.sailex.util.TranslationKeys;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.text.Text;
 
 /**
@@ -17,14 +17,14 @@ import net.minecraft.text.Text;
  */
 public class EditHudElementsScreen extends Screen {
 
-    private static final String ON = "ON";
-    private static final String OFF = "OFF";
     private static final int CONTENT_PADDING = 5;
 
     private final AWidget currentWidget;
     private final MinecraftClient client;
     private GradientWidget gradientWidget;
-    private HueBarWidget hueBarWidget;
+
+    private int screenX;
+    private int screenY;
 
     public EditHudElementsScreen(AWidget currentWidget) {
         super(Text.literal(currentWidget.getMessage().getString()));
@@ -35,25 +35,23 @@ public class EditHudElementsScreen extends Screen {
     @Override
     protected void init() {
         super.init();
+        this.screenX = this.width / 3;
+        this.screenY = this.height / 5;
         this.clearChildren();
 
         createGradientWidget();
-        createHueBarWidget();
 
         this.addDrawableChild(gradientWidget);
-        this.addDrawableChild(hueBarWidget);
-        this.addDrawableChild(buildBackgroundButton());
-        this.addDrawableChild(buildShadowButton());
+        this.addDrawableChild(createHueBarWidget());
+        this.addDrawableChild(createBackgroundCheckbox());
+        this.addDrawableChild(createShadowCheckbox());
     }
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        int windowX = this.width / 3;
-        int windowY = this.height / 5;
-
-        renderWindowBackground(context, windowX, windowY);
-        renderScreenTitle(context, windowX, windowY);
-        renderScreenContent(context, windowX, windowY);
+        renderScreenBackground(context, screenX, screenY);
+        renderScreenTitle(context, screenX, screenY);
+        renderScreenContent(context, screenX, screenY);
 
         super.render(context, mouseX, mouseY, delta);
     }
@@ -68,8 +66,8 @@ public class EditHudElementsScreen extends Screen {
         client.setScreen(PositionDisplayClient.getScreenManager().getMoveHudElementsScreen());
     }
 
-    private void renderWindowBackground(DrawContext context, int windowX, int windowY) {
-        context.fill(windowX, windowY, width - windowX, height - windowY, 0xFF232323);
+    private void renderScreenBackground(DrawContext context, int screenX, int screenY) {
+        context.fill(screenX, screenY, width - screenX, height - screenY, 0xFF232323);
     }
 
     private void renderScreenTitle(DrawContext context, int windowX, int windowY) {
@@ -95,43 +93,27 @@ public class EditHudElementsScreen extends Screen {
     }
 
     private void createGradientWidget() {
-        gradientWidget = new GradientWidget(
-                this.width - this.width / 3 - 80, this.height / 5 + 27,
-                60, 60,
-                currentWidget::setColor,
-                currentWidget.getHue(),
-                currentWidget.getColor()
-        );
+        gradientWidget = new GradientWidget(this.width - screenX - 80, screenY + 27, 60, 60,
+                currentWidget::setColor, currentWidget.getHue(), currentWidget.getColor());
     }
 
-    private void createHueBarWidget() {
-        hueBarWidget = new HueBarWidget(
-                this.width - this.width / 3 - 15, this.height / 5 + 27,
-                10, 60,
+    private HueBarWidget createHueBarWidget() {
+        return new HueBarWidget(this.width - screenX - 15, screenY + 27, 10, 60,
                 hue -> {
                     currentWidget.setHue(hue);
                     gradientWidget.setSelectedHue(hue);
-                }, currentWidget.getHue());
+                }, currentWidget.getHue()
+        );
     }
 
-    private ButtonWidget buildShadowButton() {
-        return ButtonWidget.builder(
-                Text.literal(currentWidget.isShadow() ? ON : OFF),
-                button -> {
-                    currentWidget.setShadow(!currentWidget.isShadow());
-                    button.setMessage(currentWidget.isShadow() ? Text.literal(ON) : Text.literal(OFF));
-                }
-        ).dimensions(this.width - this.width / 3 - 35, this.height / 5 + 96, 30, 15).build();
+    private CheckBoxWidget createShadowCheckbox() {
+        return new CheckBoxWidget(this.width - screenX - 20, screenY + 96,
+                currentWidget::setShadow, currentWidget.isShadow());
     }
 
-    private ButtonWidget buildBackgroundButton() {
-        return ButtonWidget.builder(
-                Text.literal(currentWidget.isBackground() ? ON : OFF),
-                button ->  {
-                    currentWidget.setBackground(!currentWidget.isBackground());
-                    button.setMessage(currentWidget.isBackground() ? Text.literal(ON) : Text.literal(OFF));
-                }
-        ).dimensions(this.width - this.width / 3 - 35, this.height / 5 + 118, 30, 15).build();
+    private CheckBoxWidget createBackgroundCheckbox() {
+        return new CheckBoxWidget(this.width - screenX - 20, screenY + 118,
+                currentWidget::setBackground, currentWidget.isBackground());
     }
 
 }

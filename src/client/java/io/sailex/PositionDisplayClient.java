@@ -10,6 +10,7 @@ import net.fabricmc.api.ClientModInitializer;
 
 public class PositionDisplayClient implements ClientModInitializer {
 
+	public static String MOD_ID = "position-display";
 	private static ScreenManager screenManager;
 
 	@Override

@@ -18,6 +18,7 @@ public class GradientWidget extends ClickableWidget {
     private int selectedColor;
     private int draggedMouseX;
     private int draggedMouseY;
+    private final int offset = 4;
 
     public GradientWidget(int x, int y, int width, int height, OnColorChanged onColorChanged, int selectedHue, int selectedColor) {
         super(x, y, width, height, Text.literal("ColorGradient"));
@@ -27,6 +28,7 @@ public class GradientWidget extends ClickableWidget {
         setDraggedMousePos();
     }
 
+    @FunctionalInterface
     public interface OnColorChanged {
         void onColorChanged(int newColor);
     }
@@ -50,14 +52,14 @@ public class GradientWidget extends ClickableWidget {
     }
 
     private void renderGradientControl(DrawContext context) {
-        int size = 12;
-        context.drawTexture(Textures.BUTTON_IDENTIFIER, draggedMouseX, draggedMouseY, 0, 0,
-                size, size, size, size);
+        int size = 8;
+        context.drawTexture(Textures.GRADIENT_CONTROL, draggedMouseX, draggedMouseY,
+                0, 0, size, size, size, size);
     }
 
     private void updateGradient(int mouseX, int mouseY) {
-        float saturation = (float) (mouseX - getX()) / getWidth();
-        float brightness = 1.0f - (float) (mouseY - getY()) / getHeight();
+        float saturation = (float) (mouseX + offset - getX()) / getWidth();
+        float brightness = 1.0f - (float) (mouseY + offset - getY()) / getHeight();
 
         this.selectedColor = Color.HSBtoRGB(this.selectedHue / 360.0f, saturation, brightness);
         this.onColorChanged.onColorChanged(this.selectedColor);
@@ -68,14 +70,8 @@ public class GradientWidget extends ClickableWidget {
         if (!isMouseOver((int) mouseX, (int) mouseY)) {
             return;
         }
-        this.draggedMouseX = (int) mouseX - 6;
-        this.draggedMouseY = (int) mouseY - 6;
-    }
-
-    private boolean isMouseOver(int mouseX, int mouseY) {
-        int offset = 6;
-        return mouseX >= getX() - offset && mouseY >= getY() - offset &&
-                mouseX <= getX() + getWidth() - offset && mouseY <= getY() + getHeight() - offset;
+        this.draggedMouseX = (int) mouseX - offset;
+        this.draggedMouseY = (int) mouseY - offset;
     }
 
     private void setDraggedMousePos() {

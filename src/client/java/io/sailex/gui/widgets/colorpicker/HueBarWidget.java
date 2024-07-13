@@ -9,7 +9,6 @@ import net.minecraft.text.Text;
 
 import java.awt.Color;
 
-
 public class HueBarWidget extends ClickableWidget {
 
     private final OnHueChanged onHueChanged;
@@ -24,6 +23,7 @@ public class HueBarWidget extends ClickableWidget {
         this.draggedMousePosY = (int) (y + (selectedHue / 360.0) * height);
     }
 
+    @FunctionalInterface
     public interface OnHueChanged {
         void onHueChanged(int newHue);
     }
@@ -42,8 +42,8 @@ public class HueBarWidget extends ClickableWidget {
     }
 
     private void drawControlButton(DrawContext context) {
-        context.drawTexture(Textures.BUTTON_IDENTIFIER, getX() - 3, draggedMousePosY - 2, 0, 0,
-                getWidth() + 6, 10, getWidth() + 6, 10);
+        context.drawTexture(Textures.HUE_BAR_CONTROL, getX() - 1, draggedMousePosY - 2, 0, 0,
+                getWidth() + 2, 8, getWidth() + 2, 8);
     }
 
     @Override
