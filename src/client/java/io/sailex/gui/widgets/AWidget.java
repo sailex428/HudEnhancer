@@ -17,6 +17,7 @@ public abstract class AWidget extends ClickableWidget {
     protected Map<ClickableWidget, IHudElement> widgetToHudElement;
     protected Map<String, HudElement> positionMap;
     protected int color;
+    protected int hue;
     protected boolean background;
     protected boolean shadow;
     private int initMouseX;
@@ -25,6 +26,7 @@ public abstract class AWidget extends ClickableWidget {
     public AWidget(HudElement hudElement, Text message) {
         super(hudElement.x(), hudElement.y(), hudElement.width(), hudElement.height(), message);
         this.color = hudElement.color();
+        this.hue = hudElement.hue();
         this.background = hudElement.background();
         this.shadow = hudElement.shadow();
     }
@@ -92,7 +94,7 @@ public abstract class AWidget extends ClickableWidget {
         HudElement updatedElement = new HudElement(
                 getX(), getY(),
                 getWidth(), getHeight(),
-                color, background, shadow
+                color, hue, background, shadow
         );
         positionMap.put(this.getMessage().getString(), updatedElement);
         setStylingToHudElement();
@@ -130,6 +132,14 @@ public abstract class AWidget extends ClickableWidget {
     public void setBackground(boolean background) {
         this.background = background;
         updateElementConfig();
+    }
+
+    public void setHue(int hue) {
+        this.hue = hue;
+    }
+
+    public int getHue() {
+        return hue;
     }
 
 }

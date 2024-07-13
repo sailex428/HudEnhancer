@@ -26,13 +26,10 @@ public class EditHudElementsScreen extends Screen {
     private GradientWidget gradientWidget;
     private HueBarWidget hueBarWidget;
 
-    private int hue;
-
     public EditHudElementsScreen(AWidget currentWidget) {
         super(Text.literal(currentWidget.getMessage().getString()));
         this.currentWidget = currentWidget;
         this.client = MinecraftClient.getInstance();
-        this.hue = 0;
     }
 
     @Override
@@ -102,7 +99,7 @@ public class EditHudElementsScreen extends Screen {
                 this.width - this.width / 3 - 80, this.height / 5 + 27,
                 60, 60,
                 currentWidget::setColor,
-                hue,
+                currentWidget.getHue(),
                 currentWidget.getColor()
         );
     }
@@ -111,10 +108,10 @@ public class EditHudElementsScreen extends Screen {
         hueBarWidget = new HueBarWidget(
                 this.width - this.width / 3 - 15, this.height / 5 + 27,
                 10, 60,
-                newHue -> {
-                    hue = newHue;
-                    gradientWidget.setSelectedHue(newHue);
-                }, hue);
+                hue -> {
+                    currentWidget.setHue(hue);
+                    gradientWidget.setSelectedHue(hue);
+                }, currentWidget.getHue());
     }
 
     private ButtonWidget buildShadowButton() {

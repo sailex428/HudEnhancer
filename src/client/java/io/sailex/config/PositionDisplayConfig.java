@@ -16,11 +16,12 @@ public class PositionDisplayConfig {
 
     public void register() {
         int color = 0xFFFFFF;
+        int hue = 0;
         boolean shadow = true;
         boolean background = true;
-        positionMap.put(POSITION_DISPLAY, new HudElement(7, 7, 123, 48, color, background, shadow));
-        positionMap.put(FPS, new HudElement(150, 38, 50, 17, color, background, shadow));
-        positionMap.put(CPS, new HudElement(150 , 7, 50, 17, color, background, shadow));
+        positionMap.put(POSITION_DISPLAY, new HudElement(7, 7, 123, 48, color, hue, background, shadow));
+        positionMap.put(FPS, new HudElement(150, 38, 50, 17, color, hue, background, shadow));
+        positionMap.put(CPS, new HudElement(150 , 7, 50, 17, color, hue, background, shadow));
     }
 
     public Map<String, HudElement> getPositionMap() {
