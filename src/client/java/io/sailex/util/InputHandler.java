@@ -1,6 +1,6 @@
 package io.sailex.util;
 
-import io.sailex.mixin.client.BoundKeyAccessor;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.GameOptions;
 
@@ -15,8 +15,8 @@ public class InputHandler {
     private InputHandler() {}
 
     public void onKey(int button, int action) {
-        int attackKeyCode = ((BoundKeyAccessor) this.options.attackKey).getBoundKey().getCode();
-        int useKeyCode = ((BoundKeyAccessor) this.options.useKey).getBoundKey().getCode();
+        int attackKeyCode = KeyBindingHelper.getBoundKeyOf(this.options.attackKey).getCode();
+        int useKeyCode = KeyBindingHelper.getBoundKeyOf(this.options.useKey).getCode();
 
         if (button != attackKeyCode && button != useKeyCode) {
             this.isPressed = false;
