@@ -18,9 +18,9 @@ public class MoveHudElementsKeybind {
     public void register() {
         keyBinding =  KeyBindingHelper.registerKeyBinding(
                 new KeyBinding(
-                        "position-display.EditHudElements",
+                        "key.position-display.editHudElements",
                         GLFW.GLFW_KEY_H,
-                        "EditHudElements"
+                        "Position Display"
                 )
         );
 
