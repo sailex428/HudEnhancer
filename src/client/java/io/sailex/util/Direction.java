@@ -1,4 +1,4 @@
-package io.sailex.hud;
+package io.sailex.util;
 
 public enum Direction {
 
