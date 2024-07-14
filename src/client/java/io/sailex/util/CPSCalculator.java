@@ -1,46 +1,38 @@
 package io.sailex.util;
 
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CPSCalculator {
 
-    private static final long CPS_UPDATE_INTERVAL = 1000;
+    private static final CPSCalculator INSTANCE = new CPSCalculator();
+    private static final long TIMES_SECOND = 1000L;
+
     private long lastUpdateTime = System.currentTimeMillis();
-    private int cps = 0;
-    private int clickCount = 0;
+    private final List<Long> clicks = new ArrayList<>();
+    private int clicksPerSecond;
 
-    public CPSCalculator() {
-        ClientTickEvents.END_CLIENT_TICK.register((client -> {
-            if (client.mouse.wasLeftButtonClicked()) {
-                clickCount++;
-            }
-            updateClicks();
-        }));
+    private CPSCalculator() {}
+
+    public void onKeyPress() {
+        this.clicks.add(System.currentTimeMillis());
     }
 
-    private void updateClicks() {
+    private void updateCPS() {
         long currentTime = System.currentTimeMillis();
-        long timeElapsed = currentTime - lastUpdateTime;
-
-        if (timeElapsed >= CPS_UPDATE_INTERVAL) {
-            cps = calculateCPS();
+        if (currentTime - lastUpdateTime >= 250L) {
             lastUpdateTime = currentTime;
-            clickCount = 0;
+            clicksPerSecond = clicks.size();
         }
-    }
-
-    private int calculateCPS() {
-        long currentTime = System.currentTimeMillis();
-        long timeElapsed = currentTime - lastUpdateTime;
-        if (timeElapsed > 0) {
-            double cps = ((double) clickCount / (timeElapsed / 1000.0));
-            return (int) cps;
-        } else {
-            return 0;
-        }
+        this.clicks.removeIf(click -> (click + TIMES_SECOND < currentTime));
     }
 
     public int getCPS() {
-        return cps;
+        updateCPS();
+        return clicksPerSecond;
+    }
+
+    public static CPSCalculator getInstance() {
+        return INSTANCE;
     }
 }
