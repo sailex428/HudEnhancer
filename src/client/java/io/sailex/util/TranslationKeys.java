@@ -10,4 +10,5 @@ public class TranslationKeys {
 
     public static final String EDIT_HUD_SCREEN_BACKGROUND = "editHudScreen.background";
 
+    public static final String KEY_ADD_HUD_ELEMENT = "key.position-display.editHudElements";
 }

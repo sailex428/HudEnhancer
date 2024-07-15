@@ -3,5 +3,6 @@
   "editHudScreen.textColor": "Textcolor",
   "editHudScreen.shadow": "Shadow",
   "editHudScreen.background": "Background",
-  "key.position-display.editHudElements": "Edit HUD Elements"
+  "key.position-display.editHudElements": "Edit HUD Elements",
+  "addHudScreen.addWidget" : "Add Widget"
 }
