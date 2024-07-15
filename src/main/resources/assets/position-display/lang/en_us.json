@@ -4,5 +4,6 @@
   "editHudScreen.shadow": "Shadow",
   "editHudScreen.background": "Background",
   "key.position-display.editHudElements": "Edit HUD Elements",
-  "addHudScreen.addWidget" : "Add Widget"
+  "moveHudScreen.addWidget": "Add Widget",
+  "addHudScreen.widgets": "Widgets"
 }

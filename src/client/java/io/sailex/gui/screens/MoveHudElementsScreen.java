@@ -1,22 +1,19 @@
 package io.sailex.gui.screens;
 
-import io.sailex.PositionDisplayClient;
-import net.minecraft.client.MinecraftClient;
+import io.sailex.gui.widgets.AddWidget;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;
+import net.minecraft.client.util.Window;
 import net.minecraft.text.Text;
 
 import java.util.List;
 
-public class MoveHudElementsScreen extends Screen {
+public class MoveHudElementsScreen extends AScreen {
 
-    private final MinecraftClient client = MinecraftClient.getInstance();
     private final List<ClickableWidget> widgetList;
 
     public MoveHudElementsScreen(List<ClickableWidget> widgetList) {
-        super(Text.empty());
+        super(Text.of("Move HUD Elements"));
         this.widgetList = widgetList;
     }
 
@@ -25,11 +22,9 @@ public class MoveHudElementsScreen extends Screen {
         super.init();
 
         this.clearChildren();
-        //this.addDrawableChild(createAddButton());
+        this.addDrawableChild(createAddWidget());
 
-        for (ClickableWidget widget : widgetList) {
-            this.addDrawableChild(widget);
-        }
+        addDrawables(widgetList);
     }
 
     @Override
@@ -38,23 +33,15 @@ public class MoveHudElementsScreen extends Screen {
         drawScreenTitle(context);
     }
 
-    @Override
-    public void renderInGameBackground(DrawContext context) {
-        context.fill(0, 0, this.width, this.height, 0);
-    }
-
-
     private void drawScreenTitle(DrawContext context) {
         int screenHeight = client.getWindow().getScaledHeight();
         context.fill(width / 2 - 40, screenHeight - 65, width / 2 + 40, screenHeight - 48, 0x80000000);
         context.drawCenteredTextWithShadow(textRenderer, Text.literal("Move Elements"), width / 2, screenHeight - 60, 0xFFFFFFFF);
     }
 
-    private ClickableWidget createAddButton() {
-        return ButtonWidget.builder(
-                Text.literal("+"),
-                button -> client.setScreen(PositionDisplayClient.getScreenManager().getAddHudElementsScreen())
-        ).dimensions(client.getWindow().getScaledWidth() - 32, client.getWindow().getScaledHeight() - 32, 25, 25).build();
+    private ClickableWidget createAddWidget() {
+        Window window = client.getWindow();
+        return new AddWidget(window.getScaledWidth() - 40, window.getScaledHeight(), 25, 25);
     }
 
 }

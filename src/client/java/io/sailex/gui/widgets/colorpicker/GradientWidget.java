@@ -7,7 +7,7 @@ import net.minecraft.text.Text;
 
 import java.awt.Color;
 
-import io.sailex.gui.widgets.Textures;
+import io.sailex.util.Textures;
 
 
 public class GradientWidget extends ClickableWidget {
