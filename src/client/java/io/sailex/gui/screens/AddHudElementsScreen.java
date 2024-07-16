@@ -2,7 +2,6 @@ package io.sailex.gui.screens;
 
 import io.sailex.util.TranslationKeys;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 
 public class AddHudElementsScreen extends AScreen {
