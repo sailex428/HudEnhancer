@@ -40,7 +40,7 @@ public class MoveHudElementsScreen extends AScreen {
 
     private ClickableWidget createAddWidget() {
         Window window = client.getWindow();
-        return new AddWidget(window.getScaledWidth() - 40, window.getScaledHeight(), 25, 25);
+        return new AddWidget(window.getScaledWidth() - 45, window.getScaledHeight() - 40, 25, 25);
     }
 
 }

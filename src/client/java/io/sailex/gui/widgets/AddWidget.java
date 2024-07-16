@@ -36,7 +36,7 @@ public class AddWidget extends ClickableWidget {
 
     private void drawAddWidgetText(DrawContext context) {
         context.drawText(client.textRenderer, Text.translatable(TranslationKeys.MOVE_HUD_SCREEN_ADD_WIDGET),
-                getX() - 7, getY() + 30, 0xFFFFFF, true);
+                getX() - 12, getY() + 27, 0xFFFFFF, true);
     }
 
     @Override
