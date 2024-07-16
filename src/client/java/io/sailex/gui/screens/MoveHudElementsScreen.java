@@ -23,8 +23,7 @@ public class MoveHudElementsScreen extends AScreen {
 
         this.clearChildren();
         this.addDrawableChild(createAddWidget());
-
-        addDrawables(widgetList);
+        addWidgets(widgetList);
     }
 
     @Override

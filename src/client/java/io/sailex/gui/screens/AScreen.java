@@ -2,7 +2,6 @@ package io.sailex.gui.screens;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.text.Text;
@@ -47,9 +46,9 @@ public class AScreen extends Screen {
         context.fill(0, 0, this.width, this.height, 0);
     }
 
-    protected void addDrawables(List<ClickableWidget> drawables) {
-        for (Drawable drawable : drawables) {
-            this.addDrawable(drawable);
+    protected void addWidgets(List<ClickableWidget> widgets) {
+        for (ClickableWidget widget : widgets) {
+            this.addDrawableChild(widget);
         }
     }
 

@@ -39,7 +39,7 @@ public class EditHudElementsScreen extends AScreen {
                 gradientWidget, createHueBarWidget(),
                 createBackgroundCheckbox(), createShadowCheckbox()
         );
-        addDrawables(widgets);
+        addWidgets(widgets);
     }
 
     @Override
