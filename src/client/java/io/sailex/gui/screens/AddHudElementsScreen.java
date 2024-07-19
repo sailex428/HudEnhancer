@@ -13,6 +13,9 @@ public class AddHudElementsScreen extends AScreen {
     @Override
     protected void init() {
         super.init();
+
+        this.screenX = this.width / 3;
+        this.screenY = this.height / 5;
     }
 
     @Override
