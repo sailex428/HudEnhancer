@@ -1,12 +1,6 @@
 # HudEnhancer
 
-HudEnhancer is a client-side FabricMC mod that allows the user to display, customize and move elements in the HUD.
-
-### Included HUD Elements
-- CPS
-- FPS
-- Position, Biome and Direction of the Player
-![toggleScreen](https://github.com/user-attachments/assets/5472f646-9e4d-46e1-9c09-9229c2641266)
+HudEnhancer is a client-side FabricMC mod that allows the user to customize and move elements in the HUD.
 
 ### Customization options
 - adjust textcolor of elements
