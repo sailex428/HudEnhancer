@@ -3,13 +3,13 @@ package io.sailex.gui.hud;
 import io.sailex.config.HudElement;
 import io.sailex.config.PositionDisplayConfig;
 import io.sailex.gui.hud.elements.PositionElement;
+import io.sailex.gui.widgets.AWidget;
 import io.sailex.gui.widgets.PositionWidget;
 import io.sailex.gui.hud.elements.CPSElement;
 import io.sailex.gui.hud.elements.FPSElement;
 import io.sailex.gui.widgets.CPSWidget;
 import io.sailex.gui.widgets.FPSWidget;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
-import net.minecraft.client.gui.widget.ClickableWidget;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +20,7 @@ import java.util.Map;
 public class HudElementsManager {
 
     private final Map<String, HudElement> positionMap;
-    private static final Map<ClickableWidget, IHudElement> widgetToHudElement = new HashMap<>();
+    private static final Map<AWidget, IHudElement> widgetToHudElement = new HashMap<>();
 
     public HudElementsManager(Map<String, HudElement> positionMap) {
         this.positionMap = positionMap;
@@ -45,7 +45,7 @@ public class HudElementsManager {
         return new ArrayList<>(widgetToHudElement.values());
     }
 
-    public List<ClickableWidget> getHudWidgets() {
+    public List<AWidget> getHudWidgets() {
         return new ArrayList<>(widgetToHudElement.keySet());
     }
 

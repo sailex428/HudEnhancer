@@ -17,7 +17,7 @@ public class MoveHudElementsKeybind {
     private KeyBinding keyBinding;
 
     public void register() {
-        keyBinding =  KeyBindingHelper.registerKeyBinding(
+        keyBinding = KeyBindingHelper.registerKeyBinding(
                 new KeyBinding(
                         TranslationKeys.KEY_ADD_HUD_ELEMENT,
                         GLFW.GLFW_KEY_H,
@@ -26,14 +26,11 @@ public class MoveHudElementsKeybind {
         );
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (keyBinding.wasPressed()) {
-                if (client.currentScreen == null) {
-                    client.setScreen(screen);
-                    return;
-                }
-                if (client.currentScreen instanceof MoveHudElementsScreen) {
-                    client.setScreen(null);
-                }
+            if (!keyBinding.wasPressed()) {
+                return;
+            }
+            if (client.currentScreen == null) {
+                client.setScreen(screen);
             }
         });
     }

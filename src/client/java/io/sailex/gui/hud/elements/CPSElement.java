@@ -17,7 +17,7 @@ public class CPSElement extends AHudElement {
         CPSElementRenderer.render(
                 drawContext,
                 elementX, elementY, elementWidth, elementHeight,
-                color, background, shadow
+                color, background, shadow, isActive
         );
     }
 

@@ -34,12 +34,8 @@ public class ConfigManager {
         saveConfigOnClientStop();
     }
 
-    public void loadConfig() {
-        if (!configFile.exists()) {
-            return;
-        }
-        JsonObject json = readConfigFile();
-        processPositionData(json);
+    private void loadConfig() {
+        processPositionData(readConfigFile());
     }
 
     private JsonObject readConfigFile() {
@@ -73,14 +69,15 @@ public class ConfigManager {
                             elementData.get("color").getAsInt(),
                             elementData.get("hue").getAsInt(),
                             elementData.get("background").getAsBoolean(),
-                            elementData.get("shadow").getAsBoolean()
+                            elementData.get("shadow").getAsBoolean(),
+                            elementData.get("isActive").getAsBoolean()
                     )
             );
         }
         config.setPositionMap(positionMap);
     }
 
-    public void saveConfig() {
+    private void saveConfig() {
         Map<String, HudElement> positions = config.getPositionMap();
 
         try (Writer writer = new OutputStreamWriter(new FileOutputStream(configFile), StandardCharsets.UTF_8)) {
@@ -105,6 +102,7 @@ public class ConfigManager {
             elementNode.addProperty("hue", entry.getValue().hue());
             elementNode.addProperty("background", entry.getValue().background());
             elementNode.addProperty("shadow", entry.getValue().shadow());
+            elementNode.addProperty("isActive", entry.getValue().isActive());
 
             positionsArrNode.add(elementNode);
         }
@@ -128,7 +126,8 @@ public class ConfigManager {
         return elementData.has("color") &&
                 elementData.has("hue") &&
                 elementData.has("background") &&
-                elementData.has("shadow");
+                elementData.has("shadow") &&
+                elementData.has("isActive");
     }
 
     private void saveConfigOnClientStop() {

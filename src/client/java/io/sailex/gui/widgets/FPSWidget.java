@@ -5,7 +5,6 @@ import io.sailex.config.PositionDisplayConfig;
 import io.sailex.util.FPSElementRenderer;
 import io.sailex.gui.hud.IHudElement;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.text.Text;
 
 import java.util.Map;
@@ -13,7 +12,7 @@ import java.util.Map;
 public class FPSWidget extends AWidget {
 
     public FPSWidget(
-            HudElement fps, Map<ClickableWidget,
+            HudElement fps, Map<AWidget,
             IHudElement> widgetToHudElement, Map<String,
             HudElement> positionMap) {
         super(fps, Text.literal(PositionDisplayConfig.FPS));
@@ -26,7 +25,7 @@ public class FPSWidget extends AWidget {
         FPSElementRenderer.render(
                 context,
                 this.getX(), this.getY(), this.getWidth(), this.getHeight(),
-                color, background, shadow
+                getColor(), isBackground(), isShadow(), isActive()
         );
     }
 

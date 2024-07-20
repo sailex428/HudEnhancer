@@ -1,26 +1,26 @@
 package io.sailex.gui.screens;
 
-import net.minecraft.client.gui.widget.ClickableWidget;
+import io.sailex.gui.widgets.AWidget;
 
 import java.util.List;
 
 public class ScreenManager {
 
-    private final List<ClickableWidget> widgetList;
-    private AddHudElementsScreen addHudElementsScreen;
+    private final List<AWidget> widgetList;
+    private static ToggleHudElementsScreen toggleHudElementsScreen;
     private static MoveHudElementsScreen moveHudElementsScreen;
 
-    public ScreenManager(List<ClickableWidget> widgetList) {
+    public ScreenManager(List<AWidget> widgetList) {
         this.widgetList = widgetList;
     }
 
     public void registerScreens() {
         moveHudElementsScreen = new MoveHudElementsScreen(widgetList);
-        addHudElementsScreen = new AddHudElementsScreen();
+        toggleHudElementsScreen = new ToggleHudElementsScreen(widgetList);
     }
 
-    public AddHudElementsScreen getAddHudElementsScreen() {
-        return addHudElementsScreen;
+    public ToggleHudElementsScreen getAddHudElementsScreen() {
+        return toggleHudElementsScreen;
     }
 
     public MoveHudElementsScreen getMoveHudElementsScreen() {

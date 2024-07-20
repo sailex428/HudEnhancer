@@ -1,9 +1,10 @@
 package io.sailex.gui.screens;
 
+import io.sailex.PositionDisplayClient;
+import io.sailex.gui.widgets.AWidget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.text.Text;
 
 import java.util.List;
@@ -32,13 +33,9 @@ public class AScreen extends Screen {
                 0xFFFFFFFF, true);
     }
 
-    protected void renderScreenSection(DrawContext context, int windowX, int windowY, int linePadding, String translationKey) {
+    protected void renderLine(DrawContext context, int windowX, int windowY, int linePadding) {
         context.drawHorizontalLine(windowX + CONTENT_PADDING, width - windowX - CONTENT_PADDING,
                 windowY + linePadding, 0xFF565656);
-        context.drawText(client.textRenderer,
-                Text.translatable(translationKey),
-                windowX + CONTENT_PADDING, windowY + linePadding + 7,
-                0xFFFFFFFF, true);
     }
 
     @Override
@@ -46,10 +43,15 @@ public class AScreen extends Screen {
         context.fill(0, 0, this.width, this.height, 0);
     }
 
-    protected void addWidgets(List<ClickableWidget> widgets) {
-        for (ClickableWidget widget : widgets) {
+    protected void addWidgets(List<AWidget> widgets) {
+        for (AWidget widget : widgets) {
             this.addDrawableChild(widget);
         }
+    }
+
+    @Override
+    public void close() {
+        client.setScreen(PositionDisplayClient.getScreenManager().getMoveHudElementsScreen());
     }
 
 }

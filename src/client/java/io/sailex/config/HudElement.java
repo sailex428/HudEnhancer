@@ -8,5 +8,6 @@ public record HudElement(
         int color,
         int hue,
         boolean background,
-        boolean shadow
+        boolean shadow,
+        boolean isActive
 ) {}

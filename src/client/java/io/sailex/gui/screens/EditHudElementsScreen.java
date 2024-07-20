@@ -1,6 +1,5 @@
 package io.sailex.gui.screens;
 
-import io.sailex.PositionDisplayClient;
 import io.sailex.gui.widgets.CheckBoxWidget;
 import io.sailex.gui.widgets.colorpicker.GradientWidget;
 import io.sailex.gui.widgets.colorpicker.HueBarWidget;
@@ -39,7 +38,9 @@ public class EditHudElementsScreen extends AScreen {
                 gradientWidget, createHueBarWidget(),
                 createBackgroundCheckbox(), createShadowCheckbox()
         );
-        addWidgets(widgets);
+        for (ClickableWidget widget : widgets) {
+            this.addDrawableChild(widget);
+        }
     }
 
     @Override
@@ -51,15 +52,18 @@ public class EditHudElementsScreen extends AScreen {
         super.render(context, mouseX, mouseY, delta);
     }
 
-    @Override
-    public void close() {
-        client.setScreen(PositionDisplayClient.getScreenManager().getMoveHudElementsScreen());
-    }
-
     private void renderScreenContent(DrawContext context, int windowX, int windowY) {
         renderScreenSection(context, windowX, windowY, 20, TranslationKeys.EDIT_HUD_SCREEN_TEXT_COLOR);
         renderScreenSection(context, windowX, windowY, 92, TranslationKeys.EDIT_HUD_SCREEN_SHADOW);
         renderScreenSection(context, windowX, windowY, 114, TranslationKeys.EDIT_HUD_SCREEN_BACKGROUND);
+    }
+
+    protected void renderScreenSection(DrawContext context, int windowX, int windowY, int linePadding, String translationKey) {
+        renderLine(context, windowX, windowY, linePadding);
+        context.drawText(client.textRenderer,
+                Text.translatable(translationKey),
+                windowX + CONTENT_PADDING, windowY + linePadding + 7,
+                0xFFFFFFFF, true);
     }
 
     private void createGradientWidget() {

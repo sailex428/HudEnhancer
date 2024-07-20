@@ -14,7 +14,7 @@ import java.util.Map;
 public abstract class AWidget extends ClickableWidget {
 
     protected final MinecraftClient client = MinecraftClient.getInstance();
-    protected Map<ClickableWidget, IHudElement> widgetToHudElement;
+    protected Map<AWidget, IHudElement> widgetToHudElement;
     protected Map<String, HudElement> positionMap;
     protected int color;
     protected int hue;
@@ -22,6 +22,7 @@ public abstract class AWidget extends ClickableWidget {
     protected boolean shadow;
     private int initMouseX;
     private int initMouseY;
+    private boolean isActive;
 
     public AWidget(HudElement hudElement, Text message) {
         super(hudElement.x(), hudElement.y(), hudElement.width(), hudElement.height(), message);
@@ -29,11 +30,12 @@ public abstract class AWidget extends ClickableWidget {
         this.hue = hudElement.hue();
         this.background = hudElement.background();
         this.shadow = hudElement.shadow();
+        this.isActive = hudElement.isActive();
     }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (!isWidgetActiveAndVisible()) {
+        if (!this.isActive) {
             return false;
         }
         if (isLeftClick(button) && clicked(mouseX, mouseY)) {
@@ -49,10 +51,6 @@ public abstract class AWidget extends ClickableWidget {
 
     @Override
     protected void appendClickableNarrations(NarrationMessageBuilder builder) {}
-
-    private boolean isWidgetActiveAndVisible() {
-        return this.active && this.visible;
-    }
 
     private boolean isLeftClick(int button) {
         return button == 0;
@@ -76,8 +74,6 @@ public abstract class AWidget extends ClickableWidget {
     @Override
     public void onDrag(double mouseX, double mouseY, double deltaX, double deltaY) {
         updateWidgetPosition((int) mouseX, (int) mouseY);
-
-        widgetToHudElement.get(this).setPosition(getX(), getY());
     }
 
     private void updateWidgetPosition(int mouseX, int mouseY) {
@@ -94,17 +90,22 @@ public abstract class AWidget extends ClickableWidget {
         HudElement updatedElement = new HudElement(
                 getX(), getY(),
                 getWidth(), getHeight(),
-                color, hue, background, shadow
+                color, hue, background, shadow,
+                isActive
         );
         positionMap.put(this.getMessage().getString(), updatedElement);
-        setStylingToHudElement();
+        updateHudElement();
     }
 
-    private void setStylingToHudElement() {
+    private void updateHudElement() {
         IHudElement hudElement = widgetToHudElement.get(this);
-        if (hudElement != null) {
-            hudElement.setStyling(color, shadow, background);
+        if (hudElement == null) {
+            return;
         }
+        hudElement.setFields(getX(), getY(),
+                getColor(), isShadow(), isBackground(),
+                isActive()
+        );
     }
 
     public boolean isShadow() {
@@ -140,6 +141,15 @@ public abstract class AWidget extends ClickableWidget {
 
     public int getHue() {
         return hue;
+    }
+
+    public boolean isActive() {
+        return this.isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+        updateElementConfig();
     }
 
 }
