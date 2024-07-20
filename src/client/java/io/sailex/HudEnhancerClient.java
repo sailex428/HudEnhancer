@@ -10,9 +10,8 @@ import net.fabricmc.api.ClientModInitializer;
 public class HudEnhancerClient implements ClientModInitializer {
 
 	public static String MOD_ID = "hud-enhancer";
-	private static ScreenManager screenManager;
 
-	@Override
+    @Override
 	public void onInitializeClient() {
 
 		PositionDisplayConfig positionDisplayConfig = new PositionDisplayConfig();
@@ -24,7 +23,7 @@ public class HudEnhancerClient implements ClientModInitializer {
 		HudElementsManager hudManager = new HudElementsManager(positionDisplayConfig.getPositionMap());
 		hudManager.register();
 
-		screenManager = new ScreenManager(hudManager.getHudWidgets());
+        ScreenManager screenManager = new ScreenManager(hudManager.getHudWidgets());
 		screenManager.registerScreens();
 
 		MoveHudElementsKeybind keybind = new MoveHudElementsKeybind(screenManager.getMoveHudElementsScreen());
