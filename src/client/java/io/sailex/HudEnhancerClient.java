@@ -7,10 +7,9 @@ import io.sailex.gui.screens.ScreenManager;
 import io.sailex.keybinds.MoveHudElementsKeybind;
 import net.fabricmc.api.ClientModInitializer;
 
+public class HudEnhancerClient implements ClientModInitializer {
 
-public class PositionDisplayClient implements ClientModInitializer {
-
-	public static String MOD_ID = "position-display";
+	public static String MOD_ID = "hud-enhancer";
 	private static ScreenManager screenManager;
 
 	@Override

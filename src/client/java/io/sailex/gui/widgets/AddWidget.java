@@ -1,6 +1,6 @@
 package io.sailex.gui.widgets;
 
-import io.sailex.PositionDisplayClient;
+import io.sailex.HudEnhancerClient;
 import io.sailex.util.Textures;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -38,7 +38,7 @@ public class AddWidget extends ClickableWidget {
 
     @Override
     public void onClick(double mouseX, double mouseY) {
-        client.setScreen(PositionDisplayClient.getScreenManager().getAddHudElementsScreen());
+        client.setScreen(HudEnhancerClient.getScreenManager().getAddHudElementsScreen());
     }
 
     private void drawAddWidgetTexture(DrawContext context) {

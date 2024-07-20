@@ -1,6 +1,6 @@
 package io.sailex.gui.screens;
 
-import io.sailex.PositionDisplayClient;
+import io.sailex.HudEnhancerClient;
 import io.sailex.gui.widgets.AWidget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -51,7 +51,7 @@ public class AScreen extends Screen {
 
     @Override
     public void close() {
-        client.setScreen(PositionDisplayClient.getScreenManager().getMoveHudElementsScreen());
+        client.setScreen(HudEnhancerClient.getScreenManager().getMoveHudElementsScreen());
     }
 
 }
