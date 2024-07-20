@@ -1,6 +1,6 @@
 package io.sailex.gui.screens;
 
-import io.sailex.PositionDisplayClient;
+import io.sailex.HudEnhancerClient;
 import io.sailex.gui.widgets.CheckBoxWidget;
 import io.sailex.gui.widgets.colorpicker.GradientWidget;
 import io.sailex.gui.widgets.colorpicker.HueBarWidget;
@@ -63,7 +63,7 @@ public class EditHudElementsScreen extends Screen {
 
     @Override
     public void close() {
-        client.setScreen(PositionDisplayClient.getScreenManager().getMoveHudElementsScreen());
+        client.setScreen(HudEnhancerClient.getScreenManager().getMoveHudElementsScreen());
     }
 
     private void renderScreenBackground(DrawContext context, int screenX, int screenY) {

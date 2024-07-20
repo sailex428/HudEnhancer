@@ -10,6 +10,7 @@ import net.fabricmc.api.ClientModInitializer;
 public class HudEnhancerClient implements ClientModInitializer {
 
 	public static String MOD_ID = "hud-enhancer";
+	public static ScreenManager screenManager;
 
     @Override
 	public void onInitializeClient() {
@@ -29,6 +30,10 @@ public class HudEnhancerClient implements ClientModInitializer {
 		MoveHudElementsKeybind keybind = new MoveHudElementsKeybind(screenManager.getMoveHudElementsScreen());
 		keybind.register();
 
+	}
+
+	public static ScreenManager getScreenManager() {
+		return screenManager;
 	}
 
 }
