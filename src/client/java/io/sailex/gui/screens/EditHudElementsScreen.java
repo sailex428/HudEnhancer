@@ -1,35 +1,28 @@
 package io.sailex.gui.screens;
 
-import io.sailex.PositionDisplayClient;
 import io.sailex.gui.widgets.CheckBoxWidget;
 import io.sailex.gui.widgets.colorpicker.GradientWidget;
 import io.sailex.gui.widgets.colorpicker.HueBarWidget;
 import io.sailex.gui.widgets.AWidget;
 import io.sailex.util.TranslationKeys;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.text.Text;
+
+import java.util.List;
 
 /**
  * @author sailex
  * Screen for editing Elements in the Hud.
  */
-public class EditHudElementsScreen extends Screen {
-
-    private static final int CONTENT_PADDING = 5;
+public class EditHudElementsScreen extends AScreen {
 
     private final AWidget currentWidget;
-    private final MinecraftClient client;
     private GradientWidget gradientWidget;
 
-    private int screenX;
-    private int screenY;
-
     public EditHudElementsScreen(AWidget currentWidget) {
-        super(Text.literal(currentWidget.getMessage().getString()));
+        super(Text.of(currentWidget.getMessage().getString()));
         this.currentWidget = currentWidget;
-        this.client = MinecraftClient.getInstance();
     }
 
     @Override
@@ -41,40 +34,22 @@ public class EditHudElementsScreen extends Screen {
 
         createGradientWidget();
 
-        this.addDrawableChild(gradientWidget);
-        this.addDrawableChild(createHueBarWidget());
-        this.addDrawableChild(createBackgroundCheckbox());
-        this.addDrawableChild(createShadowCheckbox());
+        List<ClickableWidget> widgets = List.of(
+                gradientWidget, createHueBarWidget(),
+                createBackgroundCheckbox(), createShadowCheckbox()
+        );
+        for (ClickableWidget widget : widgets) {
+            this.addDrawableChild(widget);
+        }
     }
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         renderScreenBackground(context, screenX, screenY);
-        renderScreenTitle(context, screenX, screenY);
+        renderScreenTitle(context, screenX, screenY, TranslationKeys.EDIT_HUD_SCREEN_SETTINGS);
         renderScreenContent(context, screenX, screenY);
 
         super.render(context, mouseX, mouseY, delta);
-    }
-
-    @Override
-    public void renderInGameBackground(DrawContext context) {
-        context.fill(0, 0, this.width, this.height, 0);
-    }
-
-    @Override
-    public void close() {
-        client.setScreen(PositionDisplayClient.getScreenManager().getMoveHudElementsScreen());
-    }
-
-    private void renderScreenBackground(DrawContext context, int screenX, int screenY) {
-        context.fill(screenX, screenY, width - screenX, height - screenY, 0xFF232323);
-    }
-
-    private void renderScreenTitle(DrawContext context, int windowX, int windowY) {
-        context.drawText(client.textRenderer,
-                Text.translatable(TranslationKeys.EDIT_HUD_SCREEN_SETTINGS),
-                windowX + CONTENT_PADDING, windowY + 7,
-                0xFFFFFFFF, true);
     }
 
     private void renderScreenContent(DrawContext context, int windowX, int windowY) {
@@ -83,9 +58,8 @@ public class EditHudElementsScreen extends Screen {
         renderScreenSection(context, windowX, windowY, 114, TranslationKeys.EDIT_HUD_SCREEN_BACKGROUND);
     }
 
-    private void renderScreenSection(DrawContext context, int windowX, int windowY, int linePadding, String translationKey) {
-        context.drawHorizontalLine(windowX + CONTENT_PADDING, width - windowX - CONTENT_PADDING,
-                windowY + linePadding, 0xFF565656);
+    protected void renderScreenSection(DrawContext context, int windowX, int windowY, int linePadding, String translationKey) {
+        renderLine(context, windowX, windowY, linePadding);
         context.drawText(client.textRenderer,
                 Text.translatable(translationKey),
                 windowX + CONTENT_PADDING, windowY + linePadding + 7,

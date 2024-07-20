@@ -1,22 +1,20 @@
 package io.sailex.gui.screens;
 
-import io.sailex.PositionDisplayClient;
-import net.minecraft.client.MinecraftClient;
+import io.sailex.gui.widgets.AWidget;
+import io.sailex.gui.widgets.AddWidget;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;
+import net.minecraft.client.util.Window;
 import net.minecraft.text.Text;
 
 import java.util.List;
 
-public class MoveHudElementsScreen extends Screen {
+public class MoveHudElementsScreen extends AScreen {
 
-    private final MinecraftClient client = MinecraftClient.getInstance();
-    private final List<ClickableWidget> widgetList;
+    private final List<AWidget> widgetList;
 
-    public MoveHudElementsScreen(List<ClickableWidget> widgetList) {
-        super(Text.empty());
+    public MoveHudElementsScreen(List<AWidget> widgetList) {
+        super(Text.of("Move HUD Elements"));
         this.widgetList = widgetList;
     }
 
@@ -25,11 +23,8 @@ public class MoveHudElementsScreen extends Screen {
         super.init();
 
         this.clearChildren();
-        //this.addDrawableChild(createAddButton());
-
-        for (ClickableWidget widget : widgetList) {
-            this.addDrawableChild(widget);
-        }
+        this.addDrawableChild(createAddWidget());
+        addWidgets(widgetList);
     }
 
     @Override
@@ -38,23 +33,23 @@ public class MoveHudElementsScreen extends Screen {
         drawScreenTitle(context);
     }
 
-    @Override
-    public void renderInGameBackground(DrawContext context) {
-        context.fill(0, 0, this.width, this.height, 0);
-    }
-
-
     private void drawScreenTitle(DrawContext context) {
         int screenHeight = client.getWindow().getScaledHeight();
         context.fill(width / 2 - 40, screenHeight - 65, width / 2 + 40, screenHeight - 48, 0x80000000);
-        context.drawCenteredTextWithShadow(textRenderer, Text.literal("Move Elements"), width / 2, screenHeight - 60, 0xFFFFFFFF);
+        context.drawCenteredTextWithShadow(textRenderer, Text.literal("Move Elements"),
+                width / 2, screenHeight - 60, 0xFFFFFFFF);
     }
 
-    private ClickableWidget createAddButton() {
-        return ButtonWidget.builder(
-                Text.literal("+"),
-                button -> client.setScreen(PositionDisplayClient.getScreenManager().getAddHudElementsScreen())
-        ).dimensions(client.getWindow().getScaledWidth() - 32, client.getWindow().getScaledHeight() - 32, 25, 25).build();
+    private ClickableWidget createAddWidget() {
+        Window window = client.getWindow();
+        int widgetSize = 40;
+        return new AddWidget(window.getScaledWidth() / 2 - (widgetSize / 2),  window.getScaledHeight() / 2 - (widgetSize / 2),
+                widgetSize, widgetSize);
+    }
+
+    @Override
+    public void close() {
+        this.client.setScreen(null);
     }
 
 }

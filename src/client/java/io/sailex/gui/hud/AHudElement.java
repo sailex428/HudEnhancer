@@ -16,6 +16,7 @@ public abstract class AHudElement implements IHudElement {
     protected int color;
     protected boolean background;
     protected boolean shadow;
+    protected boolean isActive;
 
     public AHudElement(HudElement element) {
         this.elementX = element.x();
@@ -25,6 +26,7 @@ public abstract class AHudElement implements IHudElement {
         this.color = element.color();
         this.shadow = element.shadow();
         this.background = element.background();
+        this.isActive = element.isActive();
     }
 
     @Override
@@ -43,16 +45,13 @@ public abstract class AHudElement implements IHudElement {
     }
 
     @Override
-    public void setPosition(int elementX, int elementY) {
+    public void setFields(int elementX, int elementY, int color, boolean shadow, boolean background, boolean active) {
         this.elementX = elementX;
         this.elementY = elementY;
-    }
-
-    @Override
-    public void setStyling(int color, boolean shadow, boolean background) {
         this.color = color;
         this.shadow = shadow;
         this.background = background;
+        this.isActive = active;
     }
 
 }

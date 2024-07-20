@@ -17,7 +17,7 @@ public class FPSElement extends AHudElement {
         FPSElementRenderer.render(
                 drawContext,
                 elementX, elementY, elementWidth, elementHeight,
-                color, background, shadow
+                color, background, shadow, isActive
         );
     }
 }

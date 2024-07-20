@@ -1,9 +1,9 @@
 {
 	"schemaVersion": 1,
-	"id": "position-display",
+	"id": "hud-enhancer",
 	"version": "${version}",
-	"name": "Position Display",
-	"description": "Shows a HUD with the current coords, biome, direction, fps and cps of the client/player.",
+	"name": "HudEnhancer",
+	"description": "Shows the current coords, biome, direction, fps and cps of the client/player in the HUD.",
 	"authors": [
 		"sailex428"
 	],
@@ -12,20 +12,20 @@
 		"sources": "https://github.com/sailex428/position-display"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/position-display/icon.png",
+	"icon": "assets/hud-enhancer/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"io.sailex.PositionDisplay"
+			"io.sailex.HudEnhancer"
 		],
 		"client": [
-          "io.sailex.PositionDisplayClient"
+			"io.sailex.HudEnhancerClient"
 		]
 	},
 	"mixins": [
-		"position-display.mixins.json",
+		"hud-enhancer.mixins.json",
 		{
-			"config": "position-display.client.mixins.json",
+			"config": "hud-enhancer.client.mixins.json",
 			"environment": "client"
 		}
 	],

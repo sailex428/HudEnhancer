@@ -1,5 +1,6 @@
 package io.sailex.gui.widgets;
 
+import io.sailex.util.Textures;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.ClickableWidget;

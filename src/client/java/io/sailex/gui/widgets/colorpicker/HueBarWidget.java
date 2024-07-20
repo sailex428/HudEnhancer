@@ -1,6 +1,6 @@
 package io.sailex.gui.widgets.colorpicker;
 
-import io.sailex.gui.widgets.Textures;
+import io.sailex.util.Textures;
 
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;

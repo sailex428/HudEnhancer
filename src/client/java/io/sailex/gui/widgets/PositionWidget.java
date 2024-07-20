@@ -1,11 +1,10 @@
 package io.sailex.gui.widgets;
 
 import io.sailex.config.HudElement;
-import io.sailex.config.PositionDisplayConfig;
+import io.sailex.config.HudEnhancerConfig;
 import io.sailex.gui.hud.IHudElement;
 import io.sailex.util.PositionElementRenderer;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.text.Text;
 
 import java.util.Map;
@@ -15,9 +14,9 @@ public class PositionWidget extends AWidget {
 
     public PositionWidget(
             HudElement posDisplay,
-            Map<ClickableWidget, IHudElement> widgetToHudElement,
+            Map<AWidget, IHudElement> widgetToHudElement,
             Map<String, HudElement> positionMap) {
-        super(posDisplay, Text.literal(PositionDisplayConfig.POSITION_DISPLAY));
+        super(posDisplay, Text.literal(HudEnhancerConfig.HUD_ENHANCER));
         this.widgetToHudElement = widgetToHudElement;
         this.positionMap = positionMap;
     }
@@ -31,7 +30,7 @@ public class PositionWidget extends AWidget {
                 context,
                 this.client.player,
                 this.getX(), this.getY(), this.getWidth(), this.getHeight(),
-                color, background, shadow
+                getColor(), isBackground(), isShadow(), isActive()
         );
     }
 

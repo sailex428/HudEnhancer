@@ -17,7 +17,7 @@ public class PositionElement extends AHudElement {
         PositionElementRenderer.render(
                 drawContext, player,
                 elementX, elementY, elementWidth, elementHeight,
-                color, background, shadow
+                color, background, shadow, isActive
         );
     }
 
