@@ -1,7 +1,7 @@
 package io.sailex;
 
 import io.sailex.config.ConfigManager;
-import io.sailex.config.PositionDisplayConfig;
+import io.sailex.config.HudEnhancerConfig;
 import io.sailex.gui.hud.HudElementsManager;
 import io.sailex.gui.screens.ScreenManager;
 import io.sailex.keybinds.MoveHudElementsKeybind;
@@ -15,13 +15,13 @@ public class HudEnhancerClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 
-		PositionDisplayConfig positionDisplayConfig = new PositionDisplayConfig();
-		positionDisplayConfig.register();
+		HudEnhancerConfig hudEnhancerConfig = new HudEnhancerConfig();
+		hudEnhancerConfig.register();
 
-		ConfigManager configManager = new ConfigManager(positionDisplayConfig);
+		ConfigManager configManager = new ConfigManager(hudEnhancerConfig);
 		configManager.initialize();
 
-		HudElementsManager hudManager = new HudElementsManager(positionDisplayConfig.getPositionMap());
+		HudElementsManager hudManager = new HudElementsManager(hudEnhancerConfig.getPositionMap());
 		hudManager.register();
 
 		screenManager = new ScreenManager(hudManager.getHudWidgets());

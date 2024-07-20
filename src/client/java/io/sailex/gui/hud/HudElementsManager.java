@@ -1,7 +1,7 @@
 package io.sailex.gui.hud;
 
 import io.sailex.config.HudElement;
-import io.sailex.config.PositionDisplayConfig;
+import io.sailex.config.HudEnhancerConfig;
 import io.sailex.gui.hud.elements.PositionElement;
 import io.sailex.gui.widgets.AWidget;
 import io.sailex.gui.widgets.PositionWidget;
@@ -28,13 +28,13 @@ public class HudElementsManager {
 
     public void register() {
 
-        HudElement fps = positionMap.get(PositionDisplayConfig.FPS);
+        HudElement fps = positionMap.get(HudEnhancerConfig.FPS);
         widgetToHudElement.put(new FPSWidget(fps, widgetToHudElement, positionMap), new FPSElement(fps));
 
-        HudElement posDisplay = positionMap.get(PositionDisplayConfig.POSITION_DISPLAY);
+        HudElement posDisplay = positionMap.get(HudEnhancerConfig.HUD_ENHANCER);
         widgetToHudElement.put(new PositionWidget(posDisplay, widgetToHudElement, positionMap), new PositionElement(posDisplay));
 
-        HudElement cps = positionMap.get(PositionDisplayConfig.CPS);
+        HudElement cps = positionMap.get(HudEnhancerConfig.CPS);
         widgetToHudElement.put(new CPSWidget(cps, widgetToHudElement, positionMap), new CPSElement(cps));
 
         getHudElements().forEach(HudRenderCallback.EVENT::register);

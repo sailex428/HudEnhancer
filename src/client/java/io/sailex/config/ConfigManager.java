@@ -16,11 +16,11 @@ public class ConfigManager {
 
     private final Logger LOGGER = LogManager.getLogger("ConfigManager");
     private final File configFile;
-    private final PositionDisplayConfig config;
+    private final HudEnhancerConfig config;
     private final Gson gson;
 
-    public ConfigManager(PositionDisplayConfig config) {
-        configFile = new File(FabricLoader.getInstance().getConfigDir().toString(), "position_display.json");
+    public ConfigManager(HudEnhancerConfig config) {
+        configFile = new File(FabricLoader.getInstance().getConfigDir().toString(), "hud-enhancer.json");
         this.config = config;
         this.gson = new GsonBuilder().setPrettyPrinting().create();
     }
