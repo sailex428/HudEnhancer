@@ -28,10 +28,6 @@ public class MoveHudElementsKeybind {
             if (keyBinding.wasPressed()) {
                 if (client.currentScreen == null) {
                     client.setScreen(screen);
-                    return;
-                }
-                if (client.currentScreen instanceof MoveHudElementsScreen) {
-                    client.setScreen(null);
                 }
             }
         });
