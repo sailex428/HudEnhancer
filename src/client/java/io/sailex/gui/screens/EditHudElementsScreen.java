@@ -5,6 +5,7 @@ import io.sailex.gui.widgets.CheckBoxWidget;
 import io.sailex.gui.widgets.colorpicker.GradientWidget;
 import io.sailex.gui.widgets.colorpicker.HueBarWidget;
 import io.sailex.gui.widgets.AWidget;
+import io.sailex.util.ScreenUtil;
 import io.sailex.util.TranslationKeys;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -36,7 +37,7 @@ public class EditHudElementsScreen extends Screen {
     protected void init() {
         super.init();
         this.screenX = this.width / 3;
-        this.screenY = this.height / 5;
+        this.screenY = ScreenUtil.calculateScreenY(this.height);
         this.clearChildren();
 
         createGradientWidget();
