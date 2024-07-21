@@ -31,7 +31,7 @@ public class EditHudElementsScreen extends AScreen {
     protected void init() {
         super.init();
         this.screenX = ScreenUtil.calculateScreenSize(this.width, 150);
-        this.screenY = ScreenUtil.calculateScreenSize(this.height, 140);
+        this.screenY = ScreenUtil.calculateScreenSize(this.height, 137);
         this.clearChildren();
 
         createGradientWidget();

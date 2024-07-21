@@ -80,8 +80,8 @@ public class GradientWidget extends ClickableWidget {
         float saturation = hsbValues[1];
         float brightness = hsbValues[2];
 
-        this.draggedMouseX = (int) (getX() + saturation * getWidth());
-        this.draggedMouseY = (int) (getY() + (1.0f - brightness) * getHeight());
+        this.draggedMouseX = (int) (getX() + saturation * getWidth()) - offset;
+        this.draggedMouseY = (int) (getY() + (1.0f - brightness) * getHeight()) -  offset;
     }
 
     public void setSelectedHue(int selectedHue) {
