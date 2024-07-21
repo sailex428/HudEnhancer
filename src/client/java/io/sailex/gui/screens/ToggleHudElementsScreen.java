@@ -2,6 +2,7 @@ package io.sailex.gui.screens;
 
 import io.sailex.gui.widgets.AWidget;
 import io.sailex.gui.widgets.CheckBoxWidget;
+import io.sailex.util.ScreenUtil;
 import io.sailex.util.Textures;
 import io.sailex.util.TranslationKeys;
 import net.minecraft.client.gui.DrawContext;
@@ -15,7 +16,7 @@ import java.util.List;
 public class ToggleHudElementsScreen extends AScreen {
 
     private final List<AWidget> widgetList;
-    private final int[] linePadding = { 20, 70, 120 };
+    private final int[] linePadding = { DEFAULT_LINE_PADDING, 60, 100 };
 
     public ToggleHudElementsScreen(List<AWidget> widgetList) {
         super(Text.of("Add HUD Elements"));
@@ -26,8 +27,8 @@ public class ToggleHudElementsScreen extends AScreen {
     protected void init() {
         super.init();
 
-        this.screenX = this.width / 3;
-        this.screenY = this.height / 5;
+        this.screenX = ScreenUtil.calculateScreenSize(this.width, 150);
+        this.screenY = ScreenUtil.calculateScreenSize(this.height, 140);
 
         for (ClickableWidget checkBoxWidget : createCheckBoxWidgets()) {
             this.addDrawableChild(checkBoxWidget);
@@ -51,8 +52,8 @@ public class ToggleHudElementsScreen extends AScreen {
     private void renderScreenSection(DrawContext context, Identifier texture, int linePadding, String text) {
         renderLine(context, this.screenX, this.screenY, linePadding);
         context.drawTexture(texture, this.screenX + CONTENT_PADDING, this.screenY + linePadding + 5,
-                0, 0, 40, 40, 40, 40);
-        context.drawText(client.textRenderer, text,this.screenX + 52, this.screenY + linePadding + 20, 0xFFFFFFFF, true);
+                0, 0, 30, 30, 30, 30);
+        context.drawText(client.textRenderer, text,this.screenX + 40, this.screenY + linePadding + 16, 0xFFFFFFFF, true);
     }
 
     private List<CheckBoxWidget> createCheckBoxWidgets() {
@@ -66,7 +67,7 @@ public class ToggleHudElementsScreen extends AScreen {
     }
 
     private CheckBoxWidget createSingleCheckBoxWidget(AWidget widget, int currentLinePadding) {
-        return new CheckBoxWidget(this.width - screenX - 20, screenY + currentLinePadding + 16,
+        return new CheckBoxWidget(this.width - screenX - 20, screenY + currentLinePadding + 12,
                 isSelected -> widget.setIsActive(!widget.isActive()),
                 widget.isActive());
     }

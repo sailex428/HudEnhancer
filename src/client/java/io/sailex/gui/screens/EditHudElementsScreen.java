@@ -4,6 +4,7 @@ import io.sailex.gui.widgets.CheckBoxWidget;
 import io.sailex.gui.widgets.colorpicker.GradientWidget;
 import io.sailex.gui.widgets.colorpicker.HueBarWidget;
 import io.sailex.gui.widgets.AWidget;
+import io.sailex.util.ScreenUtil;
 import io.sailex.util.TranslationKeys;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.ClickableWidget;
@@ -19,6 +20,7 @@ public class EditHudElementsScreen extends AScreen {
 
     private final AWidget currentWidget;
     private GradientWidget gradientWidget;
+    private final int[] linePadding = { DEFAULT_LINE_PADDING, 92, 114 };
 
     public EditHudElementsScreen(AWidget currentWidget) {
         super(Text.of(currentWidget.getMessage().getString()));
@@ -28,8 +30,8 @@ public class EditHudElementsScreen extends AScreen {
     @Override
     protected void init() {
         super.init();
-        this.screenX = this.width / 3;
-        this.screenY = this.height / 5;
+        this.screenX = ScreenUtil.calculateScreenSize(this.width, 150);
+        this.screenY = ScreenUtil.calculateScreenSize(this.height, 140);
         this.clearChildren();
 
         createGradientWidget();
@@ -53,9 +55,9 @@ public class EditHudElementsScreen extends AScreen {
     }
 
     private void renderScreenContent(DrawContext context, int windowX, int windowY) {
-        renderScreenSection(context, windowX, windowY, 20, TranslationKeys.EDIT_HUD_SCREEN_TEXT_COLOR);
-        renderScreenSection(context, windowX, windowY, 92, TranslationKeys.EDIT_HUD_SCREEN_SHADOW);
-        renderScreenSection(context, windowX, windowY, 114, TranslationKeys.EDIT_HUD_SCREEN_BACKGROUND);
+        renderScreenSection(context, windowX, windowY, linePadding[0], TranslationKeys.EDIT_HUD_SCREEN_TEXT_COLOR);
+        renderScreenSection(context, windowX, windowY, linePadding[1], TranslationKeys.EDIT_HUD_SCREEN_SHADOW);
+        renderScreenSection(context, windowX, windowY, linePadding[2], TranslationKeys.EDIT_HUD_SCREEN_BACKGROUND);
     }
 
     protected void renderScreenSection(DrawContext context, int windowX, int windowY, int linePadding, String translationKey) {

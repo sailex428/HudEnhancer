@@ -12,6 +12,7 @@ import java.util.List;
 public class AScreen extends Screen {
 
     protected static final int CONTENT_PADDING = 5;
+    protected static final int DEFAULT_LINE_PADDING = 20;
     protected final MinecraftClient client;
 
     protected int screenX;
