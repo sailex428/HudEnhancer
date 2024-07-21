@@ -16,7 +16,7 @@ public class PositionWidget extends AWidget {
             HudElement posDisplay,
             Map<AWidget, IHudElement> widgetToHudElement,
             Map<String, HudElement> positionMap) {
-        super(posDisplay, Text.literal(HudEnhancerConfig.HUD_ENHANCER));
+        super(posDisplay, Text.literal(HudEnhancerConfig.POSITION));
         this.widgetToHudElement = widgetToHudElement;
         this.positionMap = positionMap;
     }
