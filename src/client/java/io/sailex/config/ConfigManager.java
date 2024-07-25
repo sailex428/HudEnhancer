@@ -1,6 +1,7 @@
 package io.sailex.config;
 
 import com.google.gson.*;
+import io.sailex.gui.hud.HudElementsManager;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.loader.api.FabricLoader;
 
@@ -15,11 +16,13 @@ import org.apache.logging.log4j.Logger;
 public class ConfigManager {
 
     private final Logger LOGGER = LogManager.getLogger("ConfigManager");
+    private HudElementsManager hudElementsManager;
+
     private final File configFile;
-    private final HudEnhancerConfig config;
+    private final DefaultConfig config;
     private final Gson gson;
 
-    public ConfigManager(HudEnhancerConfig config) {
+    public ConfigManager(DefaultConfig config) {
         configFile = new File(FabricLoader.getInstance().getConfigDir().toString(), "hud-enhancer.json");
         this.config = config;
         this.gson = new GsonBuilder().setPrettyPrinting().create();
@@ -51,7 +54,7 @@ public class ConfigManager {
         if (!json.has("data") || !json.get("data").isJsonArray()) {
             return;
         }
-        Map<String, HudElement> positionMap = new HashMap<>();
+        Map<String, ConfigElement> positionMap = new HashMap<>();
         JsonArray dataArray = json.getAsJsonArray("data");
         for (JsonElement element : dataArray) {
             JsonObject elementData = element.getAsJsonObject();
@@ -61,7 +64,7 @@ public class ConfigManager {
             }
 
             positionMap.put(elementData.get("name").getAsString(),
-                    new HudElement(
+                    new ConfigElement(
                             elementData.get("x").getAsInt(),
                             elementData.get("y").getAsInt(),
                             elementData.get("width").getAsInt(),
@@ -78,7 +81,7 @@ public class ConfigManager {
     }
 
     private void saveConfig() {
-        Map<String, HudElement> positions = config.getPositionMap();
+        Map<String, ConfigElement> positions = config.getConfigElementMap();
 
         try (Writer writer = new OutputStreamWriter(new FileOutputStream(configFile), StandardCharsets.UTF_8)) {
             gson.toJson(createJson(positions), writer);
@@ -88,10 +91,10 @@ public class ConfigManager {
         }
     }
 
-    private JsonObject createJson(Map<String, HudElement> positions) {
+    private JsonObject createJson(Map<String, ConfigElement> positions) {
         JsonArray positionsArrNode = new JsonArray();
 
-        for (Map.Entry<String, HudElement> entry : positions.entrySet()) {
+        for (Map.Entry<String, ConfigElement> entry : positions.entrySet()) {
             JsonObject elementNode = new JsonObject();
             elementNode.addProperty("name", entry.getKey());
             elementNode.addProperty("x", entry.getValue().x());
@@ -131,7 +134,14 @@ public class ConfigManager {
     }
 
     private void saveConfigOnClientStop() {
-        ClientLifecycleEvents.CLIENT_STOPPING.register(client -> saveConfig());
+        ClientLifecycleEvents.CLIENT_STOPPING.register(client -> {
+            hudElementsManager.updateConfigElements();
+            saveConfig();
+        });
+    }
+
+    public void setHudElementsManager(HudElementsManager hudElementsManager) {
+        this.hudElementsManager = hudElementsManager;
     }
 
 }

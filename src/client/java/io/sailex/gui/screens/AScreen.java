@@ -1,13 +1,10 @@
 package io.sailex.gui.screens;
 
 import io.sailex.HudEnhancerClient;
-import io.sailex.gui.widgets.AWidget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
-
-import java.util.List;
 
 public class AScreen extends Screen {
 
@@ -42,12 +39,6 @@ public class AScreen extends Screen {
     @Override
     public void renderInGameBackground(DrawContext context) {
         context.fill(0, 0, this.width, this.height, 0);
-    }
-
-    protected void addWidgets(List<AWidget> widgets) {
-        for (AWidget widget : widgets) {
-            this.addDrawableChild(widget);
-        }
     }
 
     @Override

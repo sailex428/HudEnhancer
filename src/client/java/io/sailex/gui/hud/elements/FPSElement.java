@@ -1,6 +1,6 @@
 package io.sailex.gui.hud.elements;
 
-import io.sailex.config.HudElement;
+import io.sailex.config.ConfigElement;
 import io.sailex.gui.hud.AHudElement;
 import io.sailex.util.FPSElementRenderer;
 import net.minecraft.client.gui.DrawContext;
@@ -8,8 +8,8 @@ import net.minecraft.client.network.ClientPlayerEntity;
 
 public class FPSElement extends AHudElement {
 
-    public FPSElement(HudElement fps) {
-        super(fps);
+    public FPSElement(String key, ConfigElement fps) {
+        super(key, fps);
     }
 
     @Override

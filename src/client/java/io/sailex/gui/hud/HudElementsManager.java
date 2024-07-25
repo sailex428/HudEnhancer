@@ -1,52 +1,49 @@
 package io.sailex.gui.hud;
 
-import io.sailex.config.HudElement;
-import io.sailex.config.HudEnhancerConfig;
+import io.sailex.config.ConfigElement;
+import io.sailex.config.DefaultConfig;
 import io.sailex.gui.hud.elements.PositionElement;
-import io.sailex.gui.widgets.AWidget;
-import io.sailex.gui.widgets.PositionWidget;
 import io.sailex.gui.hud.elements.CPSElement;
 import io.sailex.gui.hud.elements.FPSElement;
-import io.sailex.gui.widgets.CPSWidget;
-import io.sailex.gui.widgets.FPSWidget;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 
 public class HudElementsManager {
 
-    private final Map<String, HudElement> positionMap;
-    private static final Map<AWidget, IHudElement> widgetToHudElement = new LinkedHashMap<>();
+    private final Map<String, ConfigElement> configElementMap;
+    private static final List<IHudElement> hudElements = new ArrayList<>();
 
-    public HudElementsManager(Map<String, HudElement> positionMap) {
-        this.positionMap = positionMap;
+    public HudElementsManager(Map<String, ConfigElement> configElementMap) {
+        this.configElementMap = configElementMap;
     }
 
     public void register() {
 
-        HudElement cps = positionMap.get(HudEnhancerConfig.CPS);
-        widgetToHudElement.put(new CPSWidget(cps, widgetToHudElement, positionMap), new CPSElement(cps));
+        ConfigElement cps = configElementMap.get(DefaultConfig.CPS);
+        hudElements.add(new CPSElement(DefaultConfig.CPS, cps));
 
-        HudElement fps = positionMap.get(HudEnhancerConfig.FPS);
-        widgetToHudElement.put(new FPSWidget(fps, widgetToHudElement, positionMap), new FPSElement(fps));
+        ConfigElement fps = configElementMap.get(DefaultConfig.FPS);
+        hudElements.add(new FPSElement(DefaultConfig.FPS, fps));
 
-        HudElement posDisplay = positionMap.get(HudEnhancerConfig.POSITION);
-        widgetToHudElement.put(new PositionWidget(posDisplay, widgetToHudElement, positionMap), new PositionElement(posDisplay));
+        ConfigElement posDisplay = configElementMap.get(DefaultConfig.POSITION);
+        hudElements.add(new PositionElement(DefaultConfig.POSITION, posDisplay));
 
         getHudElements().forEach(HudRenderCallback.EVENT::register);
 
     }
 
-    public List<IHudElement> getHudElements() {
-        return new ArrayList<>(widgetToHudElement.values());
+    public void updateConfigElements() {
+        hudElements.forEach(hudElement ->
+                configElementMap.put(hudElement.getKey(), hudElement.createUpdatedConfigElement())
+        );
     }
 
-    public List<AWidget> getHudWidgets() {
-        return new ArrayList<>(widgetToHudElement.keySet());
+    public List<IHudElement> getHudElements() {
+        return hudElements;
     }
 
 }

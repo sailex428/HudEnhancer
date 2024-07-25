@@ -1,6 +1,6 @@
 package io.sailex.config;
 
-public record HudElement(
+public record ConfigElement(
         int x,
         int y,
         int width,

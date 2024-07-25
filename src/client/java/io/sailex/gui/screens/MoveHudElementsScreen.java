@@ -1,21 +1,15 @@
 package io.sailex.gui.screens;
 
-import io.sailex.gui.widgets.AWidget;
 import io.sailex.gui.widgets.AddWidget;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.util.Window;
 import net.minecraft.text.Text;
 
-import java.util.List;
-
 public class MoveHudElementsScreen extends AScreen {
 
-    private final List<AWidget> widgetList;
-
-    public MoveHudElementsScreen(List<AWidget> widgetList) {
+    public MoveHudElementsScreen() {
         super(Text.of("Move HUD Elements"));
-        this.widgetList = widgetList;
     }
 
     @Override
@@ -24,7 +18,6 @@ public class MoveHudElementsScreen extends AScreen {
 
         this.clearChildren();
         this.addDrawableChild(createAddWidget());
-        addWidgets(widgetList);
     }
 
     @Override

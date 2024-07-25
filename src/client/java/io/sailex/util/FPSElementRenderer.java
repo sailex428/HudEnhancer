@@ -11,9 +11,7 @@ public class FPSElementRenderer {
     public static void render(DrawContext context,
                               int elementX, int elementY, int elementWidth, int elementHeight,
                               int color, boolean background, boolean shadow, boolean isActive) {
-        if (!isActive) {
-            return;
-        }
+
         context.fill(elementX, elementY, elementX + elementWidth, elementY + elementHeight, background ? 0x80000000 : 0x00FFFFFF);
         context.drawText(client.textRenderer, client.getCurrentFps() + " FPS", elementX + 5, elementY + 5, color, shadow);
     }

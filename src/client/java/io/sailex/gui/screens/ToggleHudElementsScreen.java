@@ -1,6 +1,6 @@
 package io.sailex.gui.screens;
 
-import io.sailex.gui.widgets.AWidget;
+import io.sailex.gui.hud.IHudElement;
 import io.sailex.gui.widgets.CheckBoxWidget;
 import io.sailex.util.ScreenUtil;
 import io.sailex.util.Textures;
@@ -15,12 +15,12 @@ import java.util.List;
 
 public class ToggleHudElementsScreen extends AScreen {
 
-    private final List<AWidget> widgetList;
+    private final List<IHudElement> hudElementList;
     private final int[] linePadding = { DEFAULT_LINE_PADDING, 60, 100 };
 
-    public ToggleHudElementsScreen(List<AWidget> widgetList) {
+    public ToggleHudElementsScreen(List<IHudElement> hudElementList) {
         super(Text.of("Add HUD Elements"));
-        this.widgetList = widgetList;
+        this.hudElementList = hudElementList;
     }
 
     @Override
@@ -59,17 +59,17 @@ public class ToggleHudElementsScreen extends AScreen {
     private List<CheckBoxWidget> createCheckBoxWidgets() {
         List<CheckBoxWidget> checkBoxWidgets = new ArrayList<>();
         int i = 0;
-        for (AWidget widget : widgetList) {
-            checkBoxWidgets.add(createSingleCheckBoxWidget(widget, linePadding[i]));
+        for (IHudElement hudElement : hudElementList) {
+            checkBoxWidgets.add(createSingleCheckBoxWidget(hudElement, linePadding[i]));
             i++;
         }
         return checkBoxWidgets;
     }
 
-    private CheckBoxWidget createSingleCheckBoxWidget(AWidget widget, int currentLinePadding) {
+    private CheckBoxWidget createSingleCheckBoxWidget(IHudElement hudElement, int currentLinePadding) {
         return new CheckBoxWidget(this.width - screenX - 20, screenY + currentLinePadding + 12,
-                isSelected -> widget.setIsActive(!widget.isActive()),
-                widget.isActive());
+                isSelected -> hudElement.setIsActive(!hudElement.isActive()),
+                hudElement.isActive());
     }
 
 }
