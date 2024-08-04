@@ -6,7 +6,13 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 
-public class AScreen extends Screen {
+/**
+ * Abstract base class for custom screens in the HUD Enhancer mod.
+ * <p>
+ * Provides common functionality for rendering backgrounds, titles, and lines.
+ * </p>
+ */
+public abstract class AScreen extends Screen {
 
     protected static final int CONTENT_PADDING = 5;
     protected static final int DEFAULT_LINE_PADDING = 20;
@@ -15,15 +21,35 @@ public class AScreen extends Screen {
     protected int screenX;
     protected int screenY;
 
+    /**
+     * Constructs a screen with the given title.
+     *
+     * @param title The title of the screen.
+     */
     protected AScreen(Text title) {
         super(title);
         this.client = MinecraftClient.getInstance();
     }
 
+    /**
+     * Renders the background of the screen.
+     *
+     * @param context The rendering context.
+     * @param screenX The X coordinate of the screen.
+     * @param screenY The Y coordinate of the screen.
+     */
     protected void renderScreenBackground(DrawContext context, int screenX, int screenY) {
         context.fill(screenX, screenY, width - screenX, height - screenY, 0xFF232323);
     }
 
+    /**
+     * Renders the title of the screen.
+     *
+     * @param context        The rendering context.
+     * @param windowX        The X coordinate of the window.
+     * @param windowY        The Y coordinate of the window.
+     * @param translationKey The translation key for the title text.
+     */
     protected void renderScreenTitle(DrawContext context, int windowX, int windowY, String translationKey) {
         context.drawText(client.textRenderer,
                 Text.translatable(translationKey),
@@ -31,19 +57,34 @@ public class AScreen extends Screen {
                 0xFFFFFFFF, true);
     }
 
+    /**
+     * Renders a horizontal line on the screen.
+     *
+     * @param context     The rendering context.
+     * @param windowX     The X coordinate of the window.
+     * @param windowY     The Y coordinate of the window.
+     * @param linePadding The padding for the line.
+     */
     protected void renderLine(DrawContext context, int windowX, int windowY, int linePadding) {
         context.drawHorizontalLine(windowX + CONTENT_PADDING, width - windowX - CONTENT_PADDING,
                 windowY + linePadding, 0xFF565656);
     }
 
+    /**
+     * Renders the in-game background, filling the entire screen with a transparent color.
+     *
+     * @param context The rendering context.
+     */
     @Override
     public void renderInGameBackground(DrawContext context) {
         context.fill(0, 0, this.width, this.height, 0);
     }
 
+    /**
+     * Closes the current screen and opens the Move HUD Elements screen.
+     */
     @Override
     public void close() {
         client.setScreen(HudEnhancerClient.getScreenManager().getMoveHudElementsScreen());
     }
-
 }
