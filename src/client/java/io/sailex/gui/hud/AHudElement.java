@@ -56,14 +56,16 @@ public abstract class AHudElement implements IHudElement {
     }
 
     private void setPosition() {
-        if (isDragging) {
-            int deltaX = (int) (client.mouse.getX() / 2) - initMouseX;
-            int deltaY = (int) (client.mouse.getY() / 2) - initMouseY;
-            elementX += deltaX;
-            elementY += deltaY;
-            initMouseX += deltaX;
-            initMouseY += deltaY;
+        if (!isDragging) {
+            return;
         }
+        int scaleFactor = (int) client.getWindow().getScaleFactor();
+        int deltaX = (int) (client.mouse.getX() / scaleFactor) - initMouseX;
+        int deltaY = (int) (client.mouse.getY() / scaleFactor) - initMouseY;
+        elementX += deltaX;
+        elementY += deltaY;
+        initMouseX += deltaX;
+        initMouseY += deltaY;
     }
 
     @Override
