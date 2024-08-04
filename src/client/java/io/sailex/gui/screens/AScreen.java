@@ -4,6 +4,7 @@ import io.sailex.HudEnhancerClient;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.CheckboxWidget;
 import net.minecraft.text.Text;
 
 /**
@@ -78,6 +79,20 @@ public abstract class AScreen extends Screen {
     @Override
     public void renderInGameBackground(DrawContext context) {
         context.fill(0, 0, this.width, this.height, 0);
+    }
+
+    /**
+     * Builds a basic CheckboxWidget.
+     *
+     * @param currentLinePadding Y coordinate of screen
+     * @param checked value of checkbox on initialize
+     * @param callback function that gets called on checked value change
+     * @return The created CheckboxWidget
+     */
+    protected CheckboxWidget createCheckBoxWidget(int currentLinePadding, boolean checked, CheckboxWidget.Callback callback) {
+        return CheckboxWidget.builder(Text.of(""), textRenderer)
+                .pos(this.width - screenX - 21, screenY + currentLinePadding)
+                .checked(checked).callback(callback).build();
     }
 
     /**

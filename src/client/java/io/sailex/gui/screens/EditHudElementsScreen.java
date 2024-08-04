@@ -1,12 +1,12 @@
 package io.sailex.gui.screens;
 
 import io.sailex.gui.hud.IHudElement;
-import io.sailex.gui.widgets.CheckBoxWidget;
 import io.sailex.gui.widgets.colorpicker.GradientWidget;
 import io.sailex.gui.widgets.colorpicker.HueBarWidget;
 import io.sailex.util.ScreenUtil;
 import io.sailex.util.TranslationKeys;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.widget.CheckboxWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.text.Text;
 
@@ -138,20 +138,21 @@ public class EditHudElementsScreen extends AScreen {
     /**
      * Creates the checkbox widget for toggling the shadow setting.
      *
-     * @return The created CheckBoxWidget.
+     * @return The created CheckboxWidget.
      */
-    private CheckBoxWidget createShadowCheckbox() {
-        return new CheckBoxWidget(this.width - screenX - 20, screenY + 96,
-                currentElement::setShadow, currentElement.isShadow());
+    private CheckboxWidget createShadowCheckbox() {
+        return createCheckBoxWidget(95, currentElement.isShadow(),
+                (checkbox, checked) -> currentElement.setShadow(!currentElement.isShadow()));
     }
 
     /**
      * Creates the checkbox widget for toggling the background setting.
      *
-     * @return The created CheckBoxWidget.
+     * @return The created CheckboxWidget.
      */
-    private CheckBoxWidget createBackgroundCheckbox() {
-        return new CheckBoxWidget(this.width - screenX - 20, screenY + 118,
-                currentElement::setBackground, currentElement.isBackground());
+    private CheckboxWidget createBackgroundCheckbox() {
+        return createCheckBoxWidget(117, currentElement.isBackground(),
+            (checkbox, checked) -> currentElement.setBackground(!currentElement.isBackground())
+        );
     }
 }

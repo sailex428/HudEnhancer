@@ -8,6 +8,9 @@ import net.minecraft.client.network.ClientPlayerEntity;
 
 public abstract class AHudElement implements IHudElement {
 
+    protected static final int BACKGROUND_TRANSPARENT = 0x00FFFFFF;
+    protected static final int BACKGROUND_GRAY = 0x80000000;
+
     protected final MinecraftClient client = MinecraftClient.getInstance();
     protected final String key;
 

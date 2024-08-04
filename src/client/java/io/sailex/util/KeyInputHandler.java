@@ -6,13 +6,13 @@ import net.minecraft.client.option.GameOptions;
 
 import org.lwjgl.glfw.GLFW;
 
-public class InputHandler {
+public class KeyInputHandler {
 
-    public static final InputHandler INSTANCE = new InputHandler();
+    public static final KeyInputHandler INSTANCE = new KeyInputHandler();
     private final GameOptions options = MinecraftClient.getInstance().options;
     private boolean isPressed = false;
 
-    private InputHandler() {}
+    private KeyInputHandler() {}
 
     public void onKey(int button, int action) {
         int attackKeyCode = KeyBindingHelper.getBoundKeyOf(this.options.attackKey).getCode();
@@ -32,7 +32,7 @@ public class InputHandler {
         this.isPressed = false;
     }
 
-    public static InputHandler getInstance() {
+    public static KeyInputHandler getInstance() {
         return INSTANCE;
     }
 
