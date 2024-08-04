@@ -10,10 +10,6 @@ public class Textures {
 
     public static final Identifier ADD_WIDGET = Identifier.of(HudEnhancerClient.MOD_ID, "textures/gui/add_widget.png");
 
-    public static final Identifier SELECTED_CHECKBOX = Identifier.of("minecraft", "textures/gui/sprites/widget/checkbox_selected_highlighted.png");
-    public static final Identifier UNSELECTED_CHECKBOX = Identifier.of("minecraft", "textures/gui/sprites/widget/checkbox_highlighted.png");
-
-    public static final Identifier NONE_PICTURE = Identifier.of("minecraft", "textures/misc/unknown_pack.png");
     public static final Identifier CPS_PICTURE = Identifier.of (HudEnhancerClient.MOD_ID, "textures/misc/cps.png");
     public static final Identifier FPS_PICTURE = Identifier.of(HudEnhancerClient.MOD_ID, "textures/misc/fps.png");
     public static final Identifier POSITION_PICTURE = Identifier.of(HudEnhancerClient.MOD_ID, "textures/misc/position.png");
