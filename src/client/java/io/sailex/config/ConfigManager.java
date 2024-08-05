@@ -81,13 +81,13 @@ public class ConfigManager {
     }
 
     private void saveConfig() {
-        Map<String, ConfigElement> positions = config.getConfigElementMap();
+        Map<String, ConfigElement> configOfElements = config.getConfigElementMap();
 
         try (Writer writer = new OutputStreamWriter(new FileOutputStream(configFile), StandardCharsets.UTF_8)) {
-            gson.toJson(createJson(positions), writer);
-            LOGGER.info("Saved position_display.json successfully!");
+            gson.toJson(createJson(configOfElements), writer);
+            LOGGER.info("Saved {} successfully!", configFile.getName());
         } catch (IOException e) {
-            LOGGER.error("Error writing Position-Display configs to position_display.json : ", e);
+            LOGGER.error("Error writing HudEnhancer configs to {} : ", configFile.getName(), e);
         }
     }
 
