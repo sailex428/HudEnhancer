@@ -10,12 +10,26 @@ import net.minecraft.world.biome.Biome;
 
 import java.util.Optional;
 
+/**
+ * HUD element that shows current position, biome and direction of the player.
+ *
+ * @author sailex
+ */
 public class PositionElement extends AHudElement {
 
+    /**
+     * Constructs a PositionElement with the given config element.
+     *
+     * @param key name of the element
+     * @param posDisplay config element
+     */
     public PositionElement(String key, ConfigElement posDisplay) {
         super(key, posDisplay);
     }
 
+    /**
+     * Draws the position element on the screen.
+     */
     @Override
     public void drawElement(DrawContext context, ClientPlayerEntity player) {
         context.fill(elementX, elementY, elementX + elementWidth, elementY + elementHeight, background ? BACKGROUND_GRAY : BACKGROUND_TRANSPARENT);
@@ -27,6 +41,12 @@ public class PositionElement extends AHudElement {
         context.drawText(client.textRenderer, getDirection(player), elementX + 105, elementY + 5, color, shadow);
     }
 
+    /**
+     * Creates the text content to be displayed in the position element.
+     *
+     * @param player the client player entity
+     * @return an array of strings representing the text content
+     */
     private String[] createTextContent(ClientPlayerEntity player) {
         return new String[] {
                 "X " + Math.round(player.getX() * 10.0) / 10.0,
@@ -36,6 +56,12 @@ public class PositionElement extends AHudElement {
         };
     }
 
+    /**
+     * Retrieves the name of the biome the player is currently in.
+     *
+     * @param player the client player entity
+     * @return the formatted biome name
+     */
     private String getBiome(ClientPlayerEntity player) {
         Optional<RegistryKey<Biome>> biomeRegistry = player.getWorld().getBiome(player.getBlockPos()).getKey();
         if (biomeRegistry.isPresent()) {
@@ -45,6 +71,12 @@ public class PositionElement extends AHudElement {
         return "";
     }
 
+    /**
+     * Formats the biome name to be shorter and more readable.
+     *
+     * @param biome the biome name
+     * @return the formatted biome name
+     */
     private String formatBiomeName(String biome) {
         if (biome.length() > 16) {
             biome = biome.substring(0, 16);
@@ -52,6 +84,12 @@ public class PositionElement extends AHudElement {
         return biome.replaceAll("_", " ");
     }
 
+    /**
+     * Determines the direction the player is facing.
+     *
+     * @param player the client player entity
+     * @return the abbreviation of the direction
+     */
     private String getDirection(ClientPlayerEntity player) {
         int yaw = Math.round(player.getYaw());
         int directionLength = Direction.values().length;

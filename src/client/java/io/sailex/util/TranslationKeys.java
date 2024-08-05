@@ -1,5 +1,10 @@
 package io.sailex.util;
 
+/**
+ * Class that holds the constant keys of the translation content.
+ *
+ * @author sailex
+ */
 public class TranslationKeys {
 
     public static final String EDIT_HUD_SCREEN_SETTINGS = "editHudScreen.settings";

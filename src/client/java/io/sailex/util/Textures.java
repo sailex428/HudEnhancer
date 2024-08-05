@@ -3,6 +3,11 @@ package io.sailex.util;
 import io.sailex.HudEnhancerClient;
 import net.minecraft.util.Identifier;
 
+/**
+ * Class that holds Identifiers of mod textures.
+ *
+ * @author sailex
+ */
 public class Textures {
 
     public static final Identifier GRADIENT_CONTROL = Identifier.of(HudEnhancerClient.MOD_ID, "textures/gui/gradient_control.png");

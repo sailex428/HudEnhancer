@@ -7,6 +7,8 @@ import net.minecraft.client.network.ClientPlayerEntity;
 
 /**
  * Interface representing a HUD element.
+ *
+ * @author sailex
  */
 public interface IHudElement extends HudRenderCallback {
 

@@ -7,6 +7,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+/**
+ * This mixin listens for mouse button events and redirects them to the custom key input handler.
+ *
+ * @author sailex
+ */
 @Mixin(Mouse.class)
 public abstract class MouseMixin {
 

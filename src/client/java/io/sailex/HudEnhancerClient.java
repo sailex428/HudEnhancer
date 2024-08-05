@@ -8,11 +8,20 @@ import io.sailex.gui.screens.ScreenManager;
 import io.sailex.keybinds.MoveHudElementsKeybind;
 import net.fabricmc.api.ClientModInitializer;
 
+/**
+ * Entry point for the HudEnhancer mod's client-side.
+ * Initializes and manages HUD elements, configurations, and input handlers.
+ *
+ * @author sailex
+ */
 public class HudEnhancerClient implements ClientModInitializer {
 
 	public static String MOD_ID = "hud-enhancer";
 	private static ScreenManager screenManager;
 
+	/**
+	 * Initializes the client-side components of the HudEnhancer mod.
+	 */
 	@Override
 	public void onInitializeClient() {
 
@@ -37,6 +46,11 @@ public class HudEnhancerClient implements ClientModInitializer {
 
 	}
 
+	/**
+	 * Gets the ScreenManager instance.
+	 *
+	 * @return the ScreenManager instance
+	 */
 	public static ScreenManager getScreenManager() {
 		return screenManager;
 	}

@@ -7,6 +7,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+/**
+ * This mixin listens for keyboard button events and redirects them to the key input handler.
+ *
+ * @author sailex
+ */
 @Mixin(Keyboard.class)
 public abstract class KeyboardMixin {
 

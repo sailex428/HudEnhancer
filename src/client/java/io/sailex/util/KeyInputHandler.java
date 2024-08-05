@@ -6,6 +6,11 @@ import net.minecraft.client.option.GameOptions;
 
 import org.lwjgl.glfw.GLFW;
 
+/**
+ * Handles the raw mouse and keyboard input.
+ *
+ * @author sailex
+ */
 public class KeyInputHandler {
 
     public static final KeyInputHandler INSTANCE = new KeyInputHandler();
@@ -14,6 +19,12 @@ public class KeyInputHandler {
 
     private KeyInputHandler() {}
 
+    /**
+     * Handles key press events for attack and use key bindings.
+     *
+     * @param button the button is pressed
+     * @param action the action type
+     */
     public void onKey(int button, int action) {
         int attackKeyCode = KeyBindingHelper.getBoundKeyOf(this.options.attackKey).getCode();
         int useKeyCode = KeyBindingHelper.getBoundKeyOf(this.options.useKey).getCode();
@@ -32,6 +43,11 @@ public class KeyInputHandler {
         this.isPressed = false;
     }
 
+    /**
+     * Gets the KeyInputHandler instance.
+     *
+     * @return the static instance of KeyInputHandler
+     */
     public static KeyInputHandler getInstance() {
         return INSTANCE;
     }

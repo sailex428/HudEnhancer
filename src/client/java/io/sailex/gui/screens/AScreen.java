@@ -9,9 +9,8 @@ import net.minecraft.text.Text;
 
 /**
  * Abstract base class for custom screens in the HUD Enhancer mod.
- * <p>
- * Provides common functionality for rendering backgrounds, titles, and lines.
- * </p>
+ *
+ * @author sailex
  */
 public abstract class AScreen extends Screen {
 
@@ -34,10 +33,6 @@ public abstract class AScreen extends Screen {
 
     /**
      * Renders the background of the screen.
-     *
-     * @param context The rendering context.
-     * @param screenX The X coordinate of the screen.
-     * @param screenY The Y coordinate of the screen.
      */
     protected void renderScreenBackground(DrawContext context, int screenX, int screenY) {
         context.fill(screenX, screenY, width - screenX, height - screenY, 0xFF232323);
@@ -46,9 +41,6 @@ public abstract class AScreen extends Screen {
     /**
      * Renders the title of the screen.
      *
-     * @param context        The rendering context.
-     * @param windowX        The X coordinate of the window.
-     * @param windowY        The Y coordinate of the window.
      * @param translationKey The translation key for the title text.
      */
     protected void renderScreenTitle(DrawContext context, int windowX, int windowY, String translationKey) {
@@ -61,9 +53,6 @@ public abstract class AScreen extends Screen {
     /**
      * Renders a horizontal line on the screen.
      *
-     * @param context     The rendering context.
-     * @param windowX     The X coordinate of the window.
-     * @param windowY     The Y coordinate of the window.
      * @param linePadding The padding for the line.
      */
     protected void renderLine(DrawContext context, int windowX, int windowY, int linePadding) {
@@ -87,7 +76,7 @@ public abstract class AScreen extends Screen {
      * @param currentLinePadding Y coordinate of screen
      * @param checked value of checkbox on initialize
      * @param callback function that gets called on checked value change
-     * @return The created CheckboxWidget
+     * @return the created CheckboxWidget
      */
     protected CheckboxWidget createCheckBoxWidget(int currentLinePadding, boolean checked, CheckboxWidget.Callback callback) {
         return CheckboxWidget.builder(Text.of(""), textRenderer)
