@@ -1,6 +1,8 @@
 package io.sailex.gui.hud;
 
+import io.sailex.gui.screens.EditHudElementsScreen;
 import io.sailex.gui.screens.MoveHudElementsScreen;
+import io.sailex.gui.screens.ToggleHudElementsScreen;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenMouseEvents;
 import net.minecraft.client.gui.screen.Screen;
@@ -18,12 +20,18 @@ public class ScreenInputHandler {
 
     public void register() {
         ScreenEvents.AFTER_INIT.register((client, currentScreen, scaledWidth, scaledHeight) -> {
-            if (!(currentScreen instanceof MoveHudElementsScreen)) {
+            if (!isMoveElementScreen(currentScreen)) {
                 return;
             }
             handleMouseClick(currentScreen);
             handleMouseRelease(currentScreen);
         });
+    }
+
+    private boolean isMoveElementScreen(Screen currentScreen) {
+        return currentScreen instanceof MoveHudElementsScreen ||
+                currentScreen instanceof EditHudElementsScreen ||
+                currentScreen instanceof ToggleHudElementsScreen;
     }
 
     private void handleMouseClick(Screen currentScreen) {
