@@ -9,7 +9,12 @@ import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
 
-public class AddWidget extends ClickableWidget {
+/**
+ * A widget representing a button to open the toggle hud elements screen.
+ *
+ * @author sailex
+ */
+public class ToggleHudElementsWidget extends ClickableWidget {
 
     private final MinecraftClient client;
     private boolean wasHovered;
@@ -20,7 +25,15 @@ public class AddWidget extends ClickableWidget {
     private final int originalWidth;
     private final int originalHeight;
 
-    public AddWidget(int x, int y, int width, int height) {
+    /**
+     * Constructs an {@code ToggleHudElementsWidget}.
+     *
+     * @param x      the x position of the widget
+     * @param y      the y position of the widget
+     * @param width  the width of the widget
+     * @param height the height of the widget
+     */
+    public ToggleHudElementsWidget(int x, int y, int width, int height) {
         super(x, y, width, height, Text.of("Add Widget"));
         client = MinecraftClient.getInstance();
         this.originalX = x;
@@ -33,19 +46,30 @@ public class AddWidget extends ClickableWidget {
     @Override
     protected void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
         handleAnimation();
-        drawAddWidgetTexture(context);
+        drawToggleHudElementsWidgetTexture(context);
     }
 
+    /**
+     * Opens the ToggleHudElementsScreen on click on the widget.
+     */
     @Override
     public void onClick(double mouseX, double mouseY) {
-        client.setScreen(HudEnhancerClient.getScreenManager().getAddHudElementsScreen());
+        client.setScreen(HudEnhancerClient.getScreenManager().getToggleHudElementsScreen());
     }
 
-    private void drawAddWidgetTexture(DrawContext context) {
-        context.drawTexture(Textures.ADD_WIDGET, getX(), getY(),
+    /**
+     * Draws the texture for the button.
+     *
+     * @param context the draw context
+     */
+    private void drawToggleHudElementsWidgetTexture(DrawContext context) {
+        context.drawTexture(Textures.TOGGLE_HUD_ELEMENTS_WIDGET, getX(), getY(),
                 0, 0, getWidth(), getHeight(), getWidth(), getHeight());
     }
 
+    /**
+     * Handles the scaling animation of the widget when hovered.
+     */
     private void handleAnimation() {
         boolean isCurrentlyHovered = this.isHovered();
 
@@ -63,12 +87,25 @@ public class AddWidget extends ClickableWidget {
         setPosition(offsetX, offsetY, scale);
     }
 
+    /**
+     * Calculates the animation progress based on hover state and elapsed time.
+     *
+     * @param isCurrentlyHovered whether the widget is currently hovered
+     * @return the animation progress as a float between 0.0 and 1.0
+     */
     private float calculateAnimation(boolean isCurrentlyHovered) {
         long elapsed = System.currentTimeMillis() - hoverStartTime;
         float progress = MathHelper.clamp((float) elapsed / 100L, 0.0f, 1.0f);
         return isCurrentlyHovered ? progress : 1.0f - progress;
     }
 
+    /**
+     * Updates the widget's position and size based on the current scale.
+     *
+     * @param offsetX the horizontal offset for scaling
+     * @param offsetY the vertical offset for scaling
+     * @param scale   the scale factor
+     */
     private void setPosition(int offsetX, int offsetY, float scale) {
         setX(this.originalX - offsetX);
         setWidth((int) (originalWidth * scale));

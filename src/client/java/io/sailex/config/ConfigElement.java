@@ -1,6 +1,11 @@
 package io.sailex.config;
 
-public record HudElement(
+/**
+ * Configuration data for a HUD element.
+ *
+ * @author sailex
+ */
+public record ConfigElement(
         int x,
         int y,
         int width,

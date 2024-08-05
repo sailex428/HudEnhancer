@@ -7,8 +7,18 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.option.KeyBinding;
 import org.lwjgl.glfw.GLFW;
 
+/**
+ * Manages the key binding for opening the MoveHudElement screen.
+ *
+ * @author sailex
+ */
 public class MoveHudElementsKeybind {
 
+    /**
+     * Constructs a {@code MoveHudElementsKeybind} instance.
+     *
+     * @param screen the screen to be opened when the key is pressed
+     */
     public MoveHudElementsKeybind(MoveHudElementsScreen screen) {
         this.screen = screen;
     }
@@ -16,6 +26,9 @@ public class MoveHudElementsKeybind {
     private final MoveHudElementsScreen screen;
     private KeyBinding keyBinding;
 
+    /**
+     * Registers the key binding and sets up an event listener to open the screen.
+     */
     public void register() {
         keyBinding = KeyBindingHelper.registerKeyBinding(
                 new KeyBinding(

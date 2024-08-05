@@ -1,32 +1,41 @@
 package io.sailex.gui.screens;
 
-import io.sailex.gui.widgets.CheckBoxWidget;
+import io.sailex.gui.hud.IHudElement;
 import io.sailex.gui.widgets.colorpicker.GradientWidget;
 import io.sailex.gui.widgets.colorpicker.HueBarWidget;
-import io.sailex.gui.widgets.AWidget;
 import io.sailex.util.ScreenUtil;
 import io.sailex.util.TranslationKeys;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.widget.CheckboxWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.text.Text;
 
 import java.util.List;
 
 /**
+ * Represents a screen for editing HUD elements.
+ *
  * @author sailex
- * Screen for editing Elements in the Hud.
  */
 public class EditHudElementsScreen extends AScreen {
 
-    private final AWidget currentWidget;
+    private final IHudElement currentElement;
     private GradientWidget gradientWidget;
     private final int[] linePadding = { DEFAULT_LINE_PADDING, 92, 114 };
 
-    public EditHudElementsScreen(AWidget currentWidget) {
-        super(Text.of(currentWidget.getMessage().getString()));
-        this.currentWidget = currentWidget;
+    /**
+     * Constructs an {@code EditHudElementsScreen} for the specified HUD element.
+     *
+     * @param currentElement The HUD element to be edited.
+     */
+    public EditHudElementsScreen(IHudElement currentElement) {
+        super(Text.of(currentElement.getKey()));
+        this.currentElement = currentElement;
     }
 
+    /**
+     * Initializes the screen and setting up its widgets.
+     */
     @Override
     protected void init() {
         super.init();
@@ -45,6 +54,9 @@ public class EditHudElementsScreen extends AScreen {
         }
     }
 
+    /**
+     * Renders the screen and its components.
+     */
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         renderScreenBackground(context, screenX, screenY);
@@ -54,12 +66,21 @@ public class EditHudElementsScreen extends AScreen {
         super.render(context, mouseX, mouseY, delta);
     }
 
+    /**
+     * Renders the content of the screen, including different sections.
+     */
     private void renderScreenContent(DrawContext context, int windowX, int windowY) {
         renderScreenSection(context, windowX, windowY, linePadding[0], TranslationKeys.EDIT_HUD_SCREEN_TEXT_COLOR);
         renderScreenSection(context, windowX, windowY, linePadding[1], TranslationKeys.EDIT_HUD_SCREEN_SHADOW);
         renderScreenSection(context, windowX, windowY, linePadding[2], TranslationKeys.EDIT_HUD_SCREEN_BACKGROUND);
     }
 
+    /**
+     * Renders a specific section of the screen.
+     *
+     * @param linePadding    The padding for the line.
+     * @param translationKey The translation key for the section title.
+     */
     protected void renderScreenSection(DrawContext context, int windowX, int windowY, int linePadding, String translationKey) {
         renderLine(context, windowX, windowY, linePadding);
         context.drawText(client.textRenderer,
@@ -68,28 +89,46 @@ public class EditHudElementsScreen extends AScreen {
                 0xFFFFFFFF, true);
     }
 
+    /**
+     * Creates the gradient widget for color selection.
+     */
     private void createGradientWidget() {
         gradientWidget = new GradientWidget(this.width - screenX - 80, screenY + 27, 60, 60,
-                currentWidget::setColor, currentWidget.getHue(), currentWidget.getColor());
+                currentElement::setColor, currentElement.getHue(), currentElement.getColor());
     }
 
+    /**
+     * Creates the hue bar widget for hue adjustments.
+     *
+     * @return The created HueBarWidget.
+     */
     private HueBarWidget createHueBarWidget() {
         return new HueBarWidget(this.width - screenX - 15, screenY + 27, 10, 60,
                 hue -> {
-                    currentWidget.setHue(hue);
+                    currentElement.setHue(hue);
                     gradientWidget.setSelectedHue(hue);
-                }, currentWidget.getHue()
+                }, currentElement.getHue()
         );
     }
 
-    private CheckBoxWidget createShadowCheckbox() {
-        return new CheckBoxWidget(this.width - screenX - 20, screenY + 96,
-                currentWidget::setShadow, currentWidget.isShadow());
+    /**
+     * Creates the checkbox widget for toggling the shadow setting.
+     *
+     * @return The created CheckboxWidget.
+     */
+    private CheckboxWidget createShadowCheckbox() {
+        return createCheckBoxWidget(95, currentElement.isShadow(),
+                (checkbox, checked) -> currentElement.setShadow(!currentElement.isShadow()));
     }
 
-    private CheckBoxWidget createBackgroundCheckbox() {
-        return new CheckBoxWidget(this.width - screenX - 20, screenY + 118,
-                currentWidget::setBackground, currentWidget.isBackground());
+    /**
+     * Creates the checkbox widget for toggling the background setting.
+     *
+     * @return The created CheckboxWidget.
+     */
+    private CheckboxWidget createBackgroundCheckbox() {
+        return createCheckBoxWidget(117, currentElement.isBackground(),
+            (checkbox, checked) -> currentElement.setBackground(!currentElement.isBackground())
+        );
     }
-
 }
