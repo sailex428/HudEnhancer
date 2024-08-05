@@ -14,7 +14,7 @@ import net.minecraft.util.math.MathHelper;
  *
  * @author sailex
  */
-public class AddWidget extends ClickableWidget {
+public class ToggleHudElementsWidget extends ClickableWidget {
 
     private final MinecraftClient client;
     private boolean wasHovered;
@@ -26,14 +26,14 @@ public class AddWidget extends ClickableWidget {
     private final int originalHeight;
 
     /**
-     * Constructs an {@code AddWidget}.
+     * Constructs an {@code ToggleHudElementsWidget}.
      *
      * @param x      the x position of the widget
      * @param y      the y position of the widget
      * @param width  the width of the widget
      * @param height the height of the widget
      */
-    public AddWidget(int x, int y, int width, int height) {
+    public ToggleHudElementsWidget(int x, int y, int width, int height) {
         super(x, y, width, height, Text.of("Add Widget"));
         client = MinecraftClient.getInstance();
         this.originalX = x;
@@ -46,7 +46,7 @@ public class AddWidget extends ClickableWidget {
     @Override
     protected void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
         handleAnimation();
-        drawAddWidgetTexture(context);
+        drawToggleHudElementsWidgetTexture(context);
     }
 
     /**
@@ -62,8 +62,8 @@ public class AddWidget extends ClickableWidget {
      *
      * @param context the draw context
      */
-    private void drawAddWidgetTexture(DrawContext context) {
-        context.drawTexture(Textures.ADD_WIDGET, getX(), getY(),
+    private void drawToggleHudElementsWidgetTexture(DrawContext context) {
+        context.drawTexture(Textures.TOGGLE_HUD_ELEMENTS_WIDGET, getX(), getY(),
                 0, 0, getWidth(), getHeight(), getWidth(), getHeight());
     }
 

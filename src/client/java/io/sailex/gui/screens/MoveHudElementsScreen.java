@@ -1,6 +1,6 @@
 package io.sailex.gui.screens;
 
-import io.sailex.gui.widgets.AddWidget;
+import io.sailex.gui.widgets.ToggleHudElementsWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.util.Window;
 import net.minecraft.text.Text;
@@ -38,7 +38,7 @@ public class MoveHudElementsScreen extends AScreen {
     private ClickableWidget createAddWidget() {
         Window window = client.getWindow();
         int widgetSize = 40;
-        return new AddWidget(window.getScaledWidth() / 2 - (widgetSize / 2),  window.getScaledHeight() / 2 - (widgetSize / 2),
+        return new ToggleHudElementsWidget(window.getScaledWidth() / 2 - (widgetSize / 2),  window.getScaledHeight() / 2 - (widgetSize / 2),
                 widgetSize, widgetSize);
     }
 

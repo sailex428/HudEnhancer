@@ -13,7 +13,7 @@ public class Textures {
     public static final Identifier GRADIENT_CONTROL = Identifier.of(HudEnhancerClient.MOD_ID, "textures/gui/gradient_control.png");
     public static final Identifier HUE_BAR_CONTROL = Identifier.of(HudEnhancerClient.MOD_ID, "textures/gui/hue_bar_control.png");
 
-    public static final Identifier ADD_WIDGET = Identifier.of(HudEnhancerClient.MOD_ID, "textures/gui/add_widget.png");
+    public static final Identifier TOGGLE_HUD_ELEMENTS_WIDGET = Identifier.of(HudEnhancerClient.MOD_ID, "textures/gui/toggle_hud_elements_widget.png");
 
     public static final Identifier CPS_PICTURE = Identifier.of (HudEnhancerClient.MOD_ID, "textures/misc/cps.png");
     public static final Identifier FPS_PICTURE = Identifier.of(HudEnhancerClient.MOD_ID, "textures/misc/fps.png");
