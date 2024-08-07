@@ -3,22 +3,27 @@ pipeline {
 
     environment {
         MOD_VERSION = '2.1.1'
-        MC_VERSION = env.BRANCH_NAME.split('/')[0]
-
         GITHUB_CREDENTIALS_ID = '96096c2a-dbfe-4652-93ac-61b172ccf130'
         GITHUB_USERNAME = 'sailex428'
         GITHUB_REPO = "${env.GITHUB_USERNAME}/HudEnhancer"
         GITHUB_API_URL = 'https://api.github.com'
-
-        TAG_NAME = "v${MOD_VERSION}-release-${env.MC_VERSION}"
-        RELEASE_TITLE = "${TAG_NAME}"
     }
 
     stages {
 
+        stage('Init') {
+            steps {
+                script {
+                    env.MC_VERSION = env.BRANCH_NAME.split('/')[0]
+                    env.TAG_NAME = "v${MOD_VERSION}-release-${MC_VERSION}"
+                    env.RELEASE_TITLE = "${TAG_NAME}"
+                }
+            }
+        }
+
         stage('Checkout') {
             steps {
-                git branch: "${env.MC_VERSION}/stable",
+                git branch: "${env.BRANCH_NAME}",
                     url: "https://github.com/${env.GITHUB_REPO}.git",
                     credentialsId: "${env.GITHUB_CREDENTIALS_ID}"
             }
