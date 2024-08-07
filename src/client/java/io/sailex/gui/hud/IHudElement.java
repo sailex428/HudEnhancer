@@ -4,6 +4,7 @@ import io.sailex.config.ConfigElement;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.render.RenderTickCounter;
 
 /**
  * Interface representing a HUD element.
@@ -12,7 +13,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
  */
 public interface IHudElement extends HudRenderCallback {
 
-    void onHudRender(DrawContext drawContext, float tickDelta);
+    void onHudRender(DrawContext drawContext, RenderTickCounter tickCounter);
     void drawElement(DrawContext drawContext, ClientPlayerEntity player);
     ConfigElement createUpdatedConfigElement();
 

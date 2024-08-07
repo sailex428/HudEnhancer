@@ -5,6 +5,7 @@ import io.sailex.gui.screens.EditHudElementsScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.render.RenderTickCounter;
 
 /**
  * Abstract base class for HUD elements.
@@ -63,7 +64,7 @@ public abstract class AHudElement implements IHudElement {
      * Called to render the HUD element.
      */
     @Override
-    public void onHudRender(DrawContext drawContext, float tickDelta) {
+    public void onHudRender(DrawContext drawContext, RenderTickCounter tickCounter) {
         ClientPlayerEntity player = client.player;
         if (player == null || client.getDebugHud().shouldShowDebugHud()) {
             return;

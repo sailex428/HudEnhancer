@@ -61,14 +61,12 @@ public abstract class AScreen extends Screen {
     }
 
     /**
-     * Renders the in-game background, filling the entire screen with a transparent color.
+     * Renders the in-game background, leaves the background empty.
      *
      * @param context The rendering context.
      */
     @Override
-    public void renderInGameBackground(DrawContext context) {
-        context.fill(0, 0, this.width, this.height, 0);
-    }
+    public void renderBackground(DrawContext context, int mouseX, int mouseY, float delta) {}
 
     /**
      * Builds a basic CheckboxWidget.
