@@ -14,7 +14,9 @@ pipeline {
         stage('Init') {
             steps {
                 script {
-                    env.MC_VERSION = env.BRANCH_NAME.split('/')[0]
+                    def branchParts = env.BRANCH_NAME.split('/')
+                    def mcVersion = branchParts[0]
+                    env.MC_VERSION = mcVersion
                     env.TAG_NAME = "v${MOD_VERSION}-release-${MC_VERSION}"
                     env.RELEASE_TITLE = "${TAG_NAME}"
                 }
