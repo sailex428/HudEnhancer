@@ -18,7 +18,7 @@ pipeline {
                     def mcVersion = branchParts[0]
                     env.MC_VERSION = mcVersion
                     env.TAG_NAME = "v${MOD_VERSION}-release-${MC_VERSION}"
-                    env.RELEASE_TITLE = "v${MOD_VERSION}-release - mc${TAG_NAME}"
+                    env.RELEASE_TITLE = "v${MOD_VERSION}-release-mc${MC_VERSION}"
                 }
             }
         }
