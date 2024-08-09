@@ -30,7 +30,7 @@ public class RainbowTextUtil {
             int color = getRainbowColor(hue);
 
             context.drawText(client.textRenderer, String.valueOf(text.charAt(i)), x, y, color, shadow);
-            x += 6;
+            x += client.textRenderer.getWidth(String.valueOf(text.charAt(i)));
         }
     }
 
