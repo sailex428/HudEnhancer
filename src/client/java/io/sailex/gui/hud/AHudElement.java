@@ -18,7 +18,6 @@ public abstract class AHudElement implements IHudElement {
     protected static final int BACKGROUND_TRANSPARENT = 0x00FFFFFF;
     protected static final int BACKGROUND_GRAY = 0x80000000;
 
-    private final RainbowTextUtil rainbowTextUtil;
     protected final MinecraftClient client = MinecraftClient.getInstance();
     protected final String key;
 
@@ -56,7 +55,6 @@ public abstract class AHudElement implements IHudElement {
         this.shadow = element.shadow();
         this.background = element.background();
         this.isActive = element.isActive();
-        this.rainbowTextUtil = new RainbowTextUtil();
     }
 
     /**
@@ -197,7 +195,7 @@ public abstract class AHudElement implements IHudElement {
         client.setScreen(new EditHudElementsScreen(this));
     }
 
-    protected void drawText(DrawContext context, String text, int x, int y) {
+    protected void drawText(RainbowTextUtil rainbowTextUtil, DrawContext context, String text, int x, int y) {
         if (isRainbow) {
             rainbowTextUtil.drawAnimatedRainbowText(context, text, x, y, shadow);
             return;

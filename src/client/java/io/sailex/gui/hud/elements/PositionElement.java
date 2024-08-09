@@ -3,6 +3,7 @@ package io.sailex.gui.hud.elements;
 import io.sailex.config.ConfigElement;
 import io.sailex.gui.hud.AHudElement;
 import io.sailex.util.Direction;
+import io.sailex.util.RainbowTextUtil;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.registry.RegistryKey;
@@ -36,9 +37,9 @@ public class PositionElement extends AHudElement {
         String[] textContent = createTextContent(player);
 
         for (int i = 0; i < textContent.length; i++) {
-            this.drawText(context, textContent[i], elementX + 5, elementY + 5 + (i * 10));
+            this.drawText(new RainbowTextUtil(), context, textContent[i], elementX + 5, elementY + 5 + (i * 10));
         }
-        this.drawText(context, getDirection(player), elementX + 105, elementY + 5);
+        this.drawText(new RainbowTextUtil(), context, getDirection(player), elementX + 105, elementY + 5);
     }
 
     /**

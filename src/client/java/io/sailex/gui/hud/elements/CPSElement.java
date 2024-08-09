@@ -4,6 +4,7 @@ import io.sailex.config.ConfigElement;
 import io.sailex.config.DefaultConfig;
 import io.sailex.gui.hud.AHudElement;
 import io.sailex.util.CPSCalculator;
+import io.sailex.util.RainbowTextUtil;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
 
@@ -31,7 +32,7 @@ public class CPSElement extends AHudElement {
     @Override
     public void drawElement(DrawContext context, ClientPlayerEntity player) {
         drawElementBackground(context);
-        this.drawText(context, CPSCalculator.getInstance().getCPS() + " " + DefaultConfig.CPS, elementX + 5, elementY + 5);
+        this.drawText(new RainbowTextUtil(), context, CPSCalculator.getInstance().getCPS() + " " + DefaultConfig.CPS, elementX + 5, elementY + 5);
     }
 
 }
