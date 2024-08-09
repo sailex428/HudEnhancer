@@ -18,6 +18,8 @@ public interface IHudElement extends HudRenderCallback {
 
     void setHue(int hue);
     int getHue();
+    void setIsRainbow(boolean rainbow);
+    boolean isRainbow();
     void setBackground(boolean isBackground);
     boolean isBackground();
     void setShadow(boolean shadow);

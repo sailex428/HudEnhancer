@@ -2,6 +2,7 @@ package io.sailex.gui.hud;
 
 import io.sailex.config.ConfigElement;
 import io.sailex.gui.screens.EditHudElementsScreen;
+import io.sailex.util.RainbowTextUtil;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -26,6 +27,8 @@ public abstract class AHudElement implements IHudElement {
 
     protected int color;
     protected int hue;
+
+    protected boolean isRainbow;
     protected boolean background;
     protected boolean shadow;
     protected boolean isActive;
@@ -100,7 +103,7 @@ public abstract class AHudElement implements IHudElement {
         return new ConfigElement(
                 elementX, elementY,
                 elementWidth, elementHeight,
-                color, hue, background, shadow,
+                color, hue, isRainbow, background, shadow,
                 isActive
         );
     }
@@ -191,6 +194,21 @@ public abstract class AHudElement implements IHudElement {
         client.setScreen(new EditHudElementsScreen(this));
     }
 
+    protected void drawText(DrawContext context, String text, int x, int y) {
+        if (isRainbow) {
+            RainbowTextUtil.drawAnimatedRainbowText(context, text, x, y, shadow);
+            return;
+        }
+        context.drawText(client.textRenderer, text, x, y, color, shadow);
+    }
+
+    protected void drawElementBackground(DrawContext context) {
+        context.fill(elementX, elementY,
+                elementX + elementWidth, elementY + elementHeight,
+                background ? BACKGROUND_GRAY : BACKGROUND_TRANSPARENT
+        );
+    }
+
     @Override
     public boolean isShadow() {
         return shadow;
@@ -229,6 +247,16 @@ public abstract class AHudElement implements IHudElement {
     @Override
     public int getHue() {
         return hue;
+    }
+
+    @Override
+    public boolean isRainbow() {
+        return isRainbow;
+    }
+
+    @Override
+    public void setIsRainbow(boolean rainbow) {
+        isRainbow = rainbow;
     }
 
     @Override

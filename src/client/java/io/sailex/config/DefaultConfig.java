@@ -30,10 +30,11 @@ public class DefaultConfig {
         int hue = 0;
         boolean shadow = true;
         boolean background = true;
+        boolean isRainbow = false;
 
-        configElementMap.put(CPS, new ConfigElement(150, 7, 50, 17, color, hue, background, shadow, false));
-        configElementMap.put(FPS, new ConfigElement(150, 38, 50, 17, color, hue, background, shadow, false));
-        configElementMap.put(POSITION, new ConfigElement(7, 7, 123, 48, color, hue, background, shadow, true));
+        configElementMap.put(CPS, new ConfigElement(150, 7, 50, 17, color, hue, isRainbow, background, shadow, false));
+        configElementMap.put(FPS, new ConfigElement(150, 38, 50, 17, color, hue, isRainbow, background, shadow, false));
+        configElementMap.put(POSITION, new ConfigElement(7, 7, 123, 48, color, hue, isRainbow, background, shadow, true));
     }
 
     /**

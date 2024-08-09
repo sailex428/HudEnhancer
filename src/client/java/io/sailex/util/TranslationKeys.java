@@ -21,4 +21,6 @@ public class TranslationKeys {
 
     public static final String EDIT_HUD_SCREEN_SET_COLOR_TO_ALL = "editHudScreen.setColorToAll";
 
+    public static final String EDIT_HUD_SCREEN_RAINBOW = "editHudScreen.rainbow";
+
 }
