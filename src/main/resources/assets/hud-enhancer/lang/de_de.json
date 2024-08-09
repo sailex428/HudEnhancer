@@ -1,9 +1,10 @@
 {
   "editHudScreen.settings": "Einstellungen",
   "editHudScreen.textColor": "Textfarbe",
+  "editHudScreen.setColorToAll": "Auf alle anwenden",
   "editHudScreen.shadow": "Schatten",
   "editHudScreen.background": "Hintergrund",
-  "key.position-display.editHudElements": "HUD Elemente bearbeiten",
+  "key.hudEnhancer.editHudElements": "HUD Elemente bearbeiten",
   "moveHudScreen.addWidget": "Widget hinzufügen",
   "addHudScreen.widgets": "Widgets"
 }
