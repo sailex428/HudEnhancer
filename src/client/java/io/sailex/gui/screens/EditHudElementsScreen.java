@@ -1,11 +1,14 @@
 package io.sailex.gui.screens;
 
+import io.sailex.HudEnhancerClient;
 import io.sailex.gui.hud.IHudElement;
+import io.sailex.gui.widgets.DefaultButtonWidget;
 import io.sailex.gui.widgets.colorpicker.GradientWidget;
 import io.sailex.gui.widgets.colorpicker.HueBarWidget;
 import io.sailex.util.ScreenUtil;
 import io.sailex.util.TranslationKeys;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.CheckboxWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.text.Text;
@@ -38,7 +41,6 @@ public class EditHudElementsScreen extends AScreen {
      */
     @Override
     protected void init() {
-        super.init();
         this.screenX = ScreenUtil.calculateScreenSize(this.width, 150);
         this.screenY = ScreenUtil.calculateScreenSize(this.height, 137);
         this.clearChildren();
@@ -47,7 +49,8 @@ public class EditHudElementsScreen extends AScreen {
 
         List<ClickableWidget> widgets = List.of(
                 gradientWidget, createHueBarWidget(),
-                createBackgroundCheckbox(), createShadowCheckbox()
+                createBackgroundCheckbox(), createShadowCheckbox(),
+                createSetColorToAllButton()
         );
         for (ClickableWidget widget : widgets) {
             this.addDrawableChild(widget);
@@ -94,7 +97,7 @@ public class EditHudElementsScreen extends AScreen {
      */
     private void createGradientWidget() {
         gradientWidget = new GradientWidget(this.width - screenX - 80, screenY + 27, 60, 60,
-                currentElement::setColor, currentElement.getHue(), currentElement.getColor());
+                this.currentElement::setColor,  this.currentElement.getHue(), this.currentElement.getColor());
     }
 
     /**
@@ -131,4 +134,21 @@ public class EditHudElementsScreen extends AScreen {
             (checkbox, checked) -> currentElement.setBackground(!currentElement.isBackground())
         );
     }
+
+    /**
+     * Creates a button widget that sets the color of the current widget
+     * to all other widgets.
+     *
+     * @return the created DefaultButtonWidget
+     */
+    private ButtonWidget createSetColorToAllButton() {
+        return new DefaultButtonWidget(this.screenX + CONTENT_PADDING, this.screenY + linePadding[0] + 47, 61, 20,
+            Text.translatable(TranslationKeys.EDIT_HUD_SCREEN_SET_COLOR_TO_ALL),
+                button -> HudEnhancerClient.getHudElementsManager().getHudElements().forEach(hudElement -> {
+                    hudElement.setColor(this.currentElement.getColor());
+                    hudElement.setHue(this.currentElement.getHue());
+            })
+        );
+    }
+
 }

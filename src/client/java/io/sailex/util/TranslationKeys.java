@@ -17,6 +17,8 @@ public class TranslationKeys {
 
     public static final String ADD_HUD_SCREEN_WIDGETS = "addHudScreen.widgets";
 
-    public static final String KEY_ADD_HUD_ELEMENT = "key.position-display.editHudElements";
+    public static final String KEY_ADD_HUD_ELEMENT = "key.hudEnhancer.editHudElements";
+
+    public static final String EDIT_HUD_SCREEN_SET_COLOR_TO_ALL = "editHudScreen.setColorToAll";
 
 }

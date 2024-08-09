@@ -18,6 +18,7 @@ public class HudEnhancerClient implements ClientModInitializer {
 
 	public static String MOD_ID = "hud-enhancer";
 	private static ScreenManager screenManager;
+	private static HudElementsManager hudElementsManager;
 
 	/**
 	 * Initializes the client-side components of the HudEnhancer mod.
@@ -31,14 +32,14 @@ public class HudEnhancerClient implements ClientModInitializer {
 		ConfigManager configManager = new ConfigManager(defaultConfig);
 		configManager.initialize();
 
-		HudElementsManager hudManager = new HudElementsManager(defaultConfig.getConfigElementMap());
-		hudManager.register();
-		configManager.setHudElementsManager(hudManager);
+		hudElementsManager = new HudElementsManager(defaultConfig.getConfigElementMap());
+		hudElementsManager.register();
+		configManager.setHudElementsManager(hudElementsManager);
 
-		ScreenInputHandler screenInputHandler = new ScreenInputHandler(hudManager.getHudElements());
+		ScreenInputHandler screenInputHandler = new ScreenInputHandler(hudElementsManager.getHudElements());
 		screenInputHandler.register();
 
-		screenManager = new ScreenManager(hudManager.getHudElements());
+		screenManager = new ScreenManager(hudElementsManager.getHudElements());
 		screenManager.registerScreens();
 
 		MoveHudElementsKeybind keybind = new MoveHudElementsKeybind(screenManager.getMoveHudElementsScreen());
@@ -53,6 +54,10 @@ public class HudEnhancerClient implements ClientModInitializer {
 	 */
 	public static ScreenManager getScreenManager() {
 		return screenManager;
+	}
+
+	public static HudElementsManager getHudElementsManager() {
+		return hudElementsManager;
 	}
 
 }
