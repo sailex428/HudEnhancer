@@ -24,7 +24,7 @@ public class EditHudElementsScreen extends AScreen {
 
     private final IHudElement currentElement;
     private GradientWidget gradientWidget;
-    private final int[] linePadding = { DEFAULT_LINE_PADDING, 92, 114 };
+    private final int[] linePadding = { DEFAULT_LINE_PADDING, 92, 114, 136 };
 
     /**
      * Constructs an {@code EditHudElementsScreen} for the specified HUD element.
@@ -42,7 +42,7 @@ public class EditHudElementsScreen extends AScreen {
     @Override
     protected void init() {
         this.screenX = ScreenUtil.calculateScreenSize(this.width, 150);
-        this.screenY = ScreenUtil.calculateScreenSize(this.height, 137);
+        this.screenY = ScreenUtil.calculateScreenSize(this.height, 160);
         this.clearChildren();
 
         createGradientWidget();
@@ -50,7 +50,7 @@ public class EditHudElementsScreen extends AScreen {
         List<ClickableWidget> widgets = List.of(
                 gradientWidget, createHueBarWidget(),
                 createBackgroundCheckbox(), createShadowCheckbox(),
-                createSetColorToAllButton()
+                createSetColorToAllButton(), createIsRainbowCheckbox()
         );
         for (ClickableWidget widget : widgets) {
             this.addDrawableChild(widget);
@@ -74,8 +74,9 @@ public class EditHudElementsScreen extends AScreen {
      */
     private void renderScreenContent(DrawContext context, int windowX, int windowY) {
         renderScreenSection(context, windowX, windowY, linePadding[0], TranslationKeys.EDIT_HUD_SCREEN_TEXT_COLOR);
-        renderScreenSection(context, windowX, windowY, linePadding[1], TranslationKeys.EDIT_HUD_SCREEN_SHADOW);
-        renderScreenSection(context, windowX, windowY, linePadding[2], TranslationKeys.EDIT_HUD_SCREEN_BACKGROUND);
+        renderScreenSection(context, windowX, windowY, linePadding[1], TranslationKeys.EDIT_HUD_SCREEN_RAINBOW);
+        renderScreenSection(context, windowX, windowY, linePadding[2], TranslationKeys.EDIT_HUD_SCREEN_SHADOW);
+        renderScreenSection(context, windowX, windowY, linePadding[3], TranslationKeys.EDIT_HUD_SCREEN_BACKGROUND);
     }
 
     /**
@@ -114,23 +115,29 @@ public class EditHudElementsScreen extends AScreen {
         );
     }
 
+    private CheckboxWidget createIsRainbowCheckbox() {
+        return createCheckBoxWidget(linePadding[1] + 3, currentElement.isRainbow(),
+                (checkbox, checked) -> currentElement.setIsRainbow(!currentElement.isRainbow())
+        );
+    }
+
     /**
      * Creates the checkbox widget for toggling the shadow setting.
      *
      * @return The created CheckboxWidget.
      */
     private CheckboxWidget createShadowCheckbox() {
-        return createCheckBoxWidget(95, currentElement.isShadow(),
+        return createCheckBoxWidget(linePadding[2] + 3, currentElement.isShadow(),
                 (checkbox, checked) -> currentElement.setShadow(!currentElement.isShadow()));
     }
 
     /**
-     * Creates the checkbox widget for toggling the background setting.
+     * Creates a checkbox widget for toggling the background setting.
      *
      * @return The created CheckboxWidget.
      */
     private CheckboxWidget createBackgroundCheckbox() {
-        return createCheckBoxWidget(117, currentElement.isBackground(),
+        return createCheckBoxWidget(linePadding[3] + 3, currentElement.isBackground(),
             (checkbox, checked) -> currentElement.setBackground(!currentElement.isBackground())
         );
     }

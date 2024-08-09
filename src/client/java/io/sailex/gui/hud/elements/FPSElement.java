@@ -28,14 +28,8 @@ public class FPSElement extends AHudElement {
      */
     @Override
     public void drawElement(DrawContext context, ClientPlayerEntity player) {
-        context.fill(elementX, elementY,
-                elementX + elementWidth, elementY + elementHeight,
-                background ? BACKGROUND_GRAY : BACKGROUND_TRANSPARENT
-        );
-        context.drawText(client.textRenderer, client.getCurrentFps() + " " + DefaultConfig.FPS,
-                elementX + 5, elementY + 5,
-                color, shadow
-        );
+        drawElementBackground(context);
+        this.drawText(context,client.getCurrentFps() + " " + DefaultConfig.FPS, elementX + 5, elementY + 5);
     }
 
 }
