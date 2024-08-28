@@ -94,7 +94,7 @@ pipeline {
                                           -H "Accept: application/vnd.github+json" \
                                           -H "X-GitHub-Api-Version: 2022-11-28" \
                                           -H "Content-Type: application/java-archive" \
-                                          https://uploads.github.com/repos/${env.GITHUB_REPO}/releases/${releaseID}/assets?name=${env.RELEASE_TITLE} \
+                                          https://uploads.github.com/repos/${env.GITHUB_REPO}/releases/${releaseID}/assets?name=hud-enhancer-${env.MOD_VERSION}.jar \
                                           --data-binary "@${jarFile}"
                                     """,
                                 returnStdout: true)
