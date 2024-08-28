@@ -37,7 +37,7 @@ public class DefaultButtonWidget extends ButtonWidget {
     }
 
     private void renderButtonTexture(DrawContext context) {
-        context.drawTexture(Textures.APPLY_COLOR_TO_ALL_BUTTON, getX(), getY(),
+        context.drawTexture(Textures.DEFAULT_BUTTON, getX(), getY(),
                 0, 0, getWidth(), getHeight(), getWidth(), getHeight());
     }
 
