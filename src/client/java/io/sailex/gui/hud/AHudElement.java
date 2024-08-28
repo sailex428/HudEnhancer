@@ -2,7 +2,7 @@ package io.sailex.gui.hud;
 
 import io.sailex.config.ConfigElement;
 import io.sailex.gui.screens.EditHudElementsScreen;
-import io.sailex.util.RainbowTextUtil;
+import io.sailex.util.RainbowTextRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -195,9 +195,9 @@ public abstract class AHudElement implements IHudElement {
         client.setScreen(new EditHudElementsScreen(this));
     }
 
-    protected void drawText(RainbowTextUtil rainbowTextUtil, DrawContext context, String text, int x, int y) {
+    protected void drawText(DrawContext context, String text, int x, int y) {
         if (isRainbow) {
-            rainbowTextUtil.drawAnimatedRainbowText(context, text, x, y, shadow);
+            RainbowTextRenderer.INSTANCE.drawAnimatedRainbowText(context, text, x, y, shadow);
             return;
         }
         context.drawText(client.textRenderer, text, x, y, color, shadow);
