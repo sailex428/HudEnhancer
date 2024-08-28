@@ -19,6 +19,6 @@ public class Textures {
     public static final Identifier FPS_PICTURE = Identifier.of(HudEnhancerClient.MOD_ID, "textures/misc/fps.png");
     public static final Identifier POSITION_PICTURE = Identifier.of(HudEnhancerClient.MOD_ID, "textures/misc/position.png");
 
-    public static final Identifier APPLY_COLOR_TO_ALL_BUTTON = Identifier.of(HudEnhancerClient.MOD_ID, "textures/gui/apply_color_to_all_button.png");
+    public static final Identifier DEFAULT_BUTTON = Identifier.of(HudEnhancerClient.MOD_ID, "textures/gui/default_button_dark.png");
 
 }
