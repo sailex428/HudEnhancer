@@ -1,11 +1,14 @@
 package io.sailex.gui.screens;
 
+import io.sailex.HudEnhancerClient;
 import io.sailex.gui.hud.IHudElement;
+import io.sailex.gui.widgets.DefaultButtonWidget;
 import io.sailex.gui.widgets.colorpicker.GradientWidget;
 import io.sailex.gui.widgets.colorpicker.HueBarWidget;
 import io.sailex.util.ScreenUtil;
 import io.sailex.util.TranslationKeys;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.CheckboxWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.text.Text;
@@ -21,7 +24,7 @@ public class EditHudElementsScreen extends AScreen {
 
     private final IHudElement currentElement;
     private GradientWidget gradientWidget;
-    private final int[] linePadding = { DEFAULT_LINE_PADDING, 92, 114 };
+    private final int[] linePadding = { DEFAULT_LINE_PADDING, 92, 114, 136 };
 
     /**
      * Constructs an {@code EditHudElementsScreen} for the specified HUD element.
@@ -38,16 +41,16 @@ public class EditHudElementsScreen extends AScreen {
      */
     @Override
     protected void init() {
-        super.init();
         this.screenX = ScreenUtil.calculateScreenSize(this.width, 150);
-        this.screenY = ScreenUtil.calculateScreenSize(this.height, 137);
+        this.screenY = ScreenUtil.calculateScreenSize(this.height, 160);
         this.clearChildren();
 
         createGradientWidget();
 
         List<ClickableWidget> widgets = List.of(
                 gradientWidget, createHueBarWidget(),
-                createBackgroundCheckbox(), createShadowCheckbox()
+                createBackgroundCheckbox(), createShadowCheckbox(),
+                createSetColorToAllButton(), createIsRainbowCheckbox()
         );
         for (ClickableWidget widget : widgets) {
             this.addDrawableChild(widget);
@@ -71,8 +74,9 @@ public class EditHudElementsScreen extends AScreen {
      */
     private void renderScreenContent(DrawContext context, int windowX, int windowY) {
         renderScreenSection(context, windowX, windowY, linePadding[0], TranslationKeys.EDIT_HUD_SCREEN_TEXT_COLOR);
-        renderScreenSection(context, windowX, windowY, linePadding[1], TranslationKeys.EDIT_HUD_SCREEN_SHADOW);
-        renderScreenSection(context, windowX, windowY, linePadding[2], TranslationKeys.EDIT_HUD_SCREEN_BACKGROUND);
+        renderScreenSection(context, windowX, windowY, linePadding[1], TranslationKeys.EDIT_HUD_SCREEN_RAINBOW);
+        renderScreenSection(context, windowX, windowY, linePadding[2], TranslationKeys.EDIT_HUD_SCREEN_SHADOW);
+        renderScreenSection(context, windowX, windowY, linePadding[3], TranslationKeys.EDIT_HUD_SCREEN_BACKGROUND);
     }
 
     /**
@@ -94,7 +98,7 @@ public class EditHudElementsScreen extends AScreen {
      */
     private void createGradientWidget() {
         gradientWidget = new GradientWidget(this.width - screenX - 80, screenY + 27, 60, 60,
-                currentElement::setColor, currentElement.getHue(), currentElement.getColor());
+                this.currentElement::setColor,  this.currentElement.getHue(), this.currentElement.getColor());
     }
 
     /**
@@ -111,24 +115,47 @@ public class EditHudElementsScreen extends AScreen {
         );
     }
 
+    private CheckboxWidget createIsRainbowCheckbox() {
+        return createCheckBoxWidget(linePadding[1] + 3, currentElement.isRainbow(),
+                (checkbox, checked) -> currentElement.setIsRainbow(!currentElement.isRainbow())
+        );
+    }
+
     /**
      * Creates the checkbox widget for toggling the shadow setting.
      *
      * @return The created CheckboxWidget.
      */
     private CheckboxWidget createShadowCheckbox() {
-        return createCheckBoxWidget(95, currentElement.isShadow(),
+        return createCheckBoxWidget(linePadding[2] + 3, currentElement.isShadow(),
                 (checkbox, checked) -> currentElement.setShadow(!currentElement.isShadow()));
     }
 
     /**
-     * Creates the checkbox widget for toggling the background setting.
+     * Creates a checkbox widget for toggling the background setting.
      *
      * @return The created CheckboxWidget.
      */
     private CheckboxWidget createBackgroundCheckbox() {
-        return createCheckBoxWidget(117, currentElement.isBackground(),
+        return createCheckBoxWidget(linePadding[3] + 3, currentElement.isBackground(),
             (checkbox, checked) -> currentElement.setBackground(!currentElement.isBackground())
         );
     }
+
+    /**
+     * Creates a button widget that sets the color of the current widget
+     * to all other widgets.
+     *
+     * @return the created DefaultButtonWidget
+     */
+    private ButtonWidget createSetColorToAllButton() {
+        return new DefaultButtonWidget(this.screenX + CONTENT_PADDING, this.screenY + linePadding[0] + 47, 61, 20,
+            Text.translatable(TranslationKeys.EDIT_HUD_SCREEN_SET_COLOR_TO_ALL),
+                button -> HudEnhancerClient.getHudElementsManager().getHudElements().forEach(hudElement -> {
+                    hudElement.setColor(this.currentElement.getColor());
+                    hudElement.setHue(this.currentElement.getHue());
+            })
+        );
+    }
+
 }
