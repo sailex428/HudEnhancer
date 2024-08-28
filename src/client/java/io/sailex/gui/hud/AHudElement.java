@@ -194,6 +194,13 @@ public abstract class AHudElement implements IHudElement {
         client.setScreen(new EditHudElementsScreen(this));
     }
 
+    /**
+     * Draws text on the screen.
+     *
+     * @param text the text to draw
+     * @param x the X coordinate
+     * @param y the Y coordinate
+     */
     protected void drawText(DrawContext context, String text, int x, int y) {
         if (isRainbow) {
             RainbowTextRenderer.INSTANCE.drawAnimatedRainbowText(context, text, x, y, shadow);
@@ -202,6 +209,9 @@ public abstract class AHudElement implements IHudElement {
         context.drawText(client.textRenderer, text, x, y, color, shadow);
     }
 
+    /**
+     * Draws the background of the element.
+     */
     protected void drawElementBackground(DrawContext context) {
         context.fill(elementX, elementY,
                 elementX + elementWidth, elementY + elementHeight,
