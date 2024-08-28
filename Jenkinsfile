@@ -2,7 +2,7 @@ pipeline {
     agent { label "agent1" }
 
     environment {
-        MOD_VERSION = '2.1.1'
+        MOD_VERSION = '2.1.2'
         GITHUB_CREDENTIALS_ID = '96096c2a-dbfe-4652-93ac-61b172ccf130'
         GITHUB_USERNAME = 'sailex428'
         GITHUB_REPO = "${env.GITHUB_USERNAME}/HudEnhancer"
