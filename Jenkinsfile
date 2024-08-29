@@ -2,7 +2,7 @@ pipeline {
     agent { label "agent1" }
 
     environment {
-        MOD_VERSION = '2.1.1'
+        MOD_VERSION = '2.1.2'
         GITHUB_CREDENTIALS_ID = '96096c2a-dbfe-4652-93ac-61b172ccf130'
         GITHUB_USERNAME = 'sailex428'
         GITHUB_REPO = "${env.GITHUB_USERNAME}/HudEnhancer"
@@ -94,7 +94,7 @@ pipeline {
                                           -H "Accept: application/vnd.github+json" \
                                           -H "X-GitHub-Api-Version: 2022-11-28" \
                                           -H "Content-Type: application/java-archive" \
-                                          https://uploads.github.com/repos/${env.GITHUB_REPO}/releases/${releaseID}/assets?name=${env.RELEASE_TITLE} \
+                                          https://uploads.github.com/repos/${env.GITHUB_REPO}/releases/${releaseID}/assets?name=hud-enhancer-${env.MOD_VERSION}.jar \
                                           --data-binary "@${jarFile}"
                                     """,
                                 returnStdout: true)

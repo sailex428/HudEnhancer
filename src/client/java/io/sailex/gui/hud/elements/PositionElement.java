@@ -32,13 +32,13 @@ public class PositionElement extends AHudElement {
      */
     @Override
     public void drawElement(DrawContext context, ClientPlayerEntity player) {
-        context.fill(elementX, elementY, elementX + elementWidth, elementY + elementHeight, background ? BACKGROUND_GRAY : BACKGROUND_TRANSPARENT);
+        drawElementBackground(context);
         String[] textContent = createTextContent(player);
 
         for (int i = 0; i < textContent.length; i++) {
-            context.drawText(client.textRenderer, textContent[i], elementX + 5, elementY + 5 + (i * 10), color, shadow);
+            this.drawText(context, textContent[i], elementX + 5, elementY + 5 + (i * 10));
         }
-        context.drawText(client.textRenderer, getDirection(player), elementX + 105, elementY + 5, color, shadow);
+        this.drawText(context, getDirection(player), elementX + 105, elementY + 5);
     }
 
     /**

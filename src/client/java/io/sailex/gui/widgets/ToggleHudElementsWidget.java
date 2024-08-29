@@ -26,7 +26,7 @@ public class ToggleHudElementsWidget extends ClickableWidget {
     private final int originalHeight;
 
     /**
-     * Constructs an {@code ToggleHudElementsWidget}.
+     * Constructs a {@code ToggleHudElementsWidget}.
      *
      * @param x      the x position of the widget
      * @param y      the y position of the widget
