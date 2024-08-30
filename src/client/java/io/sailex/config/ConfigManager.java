@@ -139,7 +139,7 @@ public class ConfigManager {
             elementNode.addProperty("height", entry.getValue().height());
             elementNode.addProperty("color", entry.getValue().color());
             elementNode.addProperty("hue", entry.getValue().hue());
-            elementNode.addProperty("isRainbow", entry.getValue().hue());
+            elementNode.addProperty("isRainbow", entry.getValue().isRainbow());
             elementNode.addProperty("background", entry.getValue().background());
             elementNode.addProperty("shadow", entry.getValue().shadow());
             elementNode.addProperty("isActive", entry.getValue().isActive());
