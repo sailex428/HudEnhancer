@@ -13,7 +13,7 @@ import net.minecraft.client.render.RenderTickCounter;
  */
 public interface IHudElement extends HudRenderCallback {
 
-    void onHudRender(DrawContext drawContext, RenderTickCounter tickCounter);
+    void onHudRender(DrawContext drawContext, float tickCounter);
     void drawElement(DrawContext drawContext, ClientPlayerEntity player);
     ConfigElement createUpdatedConfigElement();
 

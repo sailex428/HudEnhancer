@@ -67,7 +67,7 @@ public abstract class AHudElement implements IHudElement {
      * Called to render the HUD element.
      */
     @Override
-    public void onHudRender(DrawContext drawContext, RenderTickCounter tickCounter) {
+    public void onHudRender(DrawContext drawContext, float tickCounter) {
         ClientPlayerEntity player = client.player;
         if (player == null || client.getDebugHud().shouldShowDebugHud()) {
             return;
