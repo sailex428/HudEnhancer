@@ -4,7 +4,6 @@ import io.sailex.config.ConfigElement;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.render.RenderTickCounter;
 
 /**
  * Interface representing a HUD element.
