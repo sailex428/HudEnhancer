@@ -12,6 +12,7 @@ public record ConfigElement(
         int height,
         int color,
         int hue,
+        boolean isRainbow,
         boolean background,
         boolean shadow,
         boolean isActive

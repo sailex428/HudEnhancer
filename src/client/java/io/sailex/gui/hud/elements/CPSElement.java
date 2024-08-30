@@ -14,6 +14,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
  */
 public class CPSElement extends AHudElement {
 
+
     /**
      * Constructs a CPSElement with the given config element.
      *
@@ -30,14 +31,8 @@ public class CPSElement extends AHudElement {
      */
     @Override
     public void drawElement(DrawContext context, ClientPlayerEntity player) {
-        context.fill(elementX, elementY,
-                elementX + elementWidth, elementY + elementHeight,
-                background ? BACKGROUND_GRAY : BACKGROUND_TRANSPARENT
-        );
-        context.drawText(client.textRenderer,  CPSCalculator.getInstance().getCPS() + " " + DefaultConfig.CPS,
-                elementX + 5, elementY + 5,
-                color, shadow
-        );
+        drawElementBackground(context);
+        this.drawText(context, CPSCalculator.getInstance().getCPS() + " " + DefaultConfig.CPS, elementX + 5, elementY + 5);
     }
 
 }
