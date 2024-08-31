@@ -6,6 +6,7 @@ import io.sailex.util.Direction;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.text.Text;
 import net.minecraft.world.biome.Biome;
 
 import java.util.Optional;
@@ -60,7 +61,7 @@ public class PositionElement extends AHudElement {
      * Retrieves the name of the biome the player is currently in.
      *
      * @param player the client player entity
-     * @return the formatted biome name
+     * @return the formattedBiome biome name
      */
     private String getBiome(ClientPlayerEntity player) {
         Optional<RegistryKey<Biome>> biomeRegistry = player.getWorld().getBiome(player.getBlockPos()).getKey();
@@ -72,17 +73,34 @@ public class PositionElement extends AHudElement {
     }
 
     /**
-     * Formats the biome name to be shorter and more readable.
-     *
+     * Formats the biome name to fit the HUD element.
      * @param biome the biome name
-     * @return the formatted biome name
+     * @return the formattedBiome biome name
      */
     private String formatBiomeName(String biome) {
-        if (biome.length() > 16) {
-            biome = biome.substring(0, 16);
+        int lengthSum = 0;
+        String[] biomeParts = biome.split("_");
+        StringBuilder formattedBiome = new StringBuilder();
+
+        for (int i = 0; i < biomeParts.length; i++) {
+            lengthSum += biomeParts[i].length();
+
+            if (lengthSum > 14) {
+                if (i == 1) {
+                    return biomeParts[1];
+                } else if (i >= 2) {
+                    return biomeParts[i - 1] + " " + biomeParts[i];
+                }
+            }
+
+            formattedBiome.append(biomeParts[i]);
+            if (i < biomeParts.length - 1) {
+                formattedBiome.append(" ");
+            }
         }
-        return biome.replaceAll("_", " ");
-    }
+
+        return formattedBiome.toString();
+        }
 
     /**
      * Determines the direction the player is facing.
